@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class HallSystem {
 
 
-    private HallSystem hallsystem = new HallSystem();
+    private static HallSystem hallsystem = new HallSystem();
 
     public ArrayList<Hall> getHallList() {
         return hallList;
@@ -18,7 +18,7 @@ public class HallSystem {
     ArrayList<Hall> hallList = new ArrayList<>(); //Arraylist which contains all of the halls
 
     public static HallSystem getInstance() {
-        return this.hallsystem;
+        return hallsystem;
     }
 
     public ArrayList<Reservation> resList = new ArrayList<>();
