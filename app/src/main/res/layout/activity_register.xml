@@ -8,8 +8,8 @@
 
     <Spinner
         android:id="@+id/spinnerYear"
-        android:layout_width="85dp"
-        android:layout_height="22dp"
+        android:layout_width="120dp"
+        android:layout_height="25dp"
         android:spinnerMode="dialog"
         android:tooltipText="Enter your birthyear"
         app:layout_constraintBottom_toBottomOf="parent"

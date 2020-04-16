@@ -94,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void yearSpinner(){
         spinnerYear = (Spinner) findViewById(R.id.spinnerYear);
         final ArrayList<Integer> days = new ArrayList<>();
-        for(int i = 1920; i<2021; i++) {
+        for(int i = 2021; i>1925; i--) {
             days.add(i);
         }
         ArrayAdapter<Integer> dataAdapter = new ArrayAdapter<Integer>(getApplicationContext(),android.R.layout.simple_spinner_dropdown_item, days);
