@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
 
     //takes user to register window
     public void toRegister(View v) {
+        Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+        startActivity(intent);
 
     }
     //takes user to login window
