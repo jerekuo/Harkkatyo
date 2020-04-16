@@ -4,8 +4,24 @@
         android:title="@string/menu">
         <menu>
             <item
+                android:title="@string/home"
+                android:icon="@drawable/ic_home_black_24dp">
+            </item>
+            <item
+                android:title="@string/reservations"
+                android:icon="@drawable/ic_pages_black_24dp">
+            </item>
+            <item
+                android:title="@string/calendar"
+                android:icon="@drawable/ic_event_note_black_24dp">
+            </item>
+            <item
                 android:title="@string/settings"
                 android:icon="@drawable/ic_settings_black_24dp">
+            </item>
+            <item
+                android:title="@string/log_out"
+                android:icon="@drawable/ic_close_black_24dp">
             </item>
         </menu>
     </item>
