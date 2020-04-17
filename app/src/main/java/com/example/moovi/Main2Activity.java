@@ -62,6 +62,10 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             fragment = new ReservationFragment();
             transaction.replace(R.id.fragmentView, fragment);
         }
+        else if (item.getTitle().toString().equalsIgnoreCase("Calendar")){
+            fragment = new Calendar_Fragment();
+            transaction.replace(R.id.fragmentView, fragment);
+        }
 
         drawerLayout.closeDrawers();
         transaction.commit();
