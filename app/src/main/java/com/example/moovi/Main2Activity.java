@@ -57,6 +57,10 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             fragment = new SettingsFragment();
             transaction.replace(R.id.fragmentView,fragment);
             transaction.commit();
+        } else if (item.getTitle().toString().equalsIgnoreCase("Reservations")) {
+            fragment = new ReservationFragment();
+            transaction.replace(R.id.fragmentView, fragment);
+            transaction.commit();
         }
         return false;
     }

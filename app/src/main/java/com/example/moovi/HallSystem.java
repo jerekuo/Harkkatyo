@@ -11,6 +11,8 @@ public class HallSystem {
         return hallList;
     }
 
+
+
     public void setHallList(ArrayList<Hall> hallList) {
         this.hallList = hallList;
     }
@@ -36,6 +38,8 @@ public class HallSystem {
     public void setResList(ArrayList<Reservation> resList) {
         this.resList = resList;
     }
+
+
 
 
 }
