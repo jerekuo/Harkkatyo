@@ -19,8 +19,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    FragmentManager manager = getSupportFragmentManager();
-    FragmentTransaction transaction = manager.beginTransaction();
+
 
 
     @Override
@@ -52,17 +51,20 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         Fragment fragment;
+
         if (item.getTitle().toString().equalsIgnoreCase("settings")) {
             fragment = new SettingsFragment();
             transaction.replace(R.id.fragmentView,fragment);
-            transaction.commit();
+
         } else if (item.getTitle().toString().equalsIgnoreCase("Reservations")) {
             fragment = new ReservationFragment();
-            System.out.println("Moikka kaikki");
             transaction.replace(R.id.fragmentView, fragment);
-            transaction.commit();
         }
+
+        drawerLayout.closeDrawers();
+        transaction.commit();
         return false;
     }
 
@@ -71,3 +73,4 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
 
     }
 }
+
