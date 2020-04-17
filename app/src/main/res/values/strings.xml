@@ -6,4 +6,6 @@
     <string name="calendar">Calendar</string>
     <string name="reservations">Reservations</string>
     <string name="home">Home</string>
+    <string name="openNavDrawer">Navigation Drawer Open</string>
+    <string name="closeNavDrawer">Navigation Drawer Close</string>
 </resources>
