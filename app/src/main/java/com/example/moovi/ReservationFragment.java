@@ -57,6 +57,7 @@ public class ReservationFragment extends Fragment {
         HallSystem hallSystem = HallSystem.getInstance();
         hallSpinner = view.findViewById(R.id.spinner);
         final ArrayList<Hall> list = hallSystem.getHallList();
+        //mkamfk
 
         ArrayAdapter<Hall> dataAdapter = new ArrayAdapter<Hall>.createFromResource(getActivity().getBaseContext(), R.); //(getContext(),android.R.layout.simple_spinner_dropdown_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
