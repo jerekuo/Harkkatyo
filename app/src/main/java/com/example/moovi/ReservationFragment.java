@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 /**
@@ -83,9 +84,11 @@ public class ReservationFragment extends Fragment {
         rlist.add("aaaa");
 
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item, rlist);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(Objects.requireNonNull(getActivity()),android.R.layout.simple_spinner_dropdown_item, rlist);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hallSpinner.setAdapter(dataAdapter);
+
+
         hallSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

@@ -6,18 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
-    <Spinner
-        android:id="@+id/spinnerYear"
-        android:layout_width="120dp"
-        android:layout_height="25dp"
-        android:spinnerMode="dialog"
-        android:tooltipText="Enter your birthyear"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.247"
-        app:layout_constraintStart_toEndOf="@+id/spinnerMonth"
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"
+        android:startYear="1920"
         app:layout_constraintTop_toBottomOf="@+id/editLast"
-        app:layout_constraintVertical_bias="0.075" />
+        tools:layout_editor_absoluteX="0dp"></DatePicker>
 
     <EditText
         android:id="@+id/editLast"
@@ -58,31 +55,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editEmail" />
 
-    <Spinner
-        android:id="@+id/spinnerDay"
-        android:layout_width="85dp"
-        android:layout_height="22dp"
-        android:spinnerMode="dialog"
-        android:tooltipText="Enter your day of birth"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/spinnerMonth"
-        app:layout_constraintHorizontal_bias="0.807"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editLast"
-        app:layout_constraintVertical_bias="0.075" />
-
-    <Spinner
-        android:id="@+id/spinnerMonth"
-        android:layout_width="85dp"
-        android:layout_height="22dp"
-        android:spinnerMode="dialog"
-        android:tooltipText="Enter your birthmonth"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editLast"
-        app:layout_constraintVertical_bias="0.073" />
-
     <EditText
         android:id="@+id/editPassword"
         android:layout_width="wrap_content"
@@ -93,8 +65,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerMonth"
-        app:layout_constraintVertical_bias="0.145" />
+        app:layout_constraintTop_toBottomOf="@+id/datePicker" />
 
     <Button
         android:id="@+id/button3"
@@ -115,7 +86,9 @@
         android:textColor="#FF0000"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.357"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/datePicker"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
