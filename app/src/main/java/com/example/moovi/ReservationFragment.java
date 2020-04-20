@@ -35,6 +35,7 @@ public class ReservationFragment extends Fragment {
     Hall hall;
     Room room;
     DatePicker datePicker;
+    //
 
 
     public ReservationFragment() {
