@@ -3,6 +3,8 @@ package com.example.moovi;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -24,10 +27,10 @@ public class ReservationFragment extends Fragment {
 
     Spinner hallSpinner;
     Spinner roomSpinner;
-    Button calendarButton;
     Button searchButton;
     View view;
     Hall hall;
+    DatePicker datePicker;
 
     public ReservationFragment() {
         // Required empty public constructor
@@ -39,10 +42,8 @@ public class ReservationFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_reservation, container, false);
-
-        calendarButton = view.findViewById(R.id.button5);
-
         searchButton = view.findViewById(R.id.button4);
+        datePicker = (DatePicker) view.findViewById(R.id.datePicker);
 
 
         // Inflate the layout for this fragment
@@ -60,7 +61,7 @@ public class ReservationFragment extends Fragment {
         hallSpinner = view.findViewById(R.id.spinner);
         final ArrayList<Hall> list = hallSystem.getHallList();
 
-        ArrayAdapter<Hall> dataAdapter = new ArrayAdapter<Hall>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, list);
+        ArrayAdapter<Hall> dataAdapter = new ArrayAdapter<Hall>(getActivity(), android.R.layout.simple_spinner_dropdown_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hallSpinner.setAdapter(dataAdapter);
         hallSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -100,6 +101,13 @@ public class ReservationFragment extends Fragment {
 
             }
         });
+    }
+
+    public void showFreeTimes(View V){
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        Fragment fragment;
+        fragment = new freeTimesFragment();
+        transaction.replace(R.id.fragmentView, fragment);
     }
 
 }
