@@ -1,6 +1,7 @@
 package com.example.moovi;
 
 import java.util.Date;
+import java.util.Random;
 
 public class User {
     String password; //käytetään stringi password olion kautta
@@ -10,8 +11,11 @@ public class User {
     String lastName;
     int userId;
 
+    public int randNum() {
+        Random random = new Random();
 
-
+        return random.nextInt(50000);
+    }
 
 
     //GETSETS
@@ -61,14 +65,18 @@ public class User {
         this.lastName = lastName;
     }
 
+    public User() {
 
+    }
     //CONSTRUCTOR
-    User(String password, String email, String firstName, String lastName, Date age) {
+    public User(String password, String email, String firstName, String lastName, Date age) {
         this.password = password;
         this.email = email;
-        this.firstName = email;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+        this.userId = randNum();
+
     }
 
 
