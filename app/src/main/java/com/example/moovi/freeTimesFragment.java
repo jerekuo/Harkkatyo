@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,6 +28,10 @@ public class freeTimesFragment extends Fragment {
     View view;
     Reservation chosenReservation;
     Date newDate;
+    ArrayList<String> list = getArguments().getStringArrayList("key");
+    Date d;
+    String hall;
+    String room;
 
     public freeTimesFragment() {
         // Required empty public constructor
@@ -41,7 +46,23 @@ public class freeTimesFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_free_times, container, false);
     }
 
-    public void freeTimeSpinner(Date date, Hall hall, Room room) throws ParseException {
+    public void onViewCreated (View view, Bundle savedInstanceState) {
+        SimpleDateFormat formatter = new SimpleDateFormat("YYYY-mm-dd");
+        try {
+            Date d = formatter.parse(list.get(0));
+            String hall = list.get(1);
+            String room = list.get(2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            this.freeTimeSpinner(d, hall, room);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void freeTimeSpinner(Date date, String hall, String room) throws ParseException {
         SimpleDateFormat format1 = new SimpleDateFormat("HH.mm");
         SimpleDateFormat format2 = new SimpleDateFormat("H.mm");
         ArrayList<Date> timeList = new ArrayList<>();
@@ -56,7 +77,7 @@ public class freeTimesFragment extends Fragment {
         ArrayList<Reservation> list = hallSystem.getResList();
 
         for (Reservation r: list){                                           //Mikäli varaus löytyy samalle päivälle, poistaa yllä tehdystä listasta kyseiset ajat
-            if (hall == r.hall && room == r.room && date == r.startTime){   // Ei tietoa mätsääkö start timet daten kanssa?!?!?!?
+            if (hall.equalsIgnoreCase(r.hall.getHallName()) && room.equalsIgnoreCase(r.room.getName()) && date == r.startTime){   // Ei tietoa mätsääkö start timet daten kanssa?!?!?!?
                 timeList.remove(r.startTime);
             }
         }
