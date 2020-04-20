@@ -14,11 +14,27 @@ public class HallSystem {
         //Creating different halls
         ArrayList<Hall> halls = new ArrayList<>();
 
-        Hall tennisHall = new Hall(1, "Tennis Club", "Tennis Avenue 12");
-        Hall floorBallHall = new Hall(2, "Floorball Club", "Floorball Boulevar 5");
-        Hall basketBallHall = new Hall(3, "Basketball Club", "Basketball Street 66");
-        Hall padelHall = new Hall(4, "Padel Club", "Padel Road 10");
-        Hall fightHall = new Hall(5, "Fight Club", "Fight Alley 13");
+        ArrayList<Room> tennisRoomList = new ArrayList<Room>();
+        tennisRoomList.add(new Room("tennisMesta 1", 10, "Kaikki pelaa paitsi Jere", 1));
+
+        ArrayList<Room> fightRoomList = new ArrayList<Room>();
+        fightRoomList.add(new Room("TappeluMesta 1", 10, "gegav", 5));
+
+        ArrayList<Room> floorballRoomList = new ArrayList<Room>();
+        floorballRoomList.add(new Room("SählyMesta 1", 10, "vasvva", 2));
+
+        ArrayList<Room> basketRoomList = new ArrayList<Room>();
+        basketRoomList.add(new Room("KoripalliMesta 1", 10, "vasvvsa", 3));
+
+        ArrayList<Room> padelRoomList = new ArrayList<Room>();
+        padelRoomList.add(new Room("WannabetennisMesta 1", 10, "avsvavs", 4));
+
+
+        Hall tennisHall = new Hall(1, "Tennis Club", "Tennis Avenue 12", tennisRoomList);
+        Hall floorBallHall = new Hall(2, "Floorball Club", "Floorball Boulevar 5", floorballRoomList);
+        Hall basketBallHall = new Hall(3, "Basketball Club", "Basketball Street 66",basketRoomList);
+        Hall padelHall = new Hall(4, "Padel Club", "Padel Road 10",padelRoomList);
+        Hall fightHall = new Hall(5, "Fight Club", "Fight Alley 13",fightRoomList);
         halls.add(tennisHall);
         halls.add(floorBallHall);
         halls.add(basketBallHall);

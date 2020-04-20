@@ -54,7 +54,6 @@ public class ReservationFragment extends Fragment {
 
     public void onViewCreated (View view, Bundle savedInstanceState) {
         this.hallSpinner();
-        this.roomSpinner();
     }
 
 
@@ -63,13 +62,14 @@ public class ReservationFragment extends Fragment {
         hallSpinner = view.findViewById(R.id.spinner);
         final ArrayList<Hall> list = hallSystem.getHallList();
 
-        ArrayAdapter<Hall> dataAdapter = new ArrayAdapter<Hall>(getActivity(), android.R.layout.simple_spinner_dropdown_item, list);
+        ArrayAdapter<Hall> dataAdapter = new ArrayAdapter<Hall>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hallSpinner.setAdapter(dataAdapter);
         hallSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 hall = (Hall) parent.getItemAtPosition(position);
+                roomSpinner();
             }
 
             @Override
@@ -85,7 +85,7 @@ public class ReservationFragment extends Fragment {
         final ArrayList<Room> rlist = hall.getRoomList();
 
 
-        ArrayAdapter<Room> dataAdapter = new ArrayAdapter<Room>(getActivity(),android.R.layout.simple_spinner_dropdown_item, rlist);
+        ArrayAdapter<Room> dataAdapter = new ArrayAdapter<Room>(getActivity().getApplicationContext(),android.R.layout.simple_spinner_dropdown_item, rlist);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hallSpinner.setAdapter(dataAdapter);
 
