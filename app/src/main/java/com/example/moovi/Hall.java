@@ -52,8 +52,9 @@ public class Hall {
     ArrayList<Room> roomList = new ArrayList<>();//Arraylist for all the rooms in the hall
 
     @Override
-    public String toString(){
-        return "hallName";
+    public String toString() {
+        return this.hallName;
     }
+
 
 }

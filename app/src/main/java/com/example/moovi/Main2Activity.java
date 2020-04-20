@@ -55,13 +55,14 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         Fragment fragment;
-
         if (item.getTitle().toString().equalsIgnoreCase("settings")) {
             fragment = new SettingsFragment();
             transaction.replace(R.id.fragmentView,fragment);
 
         } else if (item.getTitle().toString().equalsIgnoreCase("Reservations")) {
             fragment = new ReservationFragment();
+            HallSystem hallSystem = HallSystem.getInstance();
+            final ArrayList<Hall> list = hallSystem.getHallList();
             transaction.replace(R.id.fragmentView, fragment);
         }
         else if (item.getTitle().toString().equalsIgnoreCase("Calendar")){

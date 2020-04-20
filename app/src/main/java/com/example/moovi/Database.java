@@ -1,7 +1,14 @@
 package com.example.moovi;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class Database {
@@ -31,5 +38,24 @@ public class Database {
     public void addRoom(Room r) {
         DatabaseReference myRef = database.getReference();
         myRef.child("rooms").child(String.valueOf(r.getRoomId())).setValue(r);
+    }
+
+    public void getUser(String id) {
+        ValueEventListener userListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("ERROR", "loadPost:onCancelled", databaseError.toException());
+            }
+
+        };
+
+
     }
 }
