@@ -52,7 +52,7 @@ public class Hall {
 
     @Override
     public String toString(){
-        return "hallName";
+        return hallId+" "+hallName+" "+hallLocation;
     }
 
 }
