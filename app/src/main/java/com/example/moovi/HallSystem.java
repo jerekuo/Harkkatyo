@@ -10,6 +10,7 @@ public class HallSystem {
         return hallList;
     }
 
+    
     private HallSystem(){
         //Creating different halls
         ArrayList<Hall> halls = new ArrayList<>();
