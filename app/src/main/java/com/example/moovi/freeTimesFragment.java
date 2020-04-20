@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.lang.reflect.Array;
 import java.text.ParseException;
@@ -28,7 +29,8 @@ public class freeTimesFragment extends Fragment {
     View view;
     Reservation chosenReservation;
     Date newDate;
-    ArrayList<String> list = getArguments().getStringArrayList("key");
+    TextView textView;
+
     Date d;
     String hall;
     String room;
@@ -43,15 +45,18 @@ public class freeTimesFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_free_times, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_free_times, container, false);
+        return view;
     }
 
     public void onViewCreated (View view, Bundle savedInstanceState) {
+        Bundle bundle = this.getArguments();
+        String list = bundle.getString("key");
         SimpleDateFormat formatter = new SimpleDateFormat("YYYY-mm-dd");
+        String[] tokens = list.split("[,]");
         try {
-            Date d = formatter.parse(list.get(0));
-            String hall = list.get(1);
-            String room = list.get(2);
+            d = formatter.parse(tokens[0]);
+            hall = tokens[1];
+            room = tokens[2];
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -60,6 +65,9 @@ public class freeTimesFragment extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        textView = view.findViewById(R.id.textView);
+        textView.setText("*****Näytetään vapaat ajat*****\nHALLI: "+hall);
     }
 
     public void freeTimeSpinner(Date date, String hall, String room) throws ParseException {

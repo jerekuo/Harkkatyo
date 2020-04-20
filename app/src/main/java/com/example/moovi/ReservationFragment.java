@@ -1,6 +1,7 @@
 package com.example.moovi;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -35,6 +36,7 @@ public class ReservationFragment extends Fragment {
     Hall hall;
     Room room;
     DatePicker datePicker;
+    Fragment fragment;
     //
 
 
@@ -48,6 +50,13 @@ public class ReservationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_reservation, container, false);
+        Button xbutton = view.findViewById(R.id.button4);
+        xbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFreeTimes();
+            }
+        });
 
         searchButton = view.findViewById(R.id.button4);
         datePicker = (DatePicker) view.findViewById(R.id.datePicker);
@@ -113,26 +122,27 @@ public class ReservationFragment extends Fragment {
         });
     }
 
-    public void showFreeTimes(View V){
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        Fragment fragment;
-        fragment = new freeTimesFragment();
-        transaction.replace(R.id.fragmentView, fragment);
-    }
-
-    public ArrayList<String> getResObjectList(){
-        Intent intent = new Intent();
+    public void showFreeTimes(){
+        Bundle bundle = new Bundle();
 
         int y = datePicker.getYear();
         int m = datePicker.getMonth();
         int d = datePicker.getDayOfMonth();
-        ArrayList<String> ResObjectList = new ArrayList<>();
-        ResObjectList.add(String.format("%04d-%02d-%02d", y, m, d));
-        ResObjectList.add(hall.hallName);
-        ResObjectList.add(room.name);
-        intent.putExtra("key", ResObjectList);
 
-        return ResObjectList;
+        String chosendaate = String.format("%04d-%02d-%02d", y, m, d);
+
+        String info = chosendaate +","+ hall.hallName +","+ room.name;
+        bundle.putString("key", info);
+        System.out.println(bundle);
+
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+
+        fragment = new freeTimesFragment();
+        fragment.setArguments(bundle);
+        transaction.replace(R.id.fragmentView, fragment);
+        transaction.commit();
     }
+
+
 
 }

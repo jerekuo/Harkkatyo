@@ -40,7 +40,6 @@
             android:layout_width="match_parent"
             android:layout_height="51dp"
             android:layout_marginTop="64dp"
-            android:onClick="showFreeTimes"
             android:text="Näytä vapaat ajat"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
