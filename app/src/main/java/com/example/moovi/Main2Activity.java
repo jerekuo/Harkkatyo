@@ -15,6 +15,8 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
+
 public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -76,5 +78,6 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
 }
 

@@ -1,8 +1,11 @@
 package com.example.moovi;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -24,10 +28,11 @@ public class ReservationFragment extends Fragment {
 
     Spinner hallSpinner;
     Spinner roomSpinner;
-    Button calendarButton;
     Button searchButton;
     View view;
     Hall hall;
+    Room room;
+    DatePicker datePicker;
 
     public ReservationFragment() {
         // Required empty public constructor
@@ -39,10 +44,8 @@ public class ReservationFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_reservation, container, false);
-
-        calendarButton = view.findViewById(R.id.button5);
-
         searchButton = view.findViewById(R.id.button4);
+        datePicker = (DatePicker) view.findViewById(R.id.datePicker);
 
 
         // Inflate the layout for this fragment
@@ -51,7 +54,6 @@ public class ReservationFragment extends Fragment {
 
     public void onViewCreated (View view, Bundle savedInstanceState) {
         this.hallSpinner();
-        this.roomSpinner();
     }
 
 
@@ -60,13 +62,14 @@ public class ReservationFragment extends Fragment {
         hallSpinner = view.findViewById(R.id.spinner);
         final ArrayList<Hall> list = hallSystem.getHallList();
 
-        ArrayAdapter<Hall> dataAdapter = new ArrayAdapter<Hall>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, list);
+        ArrayAdapter<Hall> dataAdapter = new ArrayAdapter<Hall>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hallSpinner.setAdapter(dataAdapter);
         hallSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 hall = (Hall) parent.getItemAtPosition(position);
+                roomSpinner();
             }
 
             @Override
@@ -79,12 +82,10 @@ public class ReservationFragment extends Fragment {
     public void roomSpinner(){
 
         roomSpinner = view.findViewById(R.id.spinner2);
-        final ArrayList<String> rlist = new ArrayList<>();
-        rlist.add("hhhh");
-        rlist.add("aaaa");
+        final ArrayList<Room> rlist = hall.getRoomList();
 
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(Objects.requireNonNull(getActivity()),android.R.layout.simple_spinner_dropdown_item, rlist);
+        ArrayAdapter<Room> dataAdapter = new ArrayAdapter<Room>(getActivity().getApplicationContext(),android.R.layout.simple_spinner_dropdown_item, rlist);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hallSpinner.setAdapter(dataAdapter);
 
@@ -92,7 +93,7 @@ public class ReservationFragment extends Fragment {
         hallSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                room = (Room) parent.getItemAtPosition(position);
             }
 
             @Override
@@ -100,6 +101,28 @@ public class ReservationFragment extends Fragment {
 
             }
         });
+    }
+
+    public void showFreeTimes(View V){
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        Fragment fragment;
+        fragment = new freeTimesFragment();
+        transaction.replace(R.id.fragmentView, fragment);
+    }
+
+    public ArrayList<String> getResObjectList(){
+        Intent intent = new Intent();
+
+        int y = datePicker.getYear();
+        int m = datePicker.getMonth();
+        int d = datePicker.getDayOfMonth();
+        ArrayList<String> ResObjectList = new ArrayList<>();
+        ResObjectList.add(String.format("%04d-%02d-%02d", y, m, d));
+        ResObjectList.add(hall.hallName);
+        ResObjectList.add(room.name);
+        intent.putExtra("key", ResObjectList);
+
+        return ResObjectList;
     }
 
 }

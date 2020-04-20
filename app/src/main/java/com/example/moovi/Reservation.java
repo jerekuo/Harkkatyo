@@ -114,6 +114,7 @@ public class Reservation {
 
     }
 
+
     public Boolean checkIfFree(Reservation reservation){
         HallSystem hallSystem = HallSystem.getInstance();
         Reservation res = reservation;

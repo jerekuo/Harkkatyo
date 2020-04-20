@@ -32,10 +32,11 @@ public class Hall {
     int hallId;
     String hallName;
 
-    public Hall(int hallId, String hallName, String hallLocation) {
+    public Hall(int hallId, String hallName, String hallLocation, ArrayList<Room> roomList) {
         this.hallId = hallId;
         this.hallName = hallName;
         this.hallLocation = hallLocation;
+        this.roomList = roomList;
     }
 
     String hallLocation;
