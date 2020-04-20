@@ -11,7 +11,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText editLast;
@@ -32,7 +34,9 @@ public class RegisterActivity extends AppCompatActivity {
         editPassword = findViewById(R.id.editPassword);
         textError = findViewById(R.id.textError);
         datePicker = findViewById(R.id.datePicker);
-
+        Database db = Database.getInstance();
+        User testi = new User("salainensana", "jere@hotmail.com", "Jack", "Death", null);
+        db.addUser(testi);
 
 
     }
