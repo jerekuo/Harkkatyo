@@ -35,6 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
     DatePicker datePicker;
     private FirebaseAuth mAuth;
 
+    
 
 
     @Override
