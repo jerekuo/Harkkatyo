@@ -6,7 +6,6 @@ import java.util.Date;
 public class Reservation {
     Hall hall;
     Room room;
-    String sport;
     String description;
     int resId;
     int participants;
@@ -58,13 +57,6 @@ public class Reservation {
         this.room = room;
     }
 
-    public String getSport() {
-        return sport;
-    }
-
-    public void setSport(String sport) {
-        this.sport = sport;
-    }
 
     public String getDescription() {
         return description;
@@ -90,10 +82,9 @@ public class Reservation {
         this.participants = participants;
     }
 
-    public Reservation(Hall hall, Room room, String sport, String description, int resId, int participants, Date startTime, Date endTime) {
+    public Reservation(Hall hall, Room room,  String description, int resId, int participants, Date startTime, Date endTime) {
         this.hall = hall;
         this.room = room;
-        this.sport = sport;
         this.description = description;
         this.resId = resId;
         this.participants = participants;
