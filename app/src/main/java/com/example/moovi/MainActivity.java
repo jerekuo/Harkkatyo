@@ -12,15 +12,20 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
     EditText password;
     EditText userName;
     CheckBox showPassword;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mAuth = FirebaseAuth.getInstance();
         password = (EditText) findViewById(R.id.password);
         userName = (EditText) findViewById(R.id.userName);
         showPassword = (CheckBox) findViewById(R.id.showPassword);
@@ -38,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //NEW REGISTER
+
+
+
     //takes user to register window
     public void toRegister(View v) {
         Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
@@ -50,6 +59,14 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, Main2Activity.class);
         startActivity(intent);
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        //updateUI(currentUser);
     }
 
 }
