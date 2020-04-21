@@ -27,15 +27,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class RegisterActivity extends AppCompatActivity {
-    EditText editLast;
-    EditText editEmail;
-    EditText editFirst;
     TextView textError;
-    EditText editPassword1, editPassword2;
-    DatePicker datePicker;
+    EditText editPassword1, editPassword2, editEmail;
     private FirebaseAuth mAuth;
-
-    
 
 
     @Override
@@ -43,17 +37,10 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_register);
-
-        editFirst = findViewById(R.id.editFirst);
-        editLast = findViewById(R.id.editLast);
         editEmail = findViewById(R.id.editEmail);
         editPassword1 = findViewById(R.id.editPassword1);
         editPassword2 = findViewById(R.id.editPassword2);
         textError = findViewById(R.id.textError);
-        datePicker = findViewById(R.id.datePicker);
-        Database db = Database.getInstance();
-        User testi = new User("salainensana", "jere@hotmail.com", "Jack", "Death", null);
-        db.addUser(testi);
 
     }
     public void onClick(View v) {
@@ -61,17 +48,13 @@ public class RegisterActivity extends AppCompatActivity {
         String pass2 = editPassword2.getText().toString();
         String email = editEmail.getText().toString();
         if(pass1.isEmpty() != true && pass2.isEmpty() != true && email.isEmpty() != true && pass1.equals(pass2)){
-            System.out.println(email +"  JA SALASANA ON  " + pass1);
             regAcc(email, pass1);
         }if(pass1.isEmpty() || pass2.isEmpty() || pass1 != pass2 || email.isEmpty()){
-            textError.setText("Invalid password input");
+            textError.setText("Invalid password or email input!");
         }else{
             //Do nothing
         }
     }
-
-
-
 
     public void regAcc(String email, String pass) {
         mAuth.createUserWithEmailAndPassword(email, pass)
@@ -100,6 +83,4 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
     }
-
-
 }
