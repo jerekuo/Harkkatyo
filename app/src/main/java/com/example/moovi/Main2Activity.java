@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -73,7 +74,14 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         else if (item.getTitle().toString().equalsIgnoreCase("Calendar")){
             fragment = new Calendar_Fragment();
             transaction.replace(R.id.fragmentView, fragment);
+        } else if (item.getTitle().toString().equalsIgnoreCase("log out")) {
+            Toast.makeText(Main2Activity.this, "Logged out!",
+                    Toast.LENGTH_SHORT).show();
+            HallSystem.getInstance().setUser(null);
+            Intent intent = new Intent(Main2Activity.this, MainActivity.class);
+            startActivity(intent);
         }
+
 
         drawerLayout.closeDrawers();
         transaction.commit();
