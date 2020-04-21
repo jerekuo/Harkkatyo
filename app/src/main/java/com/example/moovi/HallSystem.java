@@ -1,5 +1,7 @@
 package com.example.moovi;
 
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 
 public class HallSystem {
@@ -10,6 +12,15 @@ public class HallSystem {
         return hallList;
     }
 
+    public FirebaseUser user;
+
+    public void setUser (FirebaseUser u) {
+        this.user = u;
+    }
+
+    public FirebaseUser getUser(){
+        return this.user;
+    }
     
     private HallSystem(){
         //Creating different halls
