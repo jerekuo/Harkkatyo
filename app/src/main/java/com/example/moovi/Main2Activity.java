@@ -9,11 +9,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -21,18 +24,21 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-
+    FirebaseUser user;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        user = HallSystem.getInstance().getUser();
 
         toolbar = findViewById(R.id.main_toolbar);
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.drawer_layout);
         setSupportActionBar(toolbar);
+        Toast.makeText(Main2Activity.this, "Logged in as: " + user.getEmail(),
+                Toast.LENGTH_SHORT).show();
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
                 this,
@@ -68,7 +74,14 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         else if (item.getTitle().toString().equalsIgnoreCase("Calendar")){
             fragment = new Calendar_Fragment();
             transaction.replace(R.id.fragmentView, fragment);
+        } else if (item.getTitle().toString().equalsIgnoreCase("log out")) {
+            Toast.makeText(Main2Activity.this, "Logged out!",
+                    Toast.LENGTH_SHORT).show();
+            HallSystem.getInstance().setUser(null);
+            Intent intent = new Intent(Main2Activity.this, MainActivity.class);
+            startActivity(intent);
         }
+
 
         drawerLayout.closeDrawers();
         transaction.commit();
