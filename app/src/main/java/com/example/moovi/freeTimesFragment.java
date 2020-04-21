@@ -39,7 +39,6 @@ public class freeTimesFragment extends Fragment {
     Date d;
     String hall;
     String room;
-    //ombrnboin
 
     public freeTimesFragment() {
         // Required empty public constructor
@@ -74,61 +73,13 @@ public class freeTimesFragment extends Fragment {
         String list = bundle.getString("key");
         SimpleDateFormat formatter = new SimpleDateFormat("YYYY-mm-dd");
         String[] tokens = list.split("[,]");
-        try {
-            d = formatter.parse(tokens[0]);
-            hall = tokens[1];
-            room = tokens[2];
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        try {
-            this.freeTimeSpinner(d, hall, room);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
 
         textView = view.findViewById(R.id.textView);
         textView.setText("*****Näytetään vapaat ajat*****\nHALLI: "+hall+"\nHUONE: "+room);
     }
 
-    public void freeTimeSpinner(Date date, String hall, String room) throws ParseException {
-        SimpleDateFormat format1 = new SimpleDateFormat("HH.mm");
-        SimpleDateFormat format2 = new SimpleDateFormat("H.mm");
-        ArrayList<String> timeList = new ArrayList<>();
-        for (int i = 0 ; i < 24 ; i++){                         //Lisää spinneri listaan klo ajat 00-24
-            timeList.add(i+".00");
-        }
-        final Date chosenDate = date;
-        ArrayList<Reservation> list = hallSystem.getResList();
 
-        for (Reservation r: list){                                           //Mikäli varaus löytyy samalle päivälle, poistaa yllä tehdystä listasta kyseiset ajat
-            if (hall.equalsIgnoreCase(r.hall.getHallName()) && room.equalsIgnoreCase(r.room.getName()) && date == r.startTime){   // Ei tietoa mätsääkö start timet daten kanssa?!?!?!?
-                timeList.remove(r.startTime);
-            }
-        }
-
-        freeTimeSpinner = view.findViewById(R.id.spinner3);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, timeList);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        freeTimeSpinner.setAdapter(dataAdapter);
-        freeTimeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //SimpleDateFormat format1 = new SimpleDateFormat("HH.mm");
-                //SimpleDateFormat format2 = new SimpleDateFormat("H.mm");
-                resTime = (String) parent.getItemAtPosition(position);
-                System.out.println(parent.getItemAtPosition(position));
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
-    }
 
     public void makeReservation() throws ParseException {
         SimpleDateFormat format1 = new SimpleDateFormat("HH.mm");
