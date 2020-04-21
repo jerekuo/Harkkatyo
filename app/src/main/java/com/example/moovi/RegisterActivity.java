@@ -83,6 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, "Account created.",
                                     Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
+                            HallSystem.getInstance().setUser(user);
                             Intent intent = new Intent(RegisterActivity.this, Main2Activity.class);
                             startActivity(intent);
 
@@ -91,7 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
                             Log.w("FAILURE", "createUserWithEmail:failure", task.getException());
                             Toast.makeText(RegisterActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            //updateUI(null);
+                            HallSystem.getInstance().setUser(null);
                         }
 
                         // ...
