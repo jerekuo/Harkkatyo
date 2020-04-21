@@ -15,7 +15,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,9 +28,10 @@ public class freeTimesFragment extends Fragment {
 
     HallSystem hallSystem = HallSystem.getInstance();
     Spinner freeTimeSpinner;
+    Spinner freeTimeSpinner2;
     View view;
     TextView textView;
-    Date resTime;
+    String resTime;
     EditText editText;
     Hall newHall;
     Room newRoom;
@@ -55,7 +55,11 @@ public class freeTimesFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeReservation();
+                try {
+                    makeReservation();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -83,19 +87,15 @@ public class freeTimesFragment extends Fragment {
         }
 
         textView = view.findViewById(R.id.textView);
-        textView.setText("*****Näytetään vapaat ajat*****\nHALLI: "+hall);
+        textView.setText("*****Näytetään vapaat ajat*****\nHALLI: "+hall+"\nHUONE: "+room);
     }
 
     public void freeTimeSpinner(Date date, String hall, String room) throws ParseException {
         SimpleDateFormat format1 = new SimpleDateFormat("HH.mm");
         SimpleDateFormat format2 = new SimpleDateFormat("H.mm");
-        ArrayList<Date> timeList = new ArrayList<>();
+        ArrayList<String> timeList = new ArrayList<>();
         for (int i = 0 ; i < 24 ; i++){                         //Lisää spinneri listaan klo ajat 00-24
-            if (i < 10){
-                timeList.add(new Date(format2.parse(i+".00").getTime()));
-            } else{
-                timeList.add(new Date(format1.parse(i+".00").getTime()));
-            }
+            timeList.add(i+".00");
         }
         final Date chosenDate = date;
         ArrayList<Reservation> list = hallSystem.getResList();
@@ -107,13 +107,16 @@ public class freeTimesFragment extends Fragment {
         }
 
         freeTimeSpinner = view.findViewById(R.id.spinner3);
-        ArrayAdapter<Date> dataAdapter = new ArrayAdapter<Date>(getActivity(), android.R.layout.simple_spinner_dropdown_item, timeList);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, timeList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         freeTimeSpinner.setAdapter(dataAdapter);
         freeTimeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                resTime = (Date) parent.getItemAtPosition(position);
+                //SimpleDateFormat format1 = new SimpleDateFormat("HH.mm");
+                //SimpleDateFormat format2 = new SimpleDateFormat("H.mm");
+                resTime = (String) parent.getItemAtPosition(position);
+                System.out.println(parent.getItemAtPosition(position));
 
             }
 
@@ -126,10 +129,13 @@ public class freeTimesFragment extends Fragment {
 
     }
 
-    public void makeReservation(){
+    public void makeReservation() throws ParseException {
+        SimpleDateFormat format1 = new SimpleDateFormat("HH.mm");
+        SimpleDateFormat format2 = new SimpleDateFormat("H.mm");
         editText = view.findViewById(R.id.editText);
         String desc = editText.toString();
-        Date endTime = new Date(String.valueOf(resTime)+2);  //TODO varauksen lopetusaika pitäs laittaa kuntoon.
+        Date startTime = format2.parse(resTime);
+        Date endTime = format2.parse(resTime);   //TODO varauksen lopetusaika pitäs laittaa kuntoon.
         HallSystem hallSystem = HallSystem.getInstance();
 
         for (Hall h: hallSystem.getHallList()){
@@ -143,10 +149,15 @@ public class freeTimesFragment extends Fragment {
             }
         }
 
-        Reservation res = new Reservation(newHall, newRoom, "Sport", desc, 123, 100, resTime, endTime );
+        Reservation res = new Reservation(newHall, newRoom,  desc, 123, 100, startTime, endTime );
 
         if (checkIfFree(res) == true) {
             hallSystem.addToResList(res);
+            System.out.println(res.getDescription()+"\n");
+            System.out.println(res.getHall()+"\n");
+            System.out.println(res.getRoom()+"\n");
+            System.out.println(res.getStartTime()+"\n");
+            System.out.println(res.getEndTime()+"\n");
             Toast.makeText(getContext(),"Reservation done", Toast.LENGTH_SHORT).show();
 
         } else{
