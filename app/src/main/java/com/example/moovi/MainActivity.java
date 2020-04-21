@@ -73,21 +73,22 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("SUCCESS", "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             HallSystem.getInstance().setUser(user);
-                            //updateUI(user);
+                            Intent intent = new Intent(MainActivity.this, Main2Activity.class);
+                            startActivity(intent);
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("FAILURE", "signInWithEmail:failure", task.getException());
                             Toast.makeText(MainActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            //updateUI(null);
+                            HallSystem.getInstance().setUser(null);
                         }
 
                         // ...
                     }
                 });
         //TODO tähän tapa tarkistaa käyttäjän nimi sekä salasana tietokannasta, jotta voi kirjautua sisään
-        Intent intent = new Intent(MainActivity.this, Main2Activity.class);
-        startActivity(intent);
+
 
     }
 
