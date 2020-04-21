@@ -101,7 +101,7 @@ public class Reservation {
         this.endTime = endTime;
     }
 
-    public void makeReservation(Reservation reservation){
+    /*public void makeReservation(Reservation reservation){
         HallSystem hallSystem = HallSystem.getInstance();
 
         Reservation res = reservation;
@@ -135,7 +135,7 @@ public class Reservation {
             return true;
         }
 
-    }
+    }*/
 
     public void addParticipants(Reservation res){
         res.participants++;

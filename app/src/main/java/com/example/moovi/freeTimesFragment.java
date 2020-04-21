@@ -9,8 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.text.ParseException;
@@ -27,9 +30,11 @@ public class freeTimesFragment extends Fragment {
     HallSystem hallSystem = HallSystem.getInstance();
     Spinner freeTimeSpinner;
     View view;
-    Reservation chosenReservation;
-    Date newDate;
     TextView textView;
+    Date resTime;
+    EditText editText;
+    Hall newHall;
+    Room newRoom;
 
     Date d;
     String hall;
@@ -44,6 +49,17 @@ public class freeTimesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_free_times, container, false);
+
+        Button button = view.findViewById(R.id.button5);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeReservation();
+            }
+        });
+
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -97,8 +113,8 @@ public class freeTimesFragment extends Fragment {
         freeTimeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //newDate = parent.getItemAtPosition(position);
-                //chosenReservation = parent.getItemAtPosition(position);
+                resTime = (Date) parent.getItemAtPosition(position);
+
             }
 
             @Override
@@ -107,6 +123,58 @@ public class freeTimesFragment extends Fragment {
             }
         });
 
+
+    }
+
+    public void makeReservation(){
+        editText = view.findViewById(R.id.editText);
+        String desc = editText.toString();
+        Date endTime = new Date(String.valueOf(resTime)+2);  //TODO varauksen lopetusaika pitäs laittaa kuntoon.
+        HallSystem hallSystem = HallSystem.getInstance();
+
+        for (Hall h: hallSystem.getHallList()){
+            if (h.hallName.equalsIgnoreCase(hall)){
+                newHall = h;
+                for (Room r : newHall.getRoomList()){
+                    if (r.name.equalsIgnoreCase(room)){
+                        newRoom = r;
+                    }
+                }
+            }
+        }
+
+        Reservation res = new Reservation(newHall, newRoom, "Sport", desc, 123, 100, resTime, endTime );
+
+        if (checkIfFree(res) == true) {
+            hallSystem.addToResList(res);
+            Toast.makeText(getContext(),"Reservation done", Toast.LENGTH_SHORT).show();
+
+        } else{
+            System.out.println("Varauksen teko ei onnistunut, löytyi päällekkäisyys.");
+        }
+
+    }
+
+
+    public Boolean checkIfFree(Reservation reservation){
+        HallSystem hallSystem = HallSystem.getInstance();
+        Reservation res = reservation;
+        String availability = "True";
+
+        for (Reservation r : hallSystem.getResList()) {
+            if (r.room == res.room && r.startTime.compareTo(res.startTime)  <= 0 && r.endTime.compareTo(res.endTime) >= 0){
+                //Listasta löytyy varaus samalle ajalle
+                // date vertailu löytyy netistä helposti
+                availability = "False";
+                break;
+            }
+        }
+
+        if (availability.equalsIgnoreCase("False")){  // Metodi palauttaa truen jos listavertailun jälkeen ei ole löytynyt päällekkäisyyttä
+            return false;                                          // Palauttaa falsen jos lötyy päällekkäisyyttä
+        } else{
+            return true;
+        }
 
     }
 
