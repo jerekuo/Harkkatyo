@@ -10,7 +10,7 @@ public class HallSystem {
         return hallList;
     }
 
-    
+
     private HallSystem(){
         //Creating different halls
         ArrayList<Hall> halls = new ArrayList<>();
@@ -32,7 +32,7 @@ public class HallSystem {
 
 
         Hall tennisHall = new Hall(1, "Tennis Club", "Tennis Avenue 12", tennisRoomList);
-        Hall floorBallHall = new Hall(2, "Floorball Club", "Floorball Boulevar 5", floorballRoomList);
+        Hall floorBallHall = new Hall(2, "Floorball Club", "Floorball Boulevard 5", floorballRoomList);
         Hall basketBallHall = new Hall(3, "Basketball Club", "Basketball Street 66",basketRoomList);
         Hall padelHall = new Hall(4, "Padel Club", "Padel Road 10",padelRoomList);
         Hall fightHall = new Hall(5, "Fight Club", "Fight Alley 13",fightRoomList);

@@ -57,11 +57,11 @@
         app:layout_constraintTop_toBottomOf="@+id/editEmail" />
 
     <EditText
-        android:id="@+id/editPassword"
+        android:id="@+id/editPassword2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Password:"
+        android:hint="Confirm Password:"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,12 +72,12 @@
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="registerAccount"
+        android:onClick="onClick"
         android:text="Register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editPassword2" />
 
     <TextView
         android:id="@+id/textError"
@@ -92,5 +92,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/datePicker"
         app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/editPassword1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Password:"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/editPassword2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textError" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

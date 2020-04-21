@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -30,11 +31,10 @@ public class RegisterActivity extends AppCompatActivity {
     EditText editEmail;
     EditText editFirst;
     TextView textError;
-    EditText editPassword;
+    EditText editPassword1, editPassword2;
     DatePicker datePicker;
     private FirebaseAuth mAuth;
-    String email;
-    String password;
+
 
 
     @Override
@@ -46,27 +46,31 @@ public class RegisterActivity extends AppCompatActivity {
         editFirst = findViewById(R.id.editFirst);
         editLast = findViewById(R.id.editLast);
         editEmail = findViewById(R.id.editEmail);
-        editPassword = findViewById(R.id.editPassword);
+        editPassword1 = findViewById(R.id.editPassword1);
+        editPassword2 = findViewById(R.id.editPassword2);
         textError = findViewById(R.id.textError);
         datePicker = findViewById(R.id.datePicker);
         Database db = Database.getInstance();
         User testi = new User("salainensana", "jere@hotmail.com", "Jack", "Death", null);
         db.addUser(testi);
 
-
-
-
-
-
+    }
+    public void onClick(View v) {
+        String pass1 = editPassword1.getText().toString();
+        String pass2 = editPassword2.getText().toString();
+        String email = editEmail.getText().toString();
+        if(pass1.isEmpty() != true && pass2.isEmpty() != true && email.isEmpty() != true && pass1.equals(pass2)){
+            System.out.println(email +"  JA SALASANA ON  " + pass1);
+            regAcc(email, pass1);
+        }if(pass1.isEmpty() || pass2.isEmpty() || pass1 != pass2 || email.isEmpty()){
+            textError.setText("Invalid password input");
+        }else{
+            //Do nothing
+        }
     }
 
-    public void registerAccount(View v) {
 
-        email = editEmail.getText().toString();
-        password = editPassword.getText().toString();
-        System.out.println(email +"  JA SALASANA ON  " + password);
-        regAcc(email, password);
-    }
+
 
     public void regAcc(String email, String pass) {
         mAuth.createUserWithEmailAndPassword(email, pass)
