@@ -74,6 +74,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         else if (item.getTitle().toString().equalsIgnoreCase("Calendar")){
             fragment = new Calendar_Fragment();
             transaction.replace(R.id.fragmentView, fragment);
+
         } else if (item.getTitle().toString().equalsIgnoreCase("log out")) {
             Toast.makeText(Main2Activity.this, "Logged out!",
                     Toast.LENGTH_SHORT).show();
