@@ -50,6 +50,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //NEW REGISTER
+    public void byPassLogin(View v) {
+        String email = "jere@hotmail.com";
+        String pass = "testitesti";
+
+        mAuth.signInWithEmailAndPassword(email, pass)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("SUCCESS", "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            HallSystem.getInstance().setUser(user);
+                            Intent intent = new Intent(MainActivity.this, Main2Activity.class);
+                            startActivity(intent);
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("FAILURE", "signInWithEmail:failure", task.getException());
+                            Toast.makeText(MainActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            HallSystem.getInstance().setUser(null);
+                        }
+
+                        // ...
+                    }
+                });
+        //TODO tähän tapa tarkistaa käyttäjän nimi sekä salasana tietokannasta, jotta voi kirjautua sisään
+
+
+    }
 
 
 

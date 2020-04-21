@@ -31,11 +31,12 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        user = HallSystem.getInstance().getUser();
 
+        user = HallSystem.getInstance().getUser();
         toolbar = findViewById(R.id.main_toolbar);
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.drawer_layout);
+
         setSupportActionBar(toolbar);
         Toast.makeText(Main2Activity.this, "Logged in as: " + user.getEmail(),
                 Toast.LENGTH_SHORT).show();
