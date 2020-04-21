@@ -39,6 +39,7 @@ public class freeTimesFragment extends Fragment {
     Date d;
     String hall;
     String room;
+    //ombrnboin
 
     public freeTimesFragment() {
         // Required empty public constructor
