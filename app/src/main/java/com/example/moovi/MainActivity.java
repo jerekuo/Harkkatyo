@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                         // ...
                     }
                 });
-        //TODO tähän tapa tarkistaa käyttäjän nimi sekä salasana tietokannasta, jotta voi kirjautua sisään
+
 
 
     }
