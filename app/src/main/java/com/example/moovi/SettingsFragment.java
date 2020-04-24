@@ -12,6 +12,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -31,6 +33,8 @@ public class SettingsFragment extends Fragment {
     TextView updateText;
     Button updateInfo;
 
+    FirebaseUser user = HallSystem.getInstance().getUser();
+
 
 
     public SettingsFragment() {
@@ -40,7 +44,9 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         view = inflater.inflate(R.layout.fragment_settings, container, false);
+
         editFirstName = view.findViewById(R.id.editFirstName);
         editLastName = view.findViewById(R.id.editLastName);
         textError = view.findViewById(R.id.textError);
@@ -50,9 +56,17 @@ public class SettingsFragment extends Fragment {
         infoHeader = view.findViewById(R.id.infoHeader);
         infoText = view.findViewById(R.id.infoText);
         updateText = view.findViewById(R.id.updateText);
-
         updateInfo = view.findViewById(R.id.updateInfo);
 
+        this.updateSettings(view);
+        // Inflate the layout for this fragment
+        return view;
+
+    }
+
+
+    public void updateSettings(View view){
+        final String email = user.getEmail();
         updateInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,14 +74,13 @@ public class SettingsFragment extends Fragment {
                 String last = editLastName.getText().toString();
                 String pass1 = editPassword1.getText().toString();
                 String pass2 = editPassword2.getText().toString();
-                User user = new User(pass1,null,name,last,null);
+                User user = new User(pass1,email,name,last,null);
+                Database.getInstance().addUser(user);
+                Backup.getInstance().writeUserBackup(user, getActivity().getApplicationContext());
             }
         });
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
 
     }
-
 
 
 }

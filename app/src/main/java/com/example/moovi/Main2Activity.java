@@ -53,6 +53,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         actionBarDrawerToggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
+
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.example.moovi;
 
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.util.Log;
 
@@ -21,8 +23,10 @@ public class Backup {
 
     public static Backup getInstance() {return instance;}
 
-    public void writeToCSV(String s) {
+    public void writeToCSV(String s, Context c) {
+
         context = context.getApplicationContext();
+        System.out.println(context);
         try {
             OutputStreamWriter ows = new OutputStreamWriter(context.openFileOutput("Backup.csv", Context.MODE_PRIVATE));
             ows.append(s+"\n");
@@ -37,9 +41,8 @@ public class Backup {
 
     //Method backups user data to csv file
     //Format: "email,Firstname,Lastname,Age,userId,password
-    public void writeUserBackup(User u) {
+    public void writeUserBackup(User u, Context context) {
 
-        context = context.getApplicationContext();
         try {
             OutputStreamWriter ows = new OutputStreamWriter(context.openFileOutput("userBackup.csv", Context.MODE_PRIVATE));
             ows.append(u.getEmail()+","+u.getFirstName()+","+u.getLastName()+","+
