@@ -41,6 +41,7 @@ public class Backup {
 
     //Method backups user data to csv file
     //Format: "email,Firstname,Lastname,Age,userId,password
+    //Path to file /data/data/com.example.moovi/files/userBackup.csv
     public void writeUserBackup(User u, Context context) {
 
         try {
