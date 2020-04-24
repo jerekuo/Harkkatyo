@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class User {
     String password; //käytetään stringi password olion kautta
-    Date age;
+    String age;
     String email;
     String firstName;
     String lastName;
@@ -33,11 +33,11 @@ public class User {
     public void setUserId(int userId) {
         this.userId = userId;
     }
-    public Date getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(Date age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
@@ -69,7 +69,7 @@ public class User {
 
     }
     //CONSTRUCTOR
-    public User(String password, String email, String firstName, String lastName, Date age) {
+    public User(String password, String email, String firstName, String lastName, String age) {
         this.password = password;
         this.email = email;
         this.firstName = firstName;
