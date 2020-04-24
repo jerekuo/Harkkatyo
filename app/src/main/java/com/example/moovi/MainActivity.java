@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         mAuth = FirebaseAuth.getInstance();
         password = (EditText) findViewById(R.id.password);
         userName = (EditText) findViewById(R.id.userName);
@@ -47,12 +48,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+
     }
 
     //NEW REGISTER
     public void byPassLogin(View v) {
         String email = "jere@hotmail.com";
         String pass = "testitesti";
+        findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
 
         mAuth.signInWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -63,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("SUCCESS", "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             HallSystem.getInstance().setUser(user);
+                            findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                             Intent intent = new Intent(MainActivity.this, Main2Activity.class);
                             startActivity(intent);
 
@@ -77,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                         // ...
                     }
                 });
-        //TODO tähän tapa tarkistaa käyttäjän nimi sekä salasana tietokannasta, jotta voi kirjautua sisään
+
 
 
     }
@@ -92,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
     }
     //takes user to login window
     public void toLogin(View v) {
+        findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
         String email = userName.getText().toString();
         String pass = password.getText().toString();
 
@@ -104,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("SUCCESS", "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             HallSystem.getInstance().setUser(user);
+                            findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                             Intent intent = new Intent(MainActivity.this, Main2Activity.class);
                             startActivity(intent);
 

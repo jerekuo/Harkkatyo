@@ -36,6 +36,7 @@ public class Database {
     public void addUser(User u) {
         DatabaseReference myRef = database.getReference();
         myRef.child("users").child(user.getUid()).setValue(u);
+        Backup.getInstance().writeUserBackup(u);
     }
 
     public void addRoom(Room r) {

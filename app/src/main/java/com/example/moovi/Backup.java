@@ -25,15 +25,30 @@ public class Backup {
         context = context.getApplicationContext();
         try {
             OutputStreamWriter ows = new OutputStreamWriter(context.openFileOutput("Backup.csv", Context.MODE_PRIVATE));
-            ows.append(s);
+            ows.append(s+"\n");
             ows.close();
 
         } catch (IOException e) {
             Log.e("IOEXCEPTION", "tuli virhe!!!");
         }
 
-
-
-
     }
+
+
+    //Method backups user data to csv file
+    //Format: "email,Firstname,Lastname,Age,userId,password
+    public void writeUserBackup(User u) {
+
+        context = context.getApplicationContext();
+        try {
+            OutputStreamWriter ows = new OutputStreamWriter(context.openFileOutput("userBackup.csv", Context.MODE_PRIVATE));
+            ows.append(u.getEmail()+","+u.getFirstName()+","+u.getLastName()+","+
+                    u.getAge()+','+u.getUserId()+","+u.getPassword()+"\n");
+            ows.close();
+
+        } catch (IOException e) {
+            Log.e("IOEXCEPTION", "tuli virhe!!!");
+        }
+    }
+
 }
