@@ -29,6 +29,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Database.getInstance().getUserFromDB();
         setContentView(R.layout.activity_main2);
 
         user = HallSystem.getInstance().getUser();

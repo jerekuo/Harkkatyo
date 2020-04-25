@@ -1,7 +1,5 @@
 package com.example.moovi;
 
-import java.util.Date;
-import java.util.Random;
 
 public class User {
     String birthdate;

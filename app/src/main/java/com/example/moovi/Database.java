@@ -72,19 +72,19 @@ public class Database {
     }
 
     //Method for getting users details from db for currently logged in user
-    public User getUserFromDB() {
-        final User[] useri = {new User()};
+    public void getUserFromDB() {
+        final User[] useri = new User[1];
         DocumentReference docRef = db.collection("Users").document(user.getEmail());
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 useri[0] = documentSnapshot.toObject(User.class);
-
+                hallsystem.setUseri(useri[0]);
             }
         });
 
-        return useri[0];
     }
+
     public void writeHallList(){
         halls = new ArrayList<>();
         db.collection("AllHalls")
