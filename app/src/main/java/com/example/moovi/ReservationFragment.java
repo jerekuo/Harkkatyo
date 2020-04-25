@@ -41,6 +41,8 @@ public class ReservationFragment extends Fragment {
     Room room;
     DatePicker datePicker;
     Fragment fragment;
+    Database database = Database.getInstance();
+    final HallSystem hallSystem = HallSystem.getInstance();
 
     //
 
@@ -55,6 +57,7 @@ public class ReservationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_reservation1, container, false);
+        database.writeHallList();
 
 
         Button xbutton = view.findViewById(R.id.button4);
@@ -68,7 +71,7 @@ public class ReservationFragment extends Fragment {
         searchButton = view.findViewById(R.id.button4);
         datePicker = (DatePicker) view.findViewById(R.id.datePicker);
 
-        hallSpinner();
+
 
 
         // Inflate the layout for this fragment
@@ -79,14 +82,14 @@ public class ReservationFragment extends Fragment {
 
 
     public void onViewCreated (View view, Bundle savedInstanceState) {
-
+        hallSpinner();
 
     }
 
 
     public void hallSpinner(){
 
-        final HallSystem hallSystem = HallSystem.getInstance();
+
         hallSpinner = view.findViewById(R.id.spinner);
         final ArrayList<Hall> list = hallSystem.getHallList();
 
@@ -99,7 +102,8 @@ public class ReservationFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 hall = (Hall) parent.getItemAtPosition(position);
-                hallSystem.writeRoomList(hall.hallName);
+                System.out.println(hall);
+                database.writeRoomList(hall);
                 roomSpinner();
             }
 
