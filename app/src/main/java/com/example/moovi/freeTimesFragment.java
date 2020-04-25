@@ -7,17 +7,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+
 import java.util.Date;
 
 
@@ -27,8 +26,7 @@ import java.util.Date;
 public class freeTimesFragment extends Fragment {
 
     HallSystem hallSystem = HallSystem.getInstance();
-    Spinner freeTimeSpinner;
-    Spinner freeTimeSpinner2;
+
     View view;
     TextView textView;
     String resTime;
@@ -93,7 +91,7 @@ public class freeTimesFragment extends Fragment {
         for (Hall h: hallSystem.getHallList()){
             if (h.hallName.equalsIgnoreCase(hall)){
                 newHall = h;
-                for (Room r : newHall.getRoomList()){
+                for (Room r : hallSystem.getRoomList()){
                     if (r.name.equalsIgnoreCase(room)){
                         newRoom = r;
                     }

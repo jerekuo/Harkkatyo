@@ -4,6 +4,7 @@ package com.example.moovi;
 import android.os.Bundle;
 
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -17,15 +18,20 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 
-import java.util.ArrayList;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ReservationFragment extends Fragment {
-
 
     Spinner hallSpinner;
     Spinner roomSpinner;
@@ -35,6 +41,7 @@ public class ReservationFragment extends Fragment {
     Room room;
     DatePicker datePicker;
     Fragment fragment;
+
     //
 
 
@@ -47,7 +54,9 @@ public class ReservationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_reservation, container, false);
+        view = inflater.inflate(R.layout.fragment_reservation1, container, false);
+
+
         Button xbutton = view.findViewById(R.id.button4);
         xbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,13 +76,17 @@ public class ReservationFragment extends Fragment {
 
     }
 
+
+
     public void onViewCreated (View view, Bundle savedInstanceState) {
+
 
     }
 
 
     public void hallSpinner(){
-        HallSystem hallSystem = HallSystem.getInstance();
+
+        final HallSystem hallSystem = HallSystem.getInstance();
         hallSpinner = view.findViewById(R.id.spinner);
         final ArrayList<Hall> list = hallSystem.getHallList();
 
@@ -86,7 +99,8 @@ public class ReservationFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 hall = (Hall) parent.getItemAtPosition(position);
-                roomSpinner(hall);
+                hallSystem.writeRoomList(hall.hallName);
+                roomSpinner();
             }
 
             @Override
@@ -96,10 +110,10 @@ public class ReservationFragment extends Fragment {
         });
     }
 
-    public void roomSpinner(Hall h){
-
+    public void roomSpinner(){
+        HallSystem hallSystem = HallSystem.getInstance();
         roomSpinner = view.findViewById(R.id.spinner2);
-        final ArrayList<Room> rlist = h.getRoomList();
+        final ArrayList<Room> rlist = hallSystem.getRoomList();
 
 
         ArrayAdapter<Room> dataAdapter = new ArrayAdapter<Room>(getContext(),android.R.layout.simple_spinner_dropdown_item, rlist);
