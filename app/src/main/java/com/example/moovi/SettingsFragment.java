@@ -1,7 +1,9 @@
 package com.example.moovi;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -74,6 +76,7 @@ public class SettingsFragment extends Fragment {
     public void updateSettings(View view){
         final String email = user.getEmail();
         updateInfo.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
             @Override
             public void onClick(View v) {
                 String name = editFirstName.getText().toString();

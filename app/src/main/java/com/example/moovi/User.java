@@ -2,6 +2,8 @@ package com.example.moovi;
 
 
 public class User {
+    //CLASS VARIABLES
+
     String birthdate;
     String email;
     String firstName;
@@ -52,7 +54,7 @@ public class User {
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
     public User() {
-
+        //null construcot
     }
     //CONSTRUCTOR
     public User(String email, String firstName, String lastName, String birthDate, String address, String phoneNumber) {

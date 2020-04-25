@@ -1,45 +1,38 @@
 package com.example.moovi;
 
 import android.util.Log;
-
 import androidx.annotation.NonNull;
-
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import com.google.android.gms.tasks.OnCompleteListener;
-
 import com.google.android.gms.tasks.Task;
-
 import com.google.firebase.database.FirebaseDatabase;
-
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
 import java.util.ArrayList;
-
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 
 
 public class Database {
+    //CLASS VARIABLES
+
     HallSystem hallsystem = HallSystem.getInstance();
     private static Database instance = new Database();
     FirebaseUser user = HallSystem.getInstance().getUser();
-
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     ArrayList<Hall> halls;
     ArrayList<Room> rooms;
+
+    //GETTERS AND SETTERS
+    public static Database getInstance() {
+        return instance;
+    }
 
 
 
@@ -47,9 +40,7 @@ public class Database {
         //null constructor
     }
 
-    public static Database getInstance() {
-        return instance;
-    }
+    //CLASS METHODS
 
     //Adds users information to database
     public void addUser(User u) {

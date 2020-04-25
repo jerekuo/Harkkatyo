@@ -1,19 +1,13 @@
 package com.example.moovi;
 
 public class Room {
+    //CLASS VARIABLES
     String name;
     int capacity;
-
-    public Room(String name, int capacity, String description, int roomId) {
-        this.name = name;
-        this.capacity = capacity;
-        this.description = description;
-        this.roomId = roomId;
-    }
-
     String description;
     int roomId;
 
+    //GETTERS AND SETTERS
     public String getName() {
         return name;
     }
@@ -43,6 +37,15 @@ public class Room {
     }
 
     public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
+
+
+    //CONSTRUCTOR
+    public Room(String name, int capacity, String description, int roomId) {
+        this.name = name;
+        this.capacity = capacity;
+        this.description = description;
         this.roomId = roomId;
     }
 
