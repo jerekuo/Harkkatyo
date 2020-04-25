@@ -1,24 +1,24 @@
 package com.example.moovi;
 
+
+
 import com.google.firebase.auth.FirebaseUser;
+
+
+
 import java.util.ArrayList;
+
 
 public class HallSystem {
 
-    //Class variables
 
     private static HallSystem hallsystem = new HallSystem();
-    public FirebaseUser user;
-    public User useri;
-    public ArrayList<Reservation> resList = new ArrayList<>();
-    //Arraylist which contains all of the halls
-    ArrayList<Hall> hallList = new ArrayList<>();
 
-
-    //GETTERS AND SETTER
     public ArrayList<Hall> getHallList() {
         return hallList;
     }
+
+    public FirebaseUser user;
 
     public User getUseri() {
         return useri;
@@ -28,6 +28,8 @@ public class HallSystem {
         this.useri = useri;
     }
 
+    public User useri;
+
     public void setUser (FirebaseUser u) {
         this.user = u;
     }
@@ -36,29 +38,27 @@ public class HallSystem {
         return this.user;
     }
 
+    private HallSystem(){
+
+    }
+
+    //Arraylist which contains all of the halls
+    ArrayList<Hall> hallList = new ArrayList<>();
+
     public void setHallList(ArrayList<Hall> hallList) {
         this.hallList = hallList;
     }
+
 
     public static HallSystem getInstance() {
         return hallsystem;
     }
 
+    public ArrayList<Reservation> resList = new ArrayList<>();
+
     public ArrayList<Reservation> getResList() {
         return resList;
     }
-
-    public void setResList(ArrayList<Reservation> resList) {
-        this.resList = resList;
-    }
-
-
-    private HallSystem(){
-        //null constructor
-    }
-
-
-    //CLASS METHODS
 
     public void addToResList(Reservation res){
         ArrayList<Reservation> list = getResList();
@@ -66,7 +66,9 @@ public class HallSystem {
         setResList(list);
     }
 
-
+    public void setResList(ArrayList<Reservation> resList) {
+        this.resList = resList;
+    }
 
 
 
