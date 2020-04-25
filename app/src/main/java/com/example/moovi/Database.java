@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -49,20 +51,11 @@ public class Database {
         return instance;
     }
 
-    public void addHall(Hall h) {
-
-    }
-
+    //Adds users information to database
     public void addUser(User u) {
-        Map<String, Object> userO = new HashMap<>();
-        userO.put("firstName", u.getFirstName());
-        userO.put("lastName", u.getLastName());
-        userO.put("email", user.getEmail());
-        userO.put("password", u.getPassword());
-        userO.put("userId", user.getUid());
 
         db.collection("Users").document(user.getEmail())
-                .set(userO)
+                .set(u)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -78,14 +71,20 @@ public class Database {
 
     }
 
-    public void addRoom(Room r) {
-        }
-
-    public void getUserFromDB(String id) {
-
-
+    //Method for getting users details from db for currently logged in user
+    public void getUserFromDB() {
+        final User[] useri = new User[1];
+        DocumentReference docRef = db.collection("Users").document(user.getEmail());
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                useri[0] = documentSnapshot.toObject(User.class);
+                hallsystem.setUseri(useri[0]);
+            }
+        });
 
     }
+
     public void writeHallList(){
         halls = new ArrayList<>();
         db.collection("AllHalls")

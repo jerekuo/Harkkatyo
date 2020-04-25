@@ -1,44 +1,22 @@
 package com.example.moovi;
 
-import java.util.Date;
-import java.util.Random;
 
 public class User {
-    String password; //käytetään stringi password olion kautta
-    String age;
+    String birthdate;
     String email;
     String firstName;
     String lastName;
-    int userId;
-
-    public int randNum() {
-        Random random = new Random();
-
-        return random.nextInt(50000);
-    }
-
+    String address;
+    String phoneNumber;
 
     //GETSETS
-    public String getPassword() {
-        return password;
+
+    public String getBirthdate() {
+        return birthdate;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
+    public void setBirthdate(String age) {
+        this.birthdate = birthdate;
     }
 
     public String getEmail() {
@@ -65,17 +43,25 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getAddress() { return address; }
+
+    public void setAddress(String address) { this.address = address; }
+
+    public String getPhoneNumber() { return phoneNumber; }
+
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+
     public User() {
 
     }
     //CONSTRUCTOR
-    public User(String password, String email, String firstName, String lastName, String age) {
-        this.password = password;
+    public User(String email, String firstName, String lastName, String birthDate, String address, String phoneNumber) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
-        this.userId = randNum();
+        this.birthdate = birthDate;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
 
     }
 

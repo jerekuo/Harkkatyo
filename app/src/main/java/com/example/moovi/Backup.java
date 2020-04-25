@@ -38,7 +38,6 @@ public class Backup {
 
     }
 
-
     //Method backups user data to csv file
     //Format: "email,Firstname,Lastname,Age,userId,password
     //Path to file /data/data/com.example.moovi/files/userBackup.csv
@@ -47,7 +46,7 @@ public class Backup {
         try {
             OutputStreamWriter ows = new OutputStreamWriter(context.openFileOutput("userBackup.csv", Context.MODE_PRIVATE));
             ows.append(u.getEmail()+","+u.getFirstName()+","+u.getLastName()+","+
-                    u.getAge()+','+u.getUserId()+","+u.getPassword()+"\n");
+                    u.getBirthdate()+','+u.getAddress()+","+u.getPhoneNumber()+"\n");
             ows.close();
 
         } catch (IOException e) {
