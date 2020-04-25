@@ -60,15 +60,7 @@ public class HallSystem {
         this.resList = resList;
     }
 
-    public ArrayList<Room> getRoomList() {
-        return roomList;
-    }
 
-    public void setRoomList(ArrayList<Room> roomList) {
-        this.roomList = roomList;
-    }
-
-    ArrayList<Room> roomList = new ArrayList<>();//Arraylist for all the rooms in the hall
 
 
 

@@ -98,7 +98,9 @@ public class Database {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String name = document.getData().get("name").toString();
                                 String address = document.getData().get("address").toString();
-                                halls.add(new Hall(i,name,address));
+                                ArrayList<Room> list = writeRoomList(document.getId());
+
+                                halls.add(new Hall(i,name,address,list));
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 i++;
                             }
@@ -112,15 +114,15 @@ public class Database {
         hallsystem.setHallList(halls);
     }
 
-    public void writeRoomList(Hall h){
-        String hall = h.getHallName();
-        db.collection("AllHalls").document(hall).collection("Rooms").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+    public ArrayList<Room> writeRoomList(String hall){
+        rooms = new ArrayList<>();
+        db.collection("AllHalls").document(hall).collection("Rooms").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 int i = 0;
-                rooms = new ArrayList<>();
 
-                for (QueryDocumentSnapshot documentsnapshot : queryDocumentSnapshots){
+
+                for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
                     i++;
                     String name = documentsnapshot.getData().get("name").toString();
                     int cap = Integer.parseInt(documentsnapshot.getData().get("capacity").toString());
@@ -129,10 +131,16 @@ public class Database {
                     System.out.println(i);
                     rooms.add(new Room(name,cap,"Kaikki pelaa",i));
                     Log.d(TAG, documentsnapshot.getId() + " => " + documentsnapshot.getData());
-                } hallsystem.setRoomList(rooms);
+                }
             }
         });
+        for (Room r : rooms){
+            System.out.println("@@@@@@@@@@@@"+r.name+"@@@@@@@@@@@@");
+        }
+        return rooms;
     }
+
+
 
 
 }
