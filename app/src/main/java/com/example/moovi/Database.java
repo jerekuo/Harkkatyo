@@ -12,9 +12,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 
 import com.google.android.gms.tasks.Task;
@@ -37,7 +34,6 @@ public class Database {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
     ArrayList<Hall> halls;
     ArrayList<Room> rooms;
 
@@ -98,7 +94,6 @@ public class Database {
                                 String name = document.getData().get("name").toString();
                                 String address = document.getData().get("address").toString();
                                 ArrayList<Room> list = writeRoomList(document.getId());
-
                                 halls.add(new Hall(i,name,address,list));
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 i++;

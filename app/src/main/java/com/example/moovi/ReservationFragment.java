@@ -86,9 +86,7 @@ public class ReservationFragment extends Fragment {
 
         hallSpinner = view.findViewById(R.id.spinner);
         final ArrayList<Hall> list = hallSystem.getHallList();
-        for (Hall h: list){
-            System.out.println(h.hallName);
-        }
+
 
 
         ArrayAdapter<Hall> dataAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
@@ -112,7 +110,7 @@ public class ReservationFragment extends Fragment {
 
     public void roomSpinner(Hall h){
         roomSpinner = view.findViewById(R.id.spinner2);
-        ArrayList<Room> rlist = h.getRoomList();
+        final ArrayList<Room> rlist = h.getRoomList();
 
 
 
