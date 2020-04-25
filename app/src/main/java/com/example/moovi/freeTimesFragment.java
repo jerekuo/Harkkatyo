@@ -91,7 +91,7 @@ public class freeTimesFragment extends Fragment {
         for (Hall h: hallSystem.getHallList()){
             if (h.hallName.equalsIgnoreCase(hall)){
                 newHall = h;
-                for (Room r : hallSystem.getRoomList()){
+                for (Room r : newHall.getRoomList()){
                     if (r.name.equalsIgnoreCase(room)){
                         newRoom = r;
                     }

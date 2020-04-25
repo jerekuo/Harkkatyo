@@ -54,6 +54,23 @@ public class SettingsFragment extends Fragment {
         return view;
     }
 
+    public void onViewCreated (View view, Bundle savedInstanceState) {
+        User uuseri = HallSystem.getInstance().getUseri();
+        if (uuseri != null) {
+            editFirstName.setText(uuseri.getFirstName());
+            editLastName.setText(uuseri.getLastName());
+            editAddress.setText(uuseri.getAddress());
+            editPhone.setText(uuseri.getPhoneNumber());
+            if (uuseri.getBirthdate() != null) {
+                String date = uuseri.getBirthdate();
+                String[] dates = date.split(".");
+                datePicker.updateDate(Integer.parseInt(dates[2]),Integer.parseInt(dates[1]),Integer.parseInt(dates[0]));
+            }
+        }
+
+
+    }
+
     public void updateSettings(View view){
         final String email = user.getEmail();
         updateInfo.setOnClickListener(new View.OnClickListener() {

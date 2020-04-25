@@ -4,7 +4,6 @@ package com.example.moovi;
 import android.os.Bundle;
 
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -19,11 +18,6 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -42,7 +36,7 @@ public class ReservationFragment extends Fragment {
     DatePicker datePicker;
     Fragment fragment;
     Database database = Database.getInstance();
-    final HallSystem hallSystem = HallSystem.getInstance();
+    HallSystem hallSystem = HallSystem.getInstance();
 
     //
 
@@ -57,7 +51,7 @@ public class ReservationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_reservation1, container, false);
-        database.writeHallList();
+
 
 
         Button xbutton = view.findViewById(R.id.button4);
@@ -88,10 +82,13 @@ public class ReservationFragment extends Fragment {
 
 
     public void hallSpinner(){
-
+        System.out.println("HALLSPINNERI AJETAAAAAN #%%¤#%¤#%¤#%¤#%¤%¤#¤%#¤");
 
         hallSpinner = view.findViewById(R.id.spinner);
         final ArrayList<Hall> list = hallSystem.getHallList();
+        for (Hall h: list){
+            System.out.println(h.hallName);
+        }
 
 
         ArrayAdapter<Hall> dataAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
@@ -103,8 +100,7 @@ public class ReservationFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 hall = (Hall) parent.getItemAtPosition(position);
                 System.out.println(hall);
-                database.writeRoomList(hall);
-                roomSpinner();
+                roomSpinner(hall);
             }
 
             @Override
@@ -114,13 +110,13 @@ public class ReservationFragment extends Fragment {
         });
     }
 
-    public void roomSpinner(){
-        HallSystem hallSystem = HallSystem.getInstance();
+    public void roomSpinner(Hall h){
         roomSpinner = view.findViewById(R.id.spinner2);
-        final ArrayList<Room> rlist = hallSystem.getRoomList();
+        ArrayList<Room> rlist = h.getRoomList();
 
 
-        ArrayAdapter<Room> dataAdapter = new ArrayAdapter<Room>(getContext(),android.R.layout.simple_spinner_dropdown_item, rlist);
+
+        ArrayAdapter<Room> dataAdapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item, rlist);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         roomSpinner.setAdapter(dataAdapter);
 

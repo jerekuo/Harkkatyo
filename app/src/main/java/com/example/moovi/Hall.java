@@ -32,11 +32,22 @@ public class Hall {
     int hallId;
     String hallName;
 
-    public Hall(int hallId, String hallName, String hallLocation/*, ArrayList<Room> roomList*/) {
+    public ArrayList<Room> getRoomList() {
+        return roomList;
+    }
+
+    public void setRoomList(ArrayList<Room> roomList) {
+        this.roomList = roomList;
+    }
+
+    ArrayList<Room> roomList;
+
+
+    public Hall(int hallId, String hallName, String hallLocation, ArrayList<Room> roomList) {
         this.hallId = hallId;
         this.hallName = hallName;
         this.hallLocation = hallLocation;
-        //this.roomList = roomList;
+        this.roomList = roomList;
     }
 
     String hallLocation;

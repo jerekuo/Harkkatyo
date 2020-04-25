@@ -24,17 +24,20 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     FirebaseUser user;
+    Database database = Database.getInstance();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Database.getInstance().getUserFromDB();
         setContentView(R.layout.activity_main2);
 
         user = HallSystem.getInstance().getUser();
         toolbar = findViewById(R.id.main_toolbar);
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.drawer_layout);
+        database.writeHallList();
 
         setSupportActionBar(toolbar);
         Toast.makeText(Main2Activity.this, "Logged in as: " + user.getEmail(),
