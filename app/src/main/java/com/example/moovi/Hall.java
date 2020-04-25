@@ -3,8 +3,13 @@ package com.example.moovi;
 import java.util.ArrayList;
 
 public class Hall {
+    //CLASS VARIABLES
+    int hallId;
+    String hallName;
+    ArrayList<Room> roomList;
+    String hallLocation;
 
-
+    //GETTERS AND SETTERS
     public int getHallId() {
         return hallId;
     }
@@ -29,9 +34,6 @@ public class Hall {
         this.hallLocation = hallLocation;
     }
 
-    int hallId;
-    String hallName;
-
     public ArrayList<Room> getRoomList() {
         return roomList;
     }
@@ -40,9 +42,9 @@ public class Hall {
         this.roomList = roomList;
     }
 
-    ArrayList<Room> roomList;
 
 
+    //CONSTRUCTOR
     public Hall(int hallId, String hallName, String hallLocation, ArrayList<Room> roomList) {
         this.hallId = hallId;
         this.hallName = hallName;
@@ -50,7 +52,7 @@ public class Hall {
         this.roomList = roomList;
     }
 
-    String hallLocation;
+
 
 
 
