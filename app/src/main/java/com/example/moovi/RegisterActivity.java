@@ -7,12 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,10 +16,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class RegisterActivity extends AppCompatActivity {
     TextView textError;
@@ -38,8 +29,8 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_register);
         editEmail = findViewById(R.id.editEmail);
-        editPassword1 = findViewById(R.id.editPassword1);
-        editPassword2 = findViewById(R.id.editPassword2);
+        editPassword1 = findViewById(R.id.editPhone);
+        editPassword2 = findViewById(R.id.editAddress);
         textError = findViewById(R.id.textError);
 
     }

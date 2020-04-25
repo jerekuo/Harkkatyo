@@ -3,8 +3,8 @@ package com.example.moovi;
 import java.util.Date;
 
 public class Admin extends User {
-    Admin(String password, String email, String firstName, String lastName, String age) {
-        super(password, email, firstName, lastName, age);
+    Admin(String email, String firstName, String lastName, String age, String address, String phoneNumber) {
+        super(email, firstName, lastName, age, address, phoneNumber);
     }
 
     //method for changing users information

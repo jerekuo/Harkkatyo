@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -25,8 +24,8 @@ import java.util.Date;
  */
 public class SettingsFragment extends Fragment {
     View view;
-    TextView infoHeader, infoText, updateText;
-    EditText editPassword1, editPassword2, editLastName, editFirstName;
+    TextView infoText, updateText;
+    EditText editPhone, editAddress, editLastName, editFirstName;
     DatePicker datePicker;
     Button updateInfo;
     FirebaseUser user = HallSystem.getInstance().getUser();
@@ -43,10 +42,9 @@ public class SettingsFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_settings, container, false);
         editFirstName = view.findViewById(R.id.editFirstName);
         editLastName = view.findViewById(R.id.editLastName);
-        editPassword1 = view.findViewById(R.id.editPassword1);
-        editPassword2 = view.findViewById(R.id.editPassword2);
+        editPhone = view.findViewById(R.id.editPhone);
+        editAddress = view.findViewById(R.id.editAddress);
         datePicker = view.findViewById(R.id.datePicker);
-        infoHeader = view.findViewById(R.id.infoHeader);
         infoText = view.findViewById(R.id.infoText);
         updateText = view.findViewById(R.id.updateText);
         updateInfo = view.findViewById(R.id.updateInfo);
@@ -63,22 +61,22 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 String name = editFirstName.getText().toString();
                 String last = editLastName.getText().toString();
-                String pass1 = editPassword1.getText().toString();
-                String pass2 = editPassword2.getText().toString();
+                String address = editAddress.getText().toString();
+                String phone = editPhone.getText().toString();
                 int day = datePicker.getDayOfMonth();
                 int month = datePicker.getMonth() + 1;
                 int year = datePicker.getYear();
-                SimpleDateFormat dateFormatter = new SimpleDateFormat("MM-dd-yyyy");
-                Date d = new Date(day, month, year);
-                String strDate = dateFormatter.format(d);
-                if(pass1.isEmpty() != true && pass2.isEmpty() != true && email.isEmpty() != true && pass1.equals(pass2)
+                String strDate = (day+"."+month+"."+year);
+                if(address.isEmpty() != true && phone.isEmpty() != true && email.isEmpty() != true
                         && name.isEmpty() != true && last.isEmpty() != true){
-                    User user = new User(pass1,email,name,last,strDate);
+                    User user = new User(email,name,last,strDate,address,phone);
                     Database.getInstance().addUser(user);
                     Backup.getInstance().writeUserBackup(user, getActivity().getApplicationContext());
                     Toast.makeText(getActivity(),"Information updated.",Toast.LENGTH_SHORT).show();
-                }else if(pass1.isEmpty() || pass2.isEmpty() || pass1 != pass2 || email.isEmpty() || name.isEmpty() || last.isEmpty()){
-                    Toast.makeText(getActivity(), "Passwords do not match or text field is empty.", Toast.LENGTH_SHORT).show();
+                    infoText.setText("Name: "+name+" "+last+"\n"+"Birthdate: "+strDate+"\n"+"Email: "+email.toString()+"\n"+
+                            "Number: "+phone+"\n"+"Address: "+address);
+                }else if(address.isEmpty() || phone.isEmpty() || email.isEmpty() || name.isEmpty() || last.isEmpty()){
+                    Toast.makeText(getActivity(), "Please insert into all fields.", Toast.LENGTH_SHORT).show();
                 }else{
                     //Do nothing
                 }
