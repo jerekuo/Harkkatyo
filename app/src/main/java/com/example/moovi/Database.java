@@ -4,19 +4,20 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Database {
+    HallSystem hallsystem = HallSystem.getInstance();
     private static Database instance = new Database();
     FirebaseUser user = HallSystem.getInstance().getUser();
-
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
 
@@ -29,36 +30,39 @@ public class Database {
     }
 
     public void addHall(Hall h) {
-        DatabaseReference myRef = database.getReference();
-        myRef.child("halls").child(String.valueOf(h.getHallId())).setValue(h);
+
     }
 
     public void addUser(User u) {
-        DatabaseReference myRef = database.getReference();
-        myRef.child("users").child(user.getUid()).setValue(u);
-        System.out.println("DATABASE ADD USER METHOD COMPLETED");
+        Map<String, Object> userO = new HashMap<>();
+        userO.put("firstName", u.getFirstName());
+        userO.put("lastName", u.getLastName());
+        userO.put("email", user.getEmail());
+        userO.put("password", u.getPassword());
+        userO.put("userId", user.getUid());
+
+        db.collection("Users").document(user.getEmail())
+                .set(userO)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Success", "DocumentSnapshot success");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Error", "error writing document", e);
+                    }
+                });
+
     }
 
     public void addRoom(Room r) {
-        DatabaseReference myRef = database.getReference();
-        myRef.child("rooms").child(String.valueOf(r.getRoomId())).setValue(r);
-    }
+        }
 
-    public void getUser(String id) {
-        ValueEventListener userListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
+    public void getUserFromDB(String id) {
 
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.w("ERROR", "loadPost:onCancelled", databaseError.toException());
-            }
-
-        };
 
 
     }
