@@ -41,6 +41,5 @@
         app:headerLayout="@layout/nav_header"
         android:layout_gravity="start"
         />
-
-
+    
 </androidx.drawerlayout.widget.DrawerLayout>
