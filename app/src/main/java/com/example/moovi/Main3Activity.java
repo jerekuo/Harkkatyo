@@ -66,7 +66,7 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
         }else if (item.getTitle().toString().equalsIgnoreCase("reservations")){
 
         }
-
+        transaction.commit();
         return false;
     }
 }

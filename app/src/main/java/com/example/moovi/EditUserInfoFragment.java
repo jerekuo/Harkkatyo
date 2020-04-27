@@ -33,7 +33,7 @@ public class EditUserInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_settings, container, false);
+        view = inflater.inflate(R.layout.fragment_edit_user_info, container, false);
         editFirstName = view.findViewById(R.id.editFirstName);
         editLastName = view.findViewById(R.id.editLastName);
         editPhone = view.findViewById(R.id.editPhone);
@@ -45,6 +45,6 @@ public class EditUserInfoFragment extends Fragment {
         userEmail = view.findViewById(R.id.userEmail);
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_user_info, container, false);
+        return view;
     }
 }
