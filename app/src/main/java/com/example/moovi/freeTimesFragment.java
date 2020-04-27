@@ -92,8 +92,10 @@ public class freeTimesFragment extends Fragment {
         editText = view.findViewById(R.id.editText);
         String desc = editText.toString();
         Date startTime = format2.parse(resTime);
-        Date endTime = format2.parse(resTime);   //TODO varauksen lopetusaika pitäs laittaa kuntoon.
-        HallSystem hallSystem = HallSystem.getInstance();
+        long helpTime = startTime.getTime();
+        long helpEndTime = helpTime + 1000 * 60 * 60;
+        Date endTime = new Date(helpEndTime);
+
 
         for (Hall h: hallSystem.getHallList()){
             if (h.hallName.equalsIgnoreCase(hall)){
@@ -110,6 +112,9 @@ public class freeTimesFragment extends Fragment {
 
         if (checkIfFree(res) == true) {
             hallSystem.addToResList(res);
+            for (Reservation r : hallSystem.getResList()){
+                System.out.println(r.getRoom()+"----"+r.getStartTime());
+            }
             System.out.println(res.getDescription()+"\n");
             System.out.println(res.getHall()+"\n");
             System.out.println(res.getRoom()+"\n");
