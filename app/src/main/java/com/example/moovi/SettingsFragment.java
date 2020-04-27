@@ -79,6 +79,7 @@ public class SettingsFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
             @Override
             public void onClick(View v) {
+
                 String name = editFirstName.getText().toString();
                 String last = editLastName.getText().toString();
                 String address = editAddress.getText().toString();
@@ -86,7 +87,9 @@ public class SettingsFragment extends Fragment {
                 int day = datePicker.getDayOfMonth();
                 int month = datePicker.getMonth() + 1;
                 int year = datePicker.getYear();
+
                 String strDate = (day+"."+month+"."+year);
+
                 if(address.isEmpty() != true && phone.isEmpty() != true && email.isEmpty() != true
                         && name.isEmpty() != true && last.isEmpty() != true){
                     User user = new User(email,name,last,strDate,address,phone);
@@ -95,6 +98,7 @@ public class SettingsFragment extends Fragment {
                     Toast.makeText(getActivity(),"Information updated.",Toast.LENGTH_SHORT).show();
                     infoText.setText("Name: "+name+" "+last+"\n"+"Birthdate: "+strDate+"\n"+"Email: "+email.toString()+"\n"+
                             "Number: "+phone+"\n"+"Address: "+address);
+
                 }else if(address.isEmpty() || phone.isEmpty() || email.isEmpty() || name.isEmpty() || last.isEmpty()){
                     Toast.makeText(getActivity(), "Please insert into all fields.", Toast.LENGTH_SHORT).show();
                 }else{

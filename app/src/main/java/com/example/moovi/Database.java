@@ -27,7 +27,7 @@ public class Database {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     ArrayList<Hall> halls;
-    ArrayList<Room> rooms;
+
 
     //GETTERS AND SETTERS
     public static Database getInstance() {
@@ -106,7 +106,7 @@ public class Database {
     }
 
     public void writeRoomList(final String hall){
-        rooms = new ArrayList<>();
+        final ArrayList<Room> rooms = new ArrayList<>();
         db.collection("AllHalls").document(hall).collection("Rooms").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
