@@ -71,6 +71,13 @@ public class freeTimesFragment extends Fragment {
         String list = bundle.getString("key");
         SimpleDateFormat formatter = new SimpleDateFormat("YYYY-mm-dd");
         String[] tokens = list.split("[,]");
+        try {
+            d = formatter.parse(tokens[0]);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        hall = tokens[1];
+        room = tokens[2];
 
 
         textView = view.findViewById(R.id.textView);

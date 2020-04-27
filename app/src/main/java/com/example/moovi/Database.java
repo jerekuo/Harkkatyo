@@ -88,10 +88,10 @@ public class Database {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String name = document.getData().get("name").toString();
                                 String address = document.getData().get("address").toString();
-                                //ArrayList<Room> list = writeRoomList(document.getId());
+                                ArrayList<Room> list = writeRoomList(document.getId());
 
 
-                                halls.add(new Hall(i,name,address));
+                                halls.add(new Hall(i,name,address,list));
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 i++;
                             }
@@ -105,8 +105,9 @@ public class Database {
         hallsystem.setHallList(halls);
     }
 
-    public void writeRoomList(final String hall){
+    public ArrayList<Room> writeRoomList(final String hall){
         final ArrayList<Room> rooms = new ArrayList<>();
+        //final String h = hall;
         db.collection("AllHalls").document(hall).collection("Rooms").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -118,21 +119,21 @@ public class Database {
                     int cap = Integer.parseInt(documentsnapshot.getData().get("capacity").toString());
 
                     rooms.add(new Room(name,cap,"Kaikki pelaa",i));
-                    if (hall.equalsIgnoreCase("Sammonlahden urheiluhalli")) {
+/*                    if (hall.equalsIgnoreCase("Sammonlahden urheiluhalli")) {
                         hallsystem.setRoomsSkinu(rooms);
                     }
-                    if (hall.equalsIgnoreCase("huhtari")) {
+                    if (h.equalsIgnoreCase("huhtari")) {
                         hallsystem.setRoomsHuhtari(rooms);
 
                     }
-                    if (hall.equalsIgnoreCase("urheilutalo")) {
+                    if (h.equalsIgnoreCase("urheilutalo")) {
                         hallsystem.setRoomsUrheilu(rooms);
-                    }
+                    }*/
 
                     Log.d(TAG, documentsnapshot.getId() + " => " + documentsnapshot.getData());
                 }
             }
-        });
+        }); return rooms;
 
     }
 
