@@ -31,6 +31,9 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Database.getInstance().getUserFromDB();
+        database.writeRoomList("Huhtari");
+        database.writeRoomList("Sammonlahden urheiluhalli");
+        database.writeRoomList("Urheilutalo");
         setContentView(R.layout.activity_main2);
 
         user = HallSystem.getInstance().getUser();

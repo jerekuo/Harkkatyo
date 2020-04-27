@@ -45,11 +45,11 @@ public class Hall {
 
 
     //CONSTRUCTOR
-    public Hall(int hallId, String hallName, String hallLocation, ArrayList<Room> roomList) {
+    public Hall(int hallId, String hallName, String hallLocation/*, ArrayList<Room> roomList*/) {
         this.hallId = hallId;
         this.hallName = hallName;
         this.hallLocation = hallLocation;
-        this.roomList = roomList;
+        //this.roomList = roomList;
     }
 
 

@@ -26,7 +26,7 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class ReservationFragment extends Fragment {
-
+    String chosenHall;
     Spinner hallSpinner;
     Spinner roomSpinner;
     Button searchButton;
@@ -98,6 +98,7 @@ public class ReservationFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 hall = (Hall) parent.getItemAtPosition(position);
                 System.out.println(hall);
+                chosenHall = hall.getHallName();
                 roomSpinner(hall);
             }
 
@@ -109,8 +110,16 @@ public class ReservationFragment extends Fragment {
     }
 
     public void roomSpinner(Hall h){
+        ArrayList<Room> rlist = new ArrayList<>();
         roomSpinner = view.findViewById(R.id.spinner2);
-        final ArrayList<Room> rlist = h.getRoomList();
+        if (chosenHall.equalsIgnoreCase("urkki")) {
+            rlist = hallSystem.getRoomsUrheilu();
+        } else if (chosenHall.equalsIgnoreCase("Slahen halli")) {
+            rlist = hallSystem.getRoomsSkinu();
+        } else if (chosenHall.equalsIgnoreCase("Huhtiniemen halli")) {
+            rlist = hallSystem.getRoomsHuhtari();
+        }
+
 
 
 

@@ -70,6 +70,35 @@ public class HallSystem {
         this.resList = resList;
     }
 
+    public ArrayList<Room> getRoomsSkinu() {
+        return roomsSkinu;
+    }
+
+    public void setRoomsSkinu(ArrayList<Room> roomsSkinu) {
+        this.roomsSkinu = roomsSkinu;
+    }
+
+    ArrayList<Room> roomsSkinu = new ArrayList<>();
+
+    public ArrayList<Room> getRoomsHuhtari() {
+        return roomsHuhtari;
+    }
+
+    public void setRoomsHuhtari(ArrayList<Room> roomsHuhtari) {
+        this.roomsHuhtari = roomsHuhtari;
+    }
+
+    public ArrayList<Room> getRoomsUrheilu() {
+        return roomsUrheilu;
+    }
+
+    public void setRoomsUrheilu(ArrayList<Room> roomsUrheilu) {
+        this.roomsUrheilu = roomsUrheilu;
+    }
+
+    ArrayList<Room> roomsHuhtari = new ArrayList<>();
+    ArrayList<Room> roomsUrheilu = new ArrayList<>();
+
 
 
 
