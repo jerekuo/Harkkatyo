@@ -30,6 +30,16 @@ public class HallSystem {
 
     public User useri;
 
+    public User getEditUser() {
+        return editUser;
+    }
+
+    public void setEditUser(User editUser) {
+        this.editUser = editUser;
+    }
+
+    public User editUser;
+
     public void setUser (FirebaseUser u) {
         this.user = u;
     }
