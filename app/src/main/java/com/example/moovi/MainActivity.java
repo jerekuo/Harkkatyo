@@ -120,12 +120,17 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("SUCCESS", "signInWithEmail:success");
-                            loginAuth();
-
-
-
+                            if(email.equals("admin@gmail.com")){
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                HallSystem.getInstance().setUser(user);
+                                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                                Intent intent = new Intent(MainActivity.this, Main3Activity.class);
+                                startActivity(intent);
+                            }else{
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("SUCCESS", "signInWithEmail:success");
+                                loginAuth();
+                            }
 
                         } else {
                             // If sign in fails, display a message to the user.
