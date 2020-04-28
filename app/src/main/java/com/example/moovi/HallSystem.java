@@ -61,6 +61,8 @@ public class HallSystem {
     }
 
     public void addToResList(Reservation res){
+        Database db = Database.getInstance();
+        db.addReservation(res);
         ArrayList<Reservation> list = getResList();
         list.add(res);
         setResList(list);

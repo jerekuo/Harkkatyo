@@ -119,21 +119,31 @@ public class Database {
                     int cap = Integer.parseInt(documentsnapshot.getData().get("capacity").toString());
 
                     rooms.add(new Room(name,cap,"Kaikki pelaa",i));
-/*                    if (hall.equalsIgnoreCase("Sammonlahden urheiluhalli")) {
-                        hallsystem.setRoomsSkinu(rooms);
-                    }
-                    if (h.equalsIgnoreCase("huhtari")) {
-                        hallsystem.setRoomsHuhtari(rooms);
 
-                    }
-                    if (h.equalsIgnoreCase("urheilutalo")) {
-                        hallsystem.setRoomsUrheilu(rooms);
-                    }*/
 
                     Log.d(TAG, documentsnapshot.getId() + " => " + documentsnapshot.getData());
                 }
             }
         }); return rooms;
+
+    }
+
+    public void addReservation(Reservation r) {
+
+        db.collection("Reservations").document(user.getEmail()+","+r.resDate+","+r.startTime)
+                .set(r)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Success", "DocumentSnapshot success");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Error", "error writing document", e);
+                    }
+                });
 
     }
 
