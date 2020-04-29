@@ -203,6 +203,48 @@ public class Database {
 
     }
 
+    public ArrayList getReservationsByDate(int day, int month, int year) {
+        String sMonth;
+        String sDay;
+
+        if(month < 10) {
+            sMonth = "0" + month;
+        } else {
+            sMonth = Integer.toString(month);
+        }
+
+        if(day < 10) {
+            sDay = "0" + day;
+        } else {
+            sDay = Integer.toString(day);
+        }
+
+
+
+        final String date = year +"-" + sMonth +"-"+ sDay;
+        final ArrayList<Reservation> reservations = new ArrayList<>();
+        db.collection("Reservations").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
+
+                    if (documentsnapshot.toObject(Reservation.class).getResDate().equalsIgnoreCase(date)) {
+                        System.out.println("LISATAAN LISTAAN KOSKA: "+date + " == " + documentsnapshot.toObject(Reservation.class).getResDate());
+                        reservations.add((Reservation) documentsnapshot.toObject(Reservation.class));
+                        System.out.println("############ Reservation listaan lisätään:  "+ documentsnapshot.toObject(Reservation.class).startTime);
+                    } else {
+                        System.out.println("EI LISATA LISTAAN KOSKA: "+date + " != " + documentsnapshot.toObject(Reservation.class).getResDate());
+                    }
+
+                }
+            }
+        });
+
+        return reservations;
+
+    }
+
 
 
 

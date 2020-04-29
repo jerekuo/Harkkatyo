@@ -17,7 +17,7 @@ public class User {
         return birthdate;
     }
 
-    public void setBirthdate(String age) {
+    public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 

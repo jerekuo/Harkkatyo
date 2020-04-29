@@ -147,7 +147,7 @@ public class freeTimesFragment extends Fragment {
         SimpleDateFormat format1 = new SimpleDateFormat("HH.mm");
         SimpleDateFormat format2 = new SimpleDateFormat("H.mm");
         editText = view.findViewById(R.id.editText);
-        String desc = editText.toString();
+        String desc = editText.getText().toString();
         String startTime = resTime; // String pitäs saada oikeesee muotoo eli HH.mm eikä sitä litaniaa mis on 1970
         long helpTime = format2.parse(resTime).getTime();
         long helpEndTime = helpTime + 1000 * 60 * 60;

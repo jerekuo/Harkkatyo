@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 
@@ -65,12 +66,14 @@ public class SettingsFragment extends Fragment {
             editPhone.setText(uuseri.getPhoneNumber());
             if (uuseri.getBirthdate() != null) {
                 String date = uuseri.getBirthdate();
-                String[] dates = date.split(".");
-                datePicker.updateDate(Integer.parseInt(dates[2]),Integer.parseInt(dates[1]),Integer.parseInt(dates[0]));
+                String[] values = date.split("\\.", -1);
+                System.out.println("Arvot: "+values[0]);
+                int day = Integer.parseInt(values[0]);
+                int month = Integer.parseInt(values[1]);
+                int year = Integer.parseInt(values[2]);
+                datePicker.updateDate(year,month,day);
             }
         }
-
-
     }
 
     public void updateSettings(View view){
