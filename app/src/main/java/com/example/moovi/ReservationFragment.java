@@ -122,13 +122,6 @@ public class ReservationFragment extends Fragment {
     public void roomSpinner(Hall h){
         roomSpinner = view.findViewById(R.id.spinner2);
         ArrayList<Room> rlist = h.getRoomList();
-/*        if (chosenHall.equalsIgnoreCase("urkki")) {
-            rlist = hallSystem.getRoomsUrheilu();
-        } else if (chosenHall.equalsIgnoreCase("Slahen halli")) {
-            rlist = hallSystem.getRoomsSkinu();
-        } else if (chosenHall.equalsIgnoreCase("Huhtiniemen halli")) {
-            rlist = hallSystem.getRoomsHuhtari();
-        }*/
 
 
 

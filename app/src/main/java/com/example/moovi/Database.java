@@ -29,6 +29,7 @@ public class Database {
     ArrayList<Hall> halls;
 
 
+
     //GETTERS AND SETTERS
     public static Database getInstance() {
         return instance;
@@ -144,6 +145,25 @@ public class Database {
                         Log.w("Error", "error writing document", e);
                     }
                 });
+
+    }
+
+    public void writeReservationList(){
+        final ArrayList<Reservation> reservations = new ArrayList<>();
+        db.collection("Reservations").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
+
+                    reservations.add((Reservation) documentsnapshot.toObject(Reservation.class));
+                    System.out.println("############ Reservation listaan lisätään:  "+ documentsnapshot.toObject(Reservation.class).startTime);
+
+
+                    Log.d(TAG, documentsnapshot.getId() + " => " + documentsnapshot.getData());
+                }
+            }
+        }); hallsystem.setResList(reservations);
 
     }
 
