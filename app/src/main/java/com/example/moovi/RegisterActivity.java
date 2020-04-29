@@ -68,16 +68,15 @@ public class RegisterActivity extends AppCompatActivity {
                 if (Character.isLowerCase(x)) {
                     hasLowercase = true;
                 }
-                if (!matcher.matches()){
+                if (!matcher.matches()) {
                     hasSpecCharacter = true;
                 }
-                if (hasLetter && hasDigit && hasCapital && hasSpecCharacter && hasLowercase) {
+                if (hasLetter && hasDigit && hasCapital && hasSpecCharacter && hasLowercase && hasLenght) {
                     regAcc(email, pass1);
                     break;
-                }
-            }
+                } }
 
-        } if(pass1.isEmpty() || pass2.isEmpty()) {
+        }if(pass1.isEmpty() || pass2.isEmpty()) {
             errortext = "Please enter a password on blank password spaces";
             textError.setText(errortext);
         }else if(email.isEmpty()) {
@@ -87,7 +86,8 @@ public class RegisterActivity extends AppCompatActivity {
             errortext = "Please check that both of the passwords matches with eachother.";
             textError.setText(errortext);
 
-        }else{
+        }else if(hasLenght == false || hasCapital == false || hasDigit == false || hasLetter == false ||
+                hasLowercase == false || hasSpecCharacter == false ){
             errortext = "Invalid password input! The password must consist of:\n";
             if(hasLenght == false) {
                 errortext = errortext + "Lenght of atleast 12 characters.\n";
