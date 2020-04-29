@@ -62,6 +62,25 @@ public class Database {
 
     }
 
+    public void editUser(User u) {
+
+        db.collection("Users").document(u.getEmail())
+                .set(u)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Success", "DocumentSnapshot success");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Error", "error writing document", e);
+                    }
+                });
+
+    }
+
     //Method for getting users details from db for currently logged in user
     public void getUserFromDB() {
         final User[] useri = new User[1];
