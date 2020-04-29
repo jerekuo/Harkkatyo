@@ -25,6 +25,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     private NavigationView navigationView;
     FirebaseUser user;
     Database database = Database.getInstance();
+    User currentUser;
 
 
     @Override
@@ -58,6 +59,16 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+       /* currentUser = HallSystem.getInstance().getUseri();
+f
+        if (currentUser == null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            Fragment fragment;
+            fragment = new SettingsFragment();
+            transaction.replace(R.id.fragmentView,fragment);
+            transaction.commit();
+        }*/
 
 
 
