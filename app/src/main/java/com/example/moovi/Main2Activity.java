@@ -35,11 +35,13 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         setContentView(R.layout.activity_main2);
         database.writeReservationList();
 
+
         user = HallSystem.getInstance().getUser();
         toolbar = findViewById(R.id.main_toolbar);
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.drawer_layout);
         database.writeHallList();
+
 
         setSupportActionBar(toolbar);
         Toast.makeText(Main2Activity.this, "Logged in as: " + user.getEmail(),
@@ -58,7 +60,16 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         navigationView.setNavigationItemSelectedListener(this);
 
 
+
     }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        database.writeCurrentUserReservationList(user.getEmail());
+    }
+
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -84,6 +95,10 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             HallSystem.getInstance().setUser(null);
             Intent intent = new Intent(Main2Activity.this, MainActivity.class);
             startActivity(intent);
+        } else if (item.getTitle().toString().equalsIgnoreCase("Home")) {
+            database.writeCurrentUserReservationList(user.getEmail());
+            fragment = new HomeFragment();
+            transaction.replace(R.id.fragmentView, fragment);
         }
 
 
