@@ -12,8 +12,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseUser;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,11 +21,13 @@ public class EditUserInfoFragment extends Fragment {
     TextView updateText;
     EditText editPhone, editAddress, editLastName, editFirstName, userEmail;
     DatePicker datePicker;
-    Button updateInfo, deleteUser;
+    Button updateInfo, getUserInfo;
+    User editUser;
 
     public EditUserInfoFragment() {
         // Required empty public constructor
     }
+
 
 
     @Override
@@ -41,10 +41,44 @@ public class EditUserInfoFragment extends Fragment {
         datePicker = view.findViewById(R.id.datePicker);
         updateText = view.findViewById(R.id.updateText);
         updateInfo = view.findViewById(R.id.updateInfo);
-        deleteUser = view.findViewById(R.id.deleteUser);
-        userEmail = view.findViewById(R.id.userEmail);
+        getUserInfo = view.findViewById(R.id.getUserInfo);
+
+        getUserInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getUser();
+            }
+        });
 
         // Inflate the layout for this fragment
         return view;
     }
+
+    public void getUser() {
+        userEmail = view.findViewById(R.id.userEmail);
+        String email = userEmail.getText().toString();
+        Database.getInstance().getUserFromDBemail(email);
+        editUser = HallSystem.getInstance().getEditUser();
+
+        if (editUser != null) {
+            setInfo();
+        }
+
+
+    }
+
+    public void setInfo() {
+        editFirstName = view.findViewById(R.id.editFirstName);
+        editLastName = view.findViewById(R.id.editLastName);
+        editPhone = view.findViewById(R.id.editPhone);
+        editAddress = view.findViewById(R.id.editAddress);
+
+        editFirstName.setText(editUser.getFirstName());
+        editLastName.setText(editUser.getLastName());
+        editAddress.setText(editUser.getAddress());
+        editPhone.setText(editUser.getPhoneNumber());
+    }
+
+
+
 }

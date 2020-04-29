@@ -29,7 +29,6 @@ public class Database {
     ArrayList<Hall> halls;
 
 
-
     //GETTERS AND SETTERS
     public static Database getInstance() {
         return instance;
@@ -164,6 +163,23 @@ public class Database {
                 }
             }
         }); hallsystem.setResList(reservations);
+
+    }
+
+    public void getUserFromDBemail(String email) {
+        System.out.println("GETUSERFROMDBEMAIL KAYNNISTYY JA SAI EMAILIN:  " + email);
+        final User[] useri = new User[1];
+        DocumentReference docRef = db.collection("Users").document(email);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                useri[0] = documentSnapshot.toObject(User.class);
+                hallsystem.setEditUser(useri[0]);
+                System.out.println(useri[0].getFirstName() + "   SAATU USERI");
+                System.out.println("KAYTTAJAN HAKU ON VALMIS");
+            }
+        });
+
 
     }
 
