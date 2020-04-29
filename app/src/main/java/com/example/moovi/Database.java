@@ -146,6 +146,43 @@ public class Database {
                 });
 
     }
+    //U
+
+    public void writeReservationList(){
+        final ArrayList<Reservation> reservations = new ArrayList<>();
+        db.collection("Reservations").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
+
+                    reservations.add((Reservation) documentsnapshot.toObject(Reservation.class));
+                    System.out.println("############ Reservation listaan lisätään:  "+ documentsnapshot.toObject(Reservation.class).startTime);
+
+
+                    Log.d(TAG, documentsnapshot.getId() + " => " + documentsnapshot.getData());
+                }
+            }
+        }); hallsystem.setResList(reservations);
+
+    }
+
+    public void getUserFromDBemail(String email) {
+        System.out.println("GETUSERFROMDBEMAIL KAYNNISTYY JA SAI EMAILIN:  " + email);
+        final User[] useri = new User[1];
+        DocumentReference docRef = db.collection("Users").document(email);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                useri[0] = documentSnapshot.toObject(User.class);
+                hallsystem.setEditUser(useri[0]);
+                System.out.println(useri[0].getFirstName() + "   SAATU USERI");
+                System.out.println("KAYTTAJAN HAKU ON VALMIS");
+            }
+        });
+
+
+    }
 
 
 

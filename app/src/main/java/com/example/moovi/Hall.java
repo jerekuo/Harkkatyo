@@ -52,6 +52,10 @@ public class Hall {
         this.roomList = roomList;
     }
 
+    public Hall(){
+        //Null constructor
+    }
+
 
 
 

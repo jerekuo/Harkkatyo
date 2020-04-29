@@ -3,6 +3,7 @@ package com.example.moovi;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,14 +39,17 @@ public class freeTimesFragment extends Fragment {
     Spinner freeTimeSpinner;
     Hall newHall;
     Room newRoom;
+    Fragment fragment;
 
     String d;
     String hall;
     String room;
+    Database db = Database.getInstance();
 
     public freeTimesFragment() {
         // Required empty public constructor
     }
+    //PUSHI
 
 
     @Override
@@ -55,6 +59,7 @@ public class freeTimesFragment extends Fragment {
 
         Button button = view.findViewById(R.id.button5);
         freeTimeSpinner = view.findViewById(R.id.spinner3);
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +86,7 @@ public class freeTimesFragment extends Fragment {
         hall = tokens[1];
         room = tokens[2];
 
+
         try {
             freeTimeSpinner(d,hall,room);
         } catch (ParseException e) {
@@ -93,8 +99,6 @@ public class freeTimesFragment extends Fragment {
     }
 
     public void freeTimeSpinner(String date, String hall, String room) throws ParseException {
-        final SimpleDateFormat format1 = new SimpleDateFormat("HH.mm");
-        SimpleDateFormat format2 = new SimpleDateFormat("H.mm");
         ArrayList<String> timeList = new ArrayList<>();
         for (int i = 8 ; i < 21 ; i++){
             timeList.add(i+".00");
@@ -165,16 +169,11 @@ public class freeTimesFragment extends Fragment {
 
         if (checkIfFree(res) == true) {
             hallSystem.addToResList(res);
-            for (Reservation r : hallSystem.getResList()){
-                System.out.println(r.getRoom()+"----"+r.getStartTime());
-            }
-            System.out.println(res.getDescription()+"\n");
-            System.out.println(res.getHall()+"\n");
-            System.out.println(res.getRoom()+"\n");
-            System.out.println(res.getResDate()+"\n");
-            System.out.println(res.getStartTime()+"\n");
-            System.out.println(res.getEndTime()+"\n");
             Toast.makeText(getContext(),"Reservation done", Toast.LENGTH_SHORT).show();
+            fragment = new ReservationFragment();
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragmentView, fragment);
+            transaction.commit();
 
         } else{
             System.out.println("Varauksen teko ei onnistunut, löytyi päällekkäisyys.");

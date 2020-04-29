@@ -49,6 +49,10 @@ public class Room {
         this.roomId = roomId;
     }
 
+    public Room(){
+        //Null constructor
+    }
+
 
     @Override
     public String toString() {

@@ -104,6 +104,10 @@ public class Reservation {
         this.resDate = resDate;
     }
 
+    public Reservation(){
+        //Null constructor
+    }
+
     /*public void makeReservation(Reservation reservation){
         HallSystem hallSystem = HallSystem.getInstance();
 
