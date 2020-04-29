@@ -40,14 +40,20 @@ public class RegisterActivity extends AppCompatActivity {
         String pass1 = editPassword1.getText().toString();
         String pass2 = editPassword2.getText().toString();
         String email = editEmail.getText().toString();
+        String errortext = "";
         boolean hasLetter = false;
         boolean hasDigit = false;
+        boolean hasLowercase = false;
         boolean hasCapital = false;
         boolean hasSpecCharacter = false;
+        boolean hasLenght = false;
         Pattern pattern = Pattern.compile("[a-zA-Z0-9]*");
         Matcher matcher = pattern.matcher(pass1);
 
-        if (email.isEmpty() != true && pass1.length() >= 12 && pass2.length() >= 12 && pass1.equals(pass2)) {
+        if (email.isEmpty() != true && pass1.isEmpty() != true && pass2.isEmpty() != true && pass1.equals(pass2)) {
+            if(pass1.length() >= 12) {
+            hasLenght = true;
+            }
             for (int i = 0; i < pass1.length(); i++) {
                 char x = pass1.charAt(i);
                 if (Character.isLetter(x)) {
@@ -58,21 +64,50 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 if (Character.isUpperCase(x)) {
                     hasCapital = true;
-
+                }
+                if (Character.isLowerCase(x)) {
+                    hasLowercase = true;
                 }
                 if (!matcher.matches()){
                     hasSpecCharacter = true;
                 }
-                if (hasLetter && hasDigit && hasCapital && hasSpecCharacter) {
+                if (hasLetter && hasDigit && hasCapital && hasSpecCharacter && hasLowercase) {
                     regAcc(email, pass1);
                     break;
                 }
             }
 
-        }if(pass1.isEmpty() || pass2.isEmpty() || pass1 != pass2 || email.isEmpty()){
-            textError.setText("Invalid password or email input! The password must consist of lower- and uppercase letters, numbers and special characters.");
-       }else{
-           //Do nothing
+        } if(pass1.isEmpty() || pass2.isEmpty()) {
+            errortext = "Please enter a password on blank password spaces";
+            textError.setText(errortext);
+        }else if(email.isEmpty()) {
+            errortext = "Please enter an email on the blank email space";
+            textError.setText(errortext);
+        }else if(pass1.equals(pass2) == false && pass1.isEmpty() == false && pass2.isEmpty() == false) {
+            errortext = "Please check that both of the passwords matches with eachother.";
+            textError.setText(errortext);
+
+        }else{
+            errortext = "Invalid password input! The password must consist of:\n";
+            if(hasLenght == false) {
+                errortext = errortext + "Lenght of atleast 12 characters.\n";
+            }
+            if(hasLetter == false) {
+                errortext = errortext + "Atleast one letter\n";
+            }
+            if(hasCapital == false) {
+                errortext = errortext + "Atleast one capital letter\n";
+            }
+            if(hasLowercase == false) {
+                errortext = errortext + "Atleast one lowercase letter\n";
+            }
+            if(hasDigit == false) {
+                errortext = errortext + "Atleast one number\n";
+            }
+            if(hasSpecCharacter == false) {
+                errortext = errortext + "Atleast one special letter\n";
+            }
+            textError.setText(errortext);
         }
     }
 
