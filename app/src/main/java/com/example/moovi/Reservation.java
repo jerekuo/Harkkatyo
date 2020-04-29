@@ -9,22 +9,33 @@ public class Reservation {
     String description;
     int resId;
     int participants;
-    Date startTime;
-    Date endTime;
+    String startTime;
+    String endTime;
+    String resDate;
 
-    public Date getStartTime() {
+    public String getResDate() {
+        return resDate;
+    }
+
+    public void setResDate(String resDate) {
+        this.resDate = resDate;
+    }
+
+
+
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
@@ -82,7 +93,7 @@ public class Reservation {
         this.participants = participants;
     }
 
-    public Reservation(Hall hall, Room room,  String description, int resId, int participants, Date startTime, Date endTime) {
+    public Reservation(Hall hall, Room room,  String description, int resId, int participants, String startTime, String endTime, String resDate) {
         this.hall = hall;
         this.room = room;
         this.description = description;
@@ -90,6 +101,11 @@ public class Reservation {
         this.participants = participants;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.resDate = resDate;
+    }
+
+    public Reservation(){
+        //Null constructor
     }
 
     /*public void makeReservation(Reservation reservation){

@@ -119,21 +119,110 @@ public class Database {
                     int cap = Integer.parseInt(documentsnapshot.getData().get("capacity").toString());
 
                     rooms.add(new Room(name,cap,"Kaikki pelaa",i));
-/*                    if (hall.equalsIgnoreCase("Sammonlahden urheiluhalli")) {
-                        hallsystem.setRoomsSkinu(rooms);
-                    }
-                    if (h.equalsIgnoreCase("huhtari")) {
-                        hallsystem.setRoomsHuhtari(rooms);
 
-                    }
-                    if (h.equalsIgnoreCase("urheilutalo")) {
-                        hallsystem.setRoomsUrheilu(rooms);
-                    }*/
 
                     Log.d(TAG, documentsnapshot.getId() + " => " + documentsnapshot.getData());
                 }
             }
         }); return rooms;
+
+    }
+
+    public void addReservation(Reservation r) {
+
+        db.collection("Reservations").document(user.getEmail()+","+r.resDate+","+r.startTime)
+                .set(r)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Success", "DocumentSnapshot success");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Error", "error writing document", e);
+                    }
+                });
+
+    }
+    //U
+
+    public void writeReservationList(){
+        final ArrayList<Reservation> reservations = new ArrayList<>();
+        db.collection("Reservations").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
+
+                    reservations.add((Reservation) documentsnapshot.toObject(Reservation.class));
+                    System.out.println("############ Reservation listaan lisätään:  "+ documentsnapshot.toObject(Reservation.class).startTime);
+
+
+                    Log.d(TAG, documentsnapshot.getId() + " => " + documentsnapshot.getData());
+                }
+            }
+        }); hallsystem.setResList(reservations);
+
+    }
+
+    public void getUserFromDBemail(String email) {
+        System.out.println("GETUSERFROMDBEMAIL KAYNNISTYY JA SAI EMAILIN:  " + email);
+        final User[] useri = new User[1];
+        DocumentReference docRef = db.collection("Users").document(email);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                useri[0] = documentSnapshot.toObject(User.class);
+                hallsystem.setEditUser(useri[0]);
+                System.out.println(useri[0].getFirstName() + "   SAATU USERI");
+                System.out.println("KAYTTAJAN HAKU ON VALMIS");
+            }
+        });
+
+
+    }
+
+    public ArrayList getReservationsByDate(int day, int month, int year) {
+        String sMonth;
+        String sDay;
+
+        if(month < 10) {
+            sMonth = "0" + month;
+        } else {
+            sMonth = Integer.toString(month);
+        }
+
+        if(day < 10) {
+            sDay = "0" + day;
+        } else {
+            sDay = Integer.toString(day);
+        }
+
+
+
+        final String date = year +"-" + sMonth +"-"+ sDay;
+        final ArrayList<Reservation> reservations = new ArrayList<>();
+        db.collection("Reservations").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
+
+                    if (documentsnapshot.toObject(Reservation.class).getResDate().equalsIgnoreCase(date)) {
+                        System.out.println("LISATAAN LISTAAN KOSKA: "+date + " == " + documentsnapshot.toObject(Reservation.class).getResDate());
+                        reservations.add((Reservation) documentsnapshot.toObject(Reservation.class));
+                        System.out.println("############ Reservation listaan lisätään:  "+ documentsnapshot.toObject(Reservation.class).startTime);
+                    } else {
+                        System.out.println("EI LISATA LISTAAN KOSKA: "+date + " != " + documentsnapshot.toObject(Reservation.class).getResDate());
+                    }
+
+                }
+            }
+        });
+
+        return reservations;
 
     }
 

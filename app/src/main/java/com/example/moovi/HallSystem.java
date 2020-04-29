@@ -30,6 +30,16 @@ public class HallSystem {
 
     public User useri;
 
+    public User getEditUser() {
+        return editUser;
+    }
+
+    public void setEditUser(User editUser) {
+        this.editUser = editUser;
+    }
+
+    public User editUser;
+
     public void setUser (FirebaseUser u) {
         this.user = u;
     }
@@ -61,43 +71,18 @@ public class HallSystem {
     }
 
     public void addToResList(Reservation res){
-        ArrayList<Reservation> list = getResList();
-        list.add(res);
-        setResList(list);
+        Database db = Database.getInstance();
+        db.addReservation(res);
+        //ArrayList<Reservation> list = getResList();
+        //list.add(res);
+        //setResList(list);
     }
 
     public void setResList(ArrayList<Reservation> resList) {
         this.resList = resList;
     }
 
-    public ArrayList<Room> getRoomsSkinu() {
-        return roomsSkinu;
-    }
 
-    public void setRoomsSkinu(ArrayList<Room> roomsSkinu) {
-        this.roomsSkinu = roomsSkinu;
-    }
-
-    ArrayList<Room> roomsSkinu = new ArrayList<>();
-
-    public ArrayList<Room> getRoomsHuhtari() {
-        return roomsHuhtari;
-    }
-
-    public void setRoomsHuhtari(ArrayList<Room> roomsHuhtari) {
-        this.roomsHuhtari = roomsHuhtari;
-    }
-
-    public ArrayList<Room> getRoomsUrheilu() {
-        return roomsUrheilu;
-    }
-
-    public void setRoomsUrheilu(ArrayList<Room> roomsUrheilu) {
-        this.roomsUrheilu = roomsUrheilu;
-    }
-
-    ArrayList<Room> roomsHuhtari = new ArrayList<>();
-    ArrayList<Room> roomsUrheilu = new ArrayList<>();
 
 
 

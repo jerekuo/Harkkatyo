@@ -18,8 +18,14 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 
 
-
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 
 /**
@@ -58,7 +64,11 @@ public class ReservationFragment extends Fragment {
         xbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFreeTimes();
+                try {
+                    showFreeTimes();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -112,13 +122,6 @@ public class ReservationFragment extends Fragment {
     public void roomSpinner(Hall h){
         roomSpinner = view.findViewById(R.id.spinner2);
         ArrayList<Room> rlist = h.getRoomList();
-/*        if (chosenHall.equalsIgnoreCase("urkki")) {
-            rlist = hallSystem.getRoomsUrheilu();
-        } else if (chosenHall.equalsIgnoreCase("Slahen halli")) {
-            rlist = hallSystem.getRoomsSkinu();
-        } else if (chosenHall.equalsIgnoreCase("Huhtiniemen halli")) {
-            rlist = hallSystem.getRoomsHuhtari();
-        }*/
 
 
 
@@ -141,15 +144,16 @@ public class ReservationFragment extends Fragment {
         });
     }
 
-    public void showFreeTimes(){
+    public void showFreeTimes() throws ParseException {
         Bundle bundle = new Bundle();
 
         int y = datePicker.getYear();
         int m = datePicker.getMonth();
         int d = datePicker.getDayOfMonth();
-
+        SimpleDateFormat sf = new SimpleDateFormat("YYYY-MM-dd");
         String chosendaate = String.format("%04d-%02d-%02d", y, m, d);
-
+        Date chosendate = sf.parse(chosendaate);
+        System.out.println(chosendate);
         String info = chosendaate +","+ hall.hallName +","+ room.name;
         bundle.putString("key", info);
         System.out.println(bundle);

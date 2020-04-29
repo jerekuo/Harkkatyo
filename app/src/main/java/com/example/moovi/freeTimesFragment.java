@@ -3,20 +3,25 @@ package com.example.moovi;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -31,16 +36,20 @@ public class freeTimesFragment extends Fragment {
     TextView textView;
     String resTime;
     EditText editText;
+    Spinner freeTimeSpinner;
     Hall newHall;
     Room newRoom;
+    Fragment fragment;
 
-    Date d;
+    String d;
     String hall;
     String room;
+    Database db = Database.getInstance();
 
     public freeTimesFragment() {
         // Required empty public constructor
     }
+    //PUSHI
 
 
     @Override
@@ -49,6 +58,8 @@ public class freeTimesFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_free_times, container, false);
 
         Button button = view.findViewById(R.id.button5);
+        freeTimeSpinner = view.findViewById(R.id.spinner3);
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,20 +80,66 @@ public class freeTimesFragment extends Fragment {
     public void onViewCreated (View view, Bundle savedInstanceState) {
         Bundle bundle = this.getArguments();
         String list = bundle.getString("key");
-        SimpleDateFormat formatter = new SimpleDateFormat("YYYY-mm-dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd");
         String[] tokens = list.split("[,]");
+        d = tokens[0];
+        hall = tokens[1];
+        room = tokens[2];
+
+
         try {
-            d = formatter.parse(tokens[0]);
+            freeTimeSpinner(d,hall,room);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        hall = tokens[1];
-        room = tokens[2];
 
 
         textView = view.findViewById(R.id.textView);
         textView.setText("*****Näytetään vapaat ajat*****\nHALLI: "+hall+"\nHUONE: "+room);
     }
+
+    public void freeTimeSpinner(String date, String hall, String room) throws ParseException {
+        ArrayList<String> timeList = new ArrayList<>();
+        for (int i = 8 ; i < 21 ; i++){
+            timeList.add(i+".00");
+        }
+
+        ArrayList<Reservation> list = hallSystem.getResList();
+
+        for (Reservation r: list){
+            System.out.println("####### tsekkaillaan varauksia #######");
+            System.out.println("Valittu hall : "+ hall+ "Verrattava on : "+ r.hall.getHallName());
+            System.out.println("Valittu room : "+ room+ "Verrattava on : "+ r.room.getName());
+            System.out.println("Valittu date : "+ date+ "Verrattava on : "+ r.resDate);  //Mikäli varaus löytyy samalle päivälle, poistaa yllä tehdystä listasta kyseiset ajat
+            if (hall.equalsIgnoreCase(r.hall.getHallName()) && room.equalsIgnoreCase(r.room.getName()) && date.equalsIgnoreCase(r.resDate)){   // Ei tietoa mätsääkö start timet daten kanssa?!?!?!?
+                timeList.remove(r.startTime);
+                System.out.println("Poistettava aika:  "+ r.startTime);
+            }
+        }
+
+        freeTimeSpinner = view.findViewById(R.id.spinner3);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, timeList);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        freeTimeSpinner.setAdapter(dataAdapter);
+        freeTimeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                resTime = (String) parent.getItemAtPosition(position);
+                System.out.println(resTime);
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+    }
+
 
 
 
@@ -90,11 +147,11 @@ public class freeTimesFragment extends Fragment {
         SimpleDateFormat format1 = new SimpleDateFormat("HH.mm");
         SimpleDateFormat format2 = new SimpleDateFormat("H.mm");
         editText = view.findViewById(R.id.editText);
-        String desc = editText.toString();
-        Date startTime = format2.parse(resTime);
-        long helpTime = startTime.getTime();
+        String desc = editText.getText().toString();
+        String startTime = resTime; // String pitäs saada oikeesee muotoo eli HH.mm eikä sitä litaniaa mis on 1970
+        long helpTime = format2.parse(resTime).getTime();
         long helpEndTime = helpTime + 1000 * 60 * 60;
-        Date endTime = new Date(helpEndTime);
+        String endTime = Long.toString(helpEndTime);
 
 
         for (Hall h: hallSystem.getHallList()){
@@ -108,19 +165,15 @@ public class freeTimesFragment extends Fragment {
             }
         }
 
-        Reservation res = new Reservation(newHall, newRoom,  desc, 123, 100, startTime, endTime );
+        Reservation res = new Reservation(newHall, newRoom,  desc, 123, 100, startTime, endTime , d);
 
         if (checkIfFree(res) == true) {
             hallSystem.addToResList(res);
-            for (Reservation r : hallSystem.getResList()){
-                System.out.println(r.getRoom()+"----"+r.getStartTime());
-            }
-            System.out.println(res.getDescription()+"\n");
-            System.out.println(res.getHall()+"\n");
-            System.out.println(res.getRoom()+"\n");
-            System.out.println(res.getStartTime()+"\n");
-            System.out.println(res.getEndTime()+"\n");
             Toast.makeText(getContext(),"Reservation done", Toast.LENGTH_SHORT).show();
+            fragment = new ReservationFragment();
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragmentView, fragment);
+            transaction.commit();
 
         } else{
             System.out.println("Varauksen teko ei onnistunut, löytyi päällekkäisyys.");
@@ -150,5 +203,6 @@ public class freeTimesFragment extends Fragment {
         }
 
     }
+
 
 }
