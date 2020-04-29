@@ -27,7 +27,7 @@ import java.util.Date;
  */
 public class SettingsFragment extends Fragment {
     View view;
-    TextView infoText, updateText;
+    TextView  updateText;
     EditText editPhone, editAddress, editLastName, editFirstName;
     DatePicker datePicker;
     Button updateInfo;
@@ -48,7 +48,6 @@ public class SettingsFragment extends Fragment {
         editPhone = view.findViewById(R.id.editPhone);
         editAddress = view.findViewById(R.id.editAddress);
         datePicker = view.findViewById(R.id.datePicker);
-        infoText = view.findViewById(R.id.infoText);
         updateText = view.findViewById(R.id.updateText);
         updateInfo = view.findViewById(R.id.updateInfo);
 
@@ -99,8 +98,7 @@ public class SettingsFragment extends Fragment {
                     Database.getInstance().addUser(user);
                     Backup.getInstance().writeUserBackup(user, getActivity().getApplicationContext());
                     Toast.makeText(getActivity(),"Information updated.",Toast.LENGTH_SHORT).show();
-                    infoText.setText("Name: "+name+" "+last+"\n"+"Birthdate: "+strDate+"\n"+"Email: "+email.toString()+"\n"+
-                            "Number: "+phone+"\n"+"Address: "+address);
+
 
                 }else if(address.isEmpty() || phone.isEmpty() || email.isEmpty() || name.isEmpty() || last.isEmpty()){
                     Toast.makeText(getActivity(), "Please insert into all fields.", Toast.LENGTH_SHORT).show();

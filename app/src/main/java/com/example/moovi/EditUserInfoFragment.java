@@ -1,7 +1,9 @@
 package com.example.moovi;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -27,8 +30,6 @@ public class EditUserInfoFragment extends Fragment {
     public EditUserInfoFragment() {
         // Required empty public constructor
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +50,12 @@ public class EditUserInfoFragment extends Fragment {
                 getUser();
             }
         });
-
+        updateInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateUserInfo();
+            }
+        });
         // Inflate the layout for this fragment
         return view;
     }
@@ -59,12 +65,9 @@ public class EditUserInfoFragment extends Fragment {
         String email = userEmail.getText().toString();
         Database.getInstance().getUserFromDBemail(email);
         editUser = HallSystem.getInstance().getEditUser();
-
         if (editUser != null) {
             setInfo();
         }
-
-
     }
 
     public void setInfo() {
@@ -72,13 +75,47 @@ public class EditUserInfoFragment extends Fragment {
         editLastName = view.findViewById(R.id.editLastName);
         editPhone = view.findViewById(R.id.editPhone);
         editAddress = view.findViewById(R.id.editAddress);
+        datePicker = view.findViewById(R.id.datePicker);
 
         editFirstName.setText(editUser.getFirstName());
         editLastName.setText(editUser.getLastName());
         editAddress.setText(editUser.getAddress());
         editPhone.setText(editUser.getPhoneNumber());
+        String date = editUser.getBirthdate();
+        String[] values = date.split("\\.", -1);
+        System.out.println("Arvot: "+values[0]);
+        int day = Integer.parseInt(values[0]);
+        int month = Integer.parseInt(values[1]);
+        int year = Integer.parseInt(values[2]);
+        datePicker.updateDate(year,month,day);
     }
 
+    public void updateUserInfo(){
+        String email = userEmail.getText().toString();
+        String name = editFirstName.getText().toString();
+        String last = editLastName.getText().toString();
+        String address = editAddress.getText().toString();
+        String phone = editPhone.getText().toString();
+        int day = datePicker.getDayOfMonth();
+        int month = datePicker.getMonth() + 1;
+        int year = datePicker.getYear();
+        String strDate = (day+"."+month+"."+year);
 
+        if(address.isEmpty() != true && phone.isEmpty() != true && email.isEmpty() != true
+                && name.isEmpty() != true && last.isEmpty() != true){
+            User user = new User(email,name,last,strDate,address,phone);
+            Database.getInstance().editUser(user);
+            Backup.getInstance().writeUserBackup(user, getActivity().getApplicationContext());
+            Toast.makeText(getActivity(),"Information updated.",Toast.LENGTH_SHORT).show();
 
+        }else if(address.isEmpty() || phone.isEmpty() || email.isEmpty() || name.isEmpty() || last.isEmpty()){
+            Toast.makeText(getActivity(), "Please insert into all fields.", Toast.LENGTH_SHORT).show();
+        }else{
+            //Do nothing
+        }
+    }
 }
+
+
+
+

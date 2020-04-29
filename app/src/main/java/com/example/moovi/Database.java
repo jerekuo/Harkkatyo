@@ -62,6 +62,25 @@ public class Database {
 
     }
 
+    public void editUser(User u) {
+
+        db.collection("Users").document(u.getEmail())
+                .set(u)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Success", "DocumentSnapshot success");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Error", "error writing document", e);
+                    }
+                });
+
+    }
+
     //Method for getting users details from db for currently logged in user
     public void getUserFromDB() {
         final User[] useri = new User[1];
@@ -165,6 +184,25 @@ public class Database {
             }
         }); hallsystem.setResList(reservations);
 
+    }
+
+    public void writeCurrentUserReservationList(final String email){
+        final ArrayList<Reservation> reservations = new ArrayList<>();
+        db.collection("Reservations").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
+                    String[] tokens = documentsnapshot.getId().split("[,]");
+                    if (tokens[0].equalsIgnoreCase(email)){
+                        reservations.add(documentsnapshot.toObject(Reservation.class));
+                    }
+
+
+                    Log.d(TAG, documentsnapshot.getId() + " => " + documentsnapshot.getData());
+                }
+            }
+        }); hallsystem.setCurUserResList(reservations);
     }
 
     public void getUserFromDBemail(String email) {
