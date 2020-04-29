@@ -13,6 +13,8 @@ import android.widget.CalendarView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 /**
@@ -66,6 +68,18 @@ public class Calendar_Fragment extends Fragment {
     public void printReservations(ArrayList<Reservation> list) {
         calendarText = view.findViewById(R.id.textView3);
         String s ="";
+
+        Collections.sort(list, new Comparator<Reservation>() {
+            @Override
+            public int compare(Reservation o1, Reservation o2) {
+                Float fo1 = Float.parseFloat(o1.getStartTime());
+                Float fo2 = Float.parseFloat(o2.getStartTime());
+
+                return fo1.compareTo(fo2);
+            }
+
+
+        });
         for (Reservation r : list) {
             s += r.getHall() +" " + r.getRoom() + " " + r.getStartTime() + "\n";
             s += r.getDescription() +"\n\n";

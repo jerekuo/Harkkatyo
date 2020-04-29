@@ -186,6 +186,25 @@ public class Database {
 
     }
 
+    public void writeCurrentUserReservationList(final String email){
+        final ArrayList<Reservation> reservations = new ArrayList<>();
+        db.collection("Reservations").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
+                    String[] tokens = documentsnapshot.getId().split("[,]");
+                    if (tokens[0].equalsIgnoreCase(email)){
+                        reservations.add(documentsnapshot.toObject(Reservation.class));
+                    }
+
+
+                    Log.d(TAG, documentsnapshot.getId() + " => " + documentsnapshot.getData());
+                }
+            }
+        }); hallsystem.setCurUserResList(reservations);
+    }
+
     public void getUserFromDBemail(String email) {
         System.out.println("GETUSERFROMDBEMAIL KAYNNISTYY JA SAI EMAILIN:  " + email);
         final User[] useri = new User[1];

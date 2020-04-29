@@ -70,6 +70,16 @@ public class HallSystem {
         return resList;
     }
 
+    public ArrayList<Reservation> getCurUserResList() {
+        return curUserResList;
+    }
+
+    public void setCurUserResList(ArrayList<Reservation> curUserResList) {
+        this.curUserResList = curUserResList;
+    }
+
+    public ArrayList<Reservation> curUserResList = new ArrayList<>();
+
     public void addToResList(Reservation res){
         Database db = Database.getInstance();
         db.addReservation(res);

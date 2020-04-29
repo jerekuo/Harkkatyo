@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
     TextView textError;
@@ -38,12 +40,39 @@ public class RegisterActivity extends AppCompatActivity {
         String pass1 = editPassword1.getText().toString();
         String pass2 = editPassword2.getText().toString();
         String email = editEmail.getText().toString();
-        if(pass1.isEmpty() != true && pass2.isEmpty() != true && email.isEmpty() != true && pass1.equals(pass2)){
-            regAcc(email, pass1);
+        boolean hasLetter = false;
+        boolean hasDigit = false;
+        boolean hasCapital = false;
+        boolean hasSpecCharacter = false;
+        Pattern pattern = Pattern.compile("[a-zA-Z0-9]*");
+        Matcher matcher = pattern.matcher(pass1);
+
+        if (email.isEmpty() != true && pass1.length() >= 12 && pass2.length() >= 12 && pass1.equals(pass2)) {
+            for (int i = 0; i < pass1.length(); i++) {
+                char x = pass1.charAt(i);
+                if (Character.isLetter(x)) {
+                    hasLetter = true;
+                }
+                if (Character.isDigit(x)) {
+                    hasDigit = true;
+                }
+                if (Character.isUpperCase(x)) {
+                    hasCapital = true;
+
+                }
+                if (!matcher.matches()){
+                    hasSpecCharacter = true;
+                }
+                if (hasLetter && hasDigit && hasCapital && hasSpecCharacter) {
+                    regAcc(email, pass1);
+                    break;
+                }
+            }
+
         }if(pass1.isEmpty() || pass2.isEmpty() || pass1 != pass2 || email.isEmpty()){
-            textError.setText("Invalid password or email input!");
-        }else{
-            //Do nothing
+            textError.setText("Invalid password or email input! The password must consist of lower- and uppercase letters, numbers and special characters.");
+       }else{
+           //Do nothing
         }
     }
 
