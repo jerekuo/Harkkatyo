@@ -61,7 +61,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         navigationView.setNavigationItemSelectedListener(this);
 
        /* currentUser = HallSystem.getInstance().getUseri();
-
+f
         if (currentUser == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             Fragment fragment;
