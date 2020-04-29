@@ -73,6 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
             textError.setText("Invalid password or email input! The password must consist of lower- and uppercase letters, numbers and special characters.");
        }else{
            //Do nothing
+            textError.setText("Creating account!");
         }
     }
 
