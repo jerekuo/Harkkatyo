@@ -50,13 +50,11 @@ public class Database {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("Success", "DocumentSnapshot success");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("Error", "error writing document", e);
                     }
                 });
 
@@ -69,13 +67,11 @@ public class Database {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("Success", "DocumentSnapshot success");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("Error", "error writing document", e);
                     }
                 });
 
@@ -111,11 +107,11 @@ public class Database {
 
 
                                 halls.add(new Hall(i,name,address,list));
-                                Log.d(TAG, document.getId() + " => " + document.getData());
+
                                 i++;
                             }
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+
                         }
                     }
                 });
@@ -140,7 +136,7 @@ public class Database {
                     rooms.add(new Room(name,cap,"Kaikki pelaa",i));
 
 
-                    Log.d(TAG, documentsnapshot.getId() + " => " + documentsnapshot.getData());
+
                 }
             }
         }); return rooms;
@@ -154,13 +150,13 @@ public class Database {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("Success", "DocumentSnapshot success");
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("Error", "error writing document", e);
+
                     }
                 });
 
@@ -176,10 +172,6 @@ public class Database {
                 for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
 
                     reservations.add((Reservation) documentsnapshot.toObject(Reservation.class));
-                    System.out.println("############ Reservation listaan lisätään:  "+ documentsnapshot.toObject(Reservation.class).startTime);
-
-
-                    Log.d(TAG, documentsnapshot.getId() + " => " + documentsnapshot.getData());
                 }
             }
         }); hallsystem.setResList(reservations);
@@ -194,19 +186,23 @@ public class Database {
 
                 for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
                     String[] tokens = documentsnapshot.getId().split("[,]");
+
+
                     if (tokens[0].equalsIgnoreCase(email)){
+
                         reservations.add(documentsnapshot.toObject(Reservation.class));
+                    } else {
+
                     }
 
 
-                    Log.d(TAG, documentsnapshot.getId() + " => " + documentsnapshot.getData());
+
                 }
             }
         }); hallsystem.setCurUserResList(reservations);
     }
 
     public void getUserFromDBemail(String email) {
-        System.out.println("GETUSERFROMDBEMAIL KAYNNISTYY JA SAI EMAILIN:  " + email);
         final User[] useri = new User[1];
         DocumentReference docRef = db.collection("Users").document(email);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -214,8 +210,6 @@ public class Database {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 useri[0] = documentSnapshot.toObject(User.class);
                 hallsystem.setEditUser(useri[0]);
-                System.out.println(useri[0].getFirstName() + "   SAATU USERI");
-                System.out.println("KAYTTAJAN HAKU ON VALMIS");
             }
         });
 
@@ -249,11 +243,10 @@ public class Database {
                 for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
 
                     if (documentsnapshot.toObject(Reservation.class).getResDate().equalsIgnoreCase(date)) {
-                        System.out.println("LISATAAN LISTAAN KOSKA: "+date + " == " + documentsnapshot.toObject(Reservation.class).getResDate());
                         reservations.add((Reservation) documentsnapshot.toObject(Reservation.class));
-                        System.out.println("############ Reservation listaan lisätään:  "+ documentsnapshot.toObject(Reservation.class).startTime);
+
                     } else {
-                        System.out.println("EI LISATA LISTAAN KOSKA: "+date + " != " + documentsnapshot.toObject(Reservation.class).getResDate());
+
                     }
 
                 }

@@ -35,16 +35,18 @@ public class HomeFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_home, container, false);
         ArrayList<Reservation> res = hallSystem.getCurUserResList();
-        ArrayList<String> animalNames = new ArrayList<>();
+        System.out.println("RESLIST SIZE FROM GETCURUSERRESLIST   " + res.size());
+        ArrayList<String> resList = new ArrayList<>();
 
         for (Reservation r : res){
-            animalNames.add(r.hall+","+r.resDate+","+r.startTime);
+            System.out.println(r.hall+"  ,  "+r.resDate+"  ,  "+r.startTime);
+            resList.add(r.hall+"  ,  "+r.resDate+"  ,  "+r.startTime);
         }
 
         // set up the RecyclerView
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new MyRecyclerViewAdapter(getContext(), animalNames);
+        adapter = new MyRecyclerViewAdapter(getContext(), resList);
         adapter.setClickListener(new MyRecyclerViewAdapter.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {

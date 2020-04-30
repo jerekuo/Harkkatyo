@@ -107,7 +107,7 @@ f
             Intent intent = new Intent(Main2Activity.this, MainActivity.class);
             startActivity(intent);
         } else if (item.getTitle().toString().equalsIgnoreCase("Home")) {
-            database.writeCurrentUserReservationList(user.getEmail());
+            //database.writeCurrentUserReservationList(user.getEmail());
             fragment = new HomeFragment();
             transaction.replace(R.id.fragmentView, fragment);
         }
