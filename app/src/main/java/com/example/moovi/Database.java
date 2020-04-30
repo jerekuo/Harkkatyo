@@ -1,10 +1,13 @@
 package com.example.moovi;
 
+
 import android.util.Log;
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -15,8 +18,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import static androidx.constraintlayout.widget.Constraints.TAG;
-
-
 
 public class Database {
     //CLASS VARIABLES
@@ -78,18 +79,25 @@ public class Database {
     }
 
     //Method for getting users details from db for currently logged in user
-    public void getUserFromDB() {
+    public void getUserFromDB(final OnGetDataListener listener) {
         final User[] useri = new User[1];
+        listener.onStart();
+
         DocumentReference docRef = db.collection("Users").document(user.getEmail());
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                useri[0] = documentSnapshot.toObject(User.class);
-                hallsystem.setUseri(useri[0]);
+                listener.onSuccess(documentSnapshot);
+                //useri[0] = documentSnapshot.toObject(User.class);
+                //hallsystem.setUseri(useri[0]);
+                //System.out.println("USERI SETATTU");
             }
         });
 
     }
+
+
+
 
     public void writeHallList(){
         halls = new ArrayList<>();
@@ -173,8 +181,13 @@ public class Database {
 
                     reservations.add((Reservation) documentsnapshot.toObject(Reservation.class));
                 }
+
             }
-        }); hallsystem.setResList(reservations);
+        });
+
+        hallsystem.setResList(reservations);
+
+
 
     }
 

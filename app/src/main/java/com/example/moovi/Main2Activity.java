@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 
@@ -31,7 +32,32 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Database.getInstance().getUserFromDB();
+        Database.getInstance().getUserFromDB(new OnGetDataListener() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                currentUser = documentSnapshot.toObject(User.class);
+                HallSystem.getInstance().setUseri(currentUser);
+                System.out.println("USERI SETATTU");
+
+                if (currentUser == null) {
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    Fragment fragment;
+                    fragment = new SettingsFragment();
+                    transaction.replace(R.id.fragmentView,fragment);
+                    transaction.commit();
+                }
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
 
         setContentView(R.layout.activity_main2);
         database.writeReservationList();
@@ -60,15 +86,8 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         actionBarDrawerToggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-       /* currentUser = HallSystem.getInstance().getUseri();
-f
-        if (currentUser == null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            Fragment fragment;
-            fragment = new SettingsFragment();
-            transaction.replace(R.id.fragmentView,fragment);
-            transaction.commit();
-        }*/
+
+
 
 
 
