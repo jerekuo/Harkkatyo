@@ -14,19 +14,24 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
 public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     FirebaseUser user;
     Database database = Database.getInstance();
     User currentUser;
+    final ArrayList<Reservation> reservations = new ArrayList<>();
 
 
     @Override
@@ -46,6 +51,11 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                     transaction.replace(R.id.fragmentView,fragment);
                     transaction.commit();
                 }
+            }
+
+            @Override
+            public void onSuccess(@NonNull Task<QuerySnapshot> task) {
+
             }
 
             @Override
@@ -96,7 +106,47 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     @Override
     protected void onStart(){
         super.onStart();
-        database.writeCurrentUserReservationList(user.getEmail());
+        database.writeCurrentUserReservationList(user.getEmail(), new OnGetDataListener() {
+
+
+
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+            }
+
+            @Override
+            public void onSuccess(@NonNull Task<QuerySnapshot> task) {
+                for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
+
+                    String[] tokens = documentsnapshot.getId().split("[,]");
+
+
+                    if (tokens[0].equalsIgnoreCase(user.getEmail())){
+
+                        reservations.add(documentsnapshot.toObject(Reservation.class));
+                    } else {
+
+                    }
+
+
+
+                }
+                HallSystem.getInstance().setCurUserResList(reservations);
+            }
+
+
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
     }
 
 
@@ -125,8 +175,50 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             HallSystem.getInstance().setUser(null);
             Intent intent = new Intent(Main2Activity.this, MainActivity.class);
             startActivity(intent);
+
         } else if (item.getTitle().toString().equalsIgnoreCase("Home")) {
-            //database.writeCurrentUserReservationList(user.getEmail());
+            database.writeCurrentUserReservationList(user.getEmail(), new OnGetDataListener() {
+
+
+
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                }
+
+                @Override
+                public void onSuccess(@NonNull Task<QuerySnapshot> task) {
+                    reservations.clear();
+                    for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
+
+                        String[] tokens = documentsnapshot.getId().split("[,]");
+
+
+                        if (tokens[0].equalsIgnoreCase(user.getEmail())){
+
+                            reservations.add(documentsnapshot.toObject(Reservation.class));
+                        } else {
+
+                        }
+
+
+
+                    }
+                    HallSystem.getInstance().setCurUserResList(reservations);
+                }
+
+
+
+                @Override
+                public void onStart() {
+
+                }
+
+                @Override
+                public void onFailure() {
+
+                }
+            });
             fragment = new HomeFragment();
             transaction.replace(R.id.fragmentView, fragment);
         }
