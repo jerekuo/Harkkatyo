@@ -1,13 +1,14 @@
 package com.example.moovi;
 
 
-import android.util.Log;
+
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.ValueEventListener;
+
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -17,7 +18,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
-
 
 public class Database {
     //CLASS VARIABLES
@@ -175,7 +175,7 @@ public class Database {
 
                 for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
 
-                    reservations.add((Reservation) documentsnapshot.toObject(Reservation.class));
+                    reservations.add(documentsnapshot.toObject(Reservation.class));
                 }
 
             }
@@ -240,7 +240,7 @@ public class Database {
                 for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
 
                     if (documentsnapshot.toObject(Reservation.class).getResDate().equalsIgnoreCase(date)) {
-                        reservations.add((Reservation) documentsnapshot.toObject(Reservation.class));
+                        reservations.add(documentsnapshot.toObject(Reservation.class));
 
                     } else {
 
@@ -254,7 +254,15 @@ public class Database {
 
     }
 
-
+    //Deletes reservation from db, Takes the documents name as parameter.
+    public void deleteRes(final String s) {
+        db.collection("Reservations").document(s).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                System.out.println("Reservation "+ s +"Removed");
+            }
+        });
+    }
 
 
 }

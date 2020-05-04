@@ -45,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         mAuth = FirebaseAuth.getInstance();
-        password = (EditText) findViewById(R.id.password);
-        userName = (EditText) findViewById(R.id.userName);
-        showPassword = (CheckBox) findViewById(R.id.showPassword);
+        password = findViewById(R.id.password);
+        userName = findViewById(R.id.userName);
+        showPassword = findViewById(R.id.showPassword);
 
         //Hides/Shows password to user
         showPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
