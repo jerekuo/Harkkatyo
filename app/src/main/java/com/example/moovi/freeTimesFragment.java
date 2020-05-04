@@ -107,13 +107,9 @@ public class freeTimesFragment extends Fragment {
         ArrayList<Reservation> list = hallSystem.getResList();
 
         for (Reservation r: list){
-            System.out.println("####### tsekkaillaan varauksia #######");
-            System.out.println("Valittu hall : "+ hall+ "Verrattava on : "+ r.hall.getHallName());
-            System.out.println("Valittu room : "+ room+ "Verrattava on : "+ r.room.getName());
-            System.out.println("Valittu date : "+ date+ "Verrattava on : "+ r.resDate);  //Mikäli varaus löytyy samalle päivälle, poistaa yllä tehdystä listasta kyseiset ajat
+         //Mikäli varaus löytyy samalle päivälle, poistaa yllä tehdystä listasta kyseiset ajat
             if (hall.equalsIgnoreCase(r.hall.getHallName()) && room.equalsIgnoreCase(r.room.getName()) && date.equalsIgnoreCase(r.resDate)){   // Ei tietoa mätsääkö start timet daten kanssa?!?!?!?
                 timeList.remove(r.startTime);
-                System.out.println("Poistettava aika:  "+ r.startTime);
             }
         }
 

@@ -182,9 +182,39 @@ public class Database {
         });
 
         hallsystem.setResList(reservations);
+    }
 
+    public void deleteReservation(){
+        final Reservation res = HallSystem.getInstance().getChosenRes();
+        db.collection("Reservations").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
+                for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
+                    if (documentsnapshot.getId().equalsIgnoreCase(user.getEmail()+","+res.getResDate()+","+res.getStartTime())){
+                        deleteRes(user.getEmail()+","+res.getResDate()+","+res.getStartTime());
+                    }
+                }
 
+            }
+        });
+    }
+
+    public void editReservation(final Reservation r){
+        final Reservation res = HallSystem.getInstance().getChosenRes();
+        db.collection("Reservations").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
+                    if (documentsnapshot.getId().equalsIgnoreCase(user.getEmail()+","+res.getResDate()+","+res.getStartTime())){
+                        deleteRes(user.getEmail()+","+res.getResDate()+","+res.getStartTime());
+                        addReservation(r);
+                    }
+                }
+
+            }
+        });
     }
 
     public void writeCurrentUserReservationList(final String email, final OnGetDataListener listener){

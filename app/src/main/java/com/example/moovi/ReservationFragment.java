@@ -92,7 +92,6 @@ public class ReservationFragment extends Fragment {
 
 
     public void hallSpinner(){
-        System.out.println("HALLSPINNERI AJETAAAAAN #%%¤#%¤#%¤#%¤#%¤%¤#¤%#¤");
 
         hallSpinner = view.findViewById(R.id.spinner);
         final ArrayList<Hall> list = hallSystem.getHallList();
