@@ -8,14 +8,14 @@
                 android:icon="@drawable/ic_home_black_24dp">
             </item>
             <item
-                android:icon="@drawable/ic_event_note_black_24dp"
-                android:title="@string/reservations" />
-            <item
                 android:icon="@drawable/ic_person_black_24dp"
                 android:title="@string/users" />
             <item
+                android:icon="@drawable/ic_event_note_black_24dp"
+                android:title="@string/reservations" />
+            <item
                 android:icon="@drawable/ic_settings_black_24dp"
-                android:title="@string/settings"></item>
+                android:title="Edit reservations"></item>
             <item
                 android:title="@string/log_out"
                 android:icon="@drawable/ic_close_black_24dp">

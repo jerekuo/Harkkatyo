@@ -91,9 +91,12 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
             transaction.replace(R.id.fragmentView,fragment);
 
         }else if (item.getTitle().toString().equalsIgnoreCase("reservations")){
-            fragment = new EditReservationsFragment();
+            fragment = new ShowReservationsFragment();
             transaction.replace(R.id.fragmentView,fragment);
 
+        }else if (item.getTitle().toString().equalsIgnoreCase("edit reservations")){
+            fragment = new EditReservationsFragment();
+            transaction.replace(R.id.fragmentView,fragment);
         }
         transaction.commit();
         return false;
