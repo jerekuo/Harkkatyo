@@ -40,8 +40,6 @@ public class Calendar_Fragment extends Fragment {
 
         // Inflate the layout for this fragment
         return view;
-
-
     }
 
     public void onViewCreated (View view, Bundle savedInstanceState) {
@@ -62,7 +60,6 @@ public class Calendar_Fragment extends Fragment {
                 printReservations(reslist);
             }
         });
-
     }
 
     public void printReservations(ArrayList<Reservation> list) {
@@ -91,7 +88,5 @@ public class Calendar_Fragment extends Fragment {
         } else {
             calendarText.setText("No reservations on this day!");
         }
-
     }
-
 }
