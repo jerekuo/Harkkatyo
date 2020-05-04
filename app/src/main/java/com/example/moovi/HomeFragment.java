@@ -21,6 +21,7 @@ public class HomeFragment extends Fragment {
 
     View view;
     MyRecyclerViewAdapter adapter;
+    ArrayList<Reservation> res;
     HallSystem hallSystem = HallSystem.getInstance();
     Database database = Database.getInstance();
 
@@ -34,12 +35,14 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_home, container, false);
-        ArrayList<Reservation> res = hallSystem.getCurUserResList();
+        res = hallSystem.getCurUserResList();
         ArrayList<String> resList = new ArrayList<>();
 
         for (Reservation r : res){
             String[] date = r.resDate.split("-");
             String md = date[2] + "." + date[1];
+
+
 
             resList.add(r.hall+" "+r.room+ " " +md+" "+r.startTime);
         }
@@ -51,7 +54,7 @@ public class HomeFragment extends Fragment {
         adapter.setClickListener(new MyRecyclerViewAdapter.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                System.out.println("Painettu nappia");
+                Reservation resChoice = res.get(position);
             }
         });
         recyclerView.setAdapter(adapter);
