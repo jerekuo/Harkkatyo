@@ -73,7 +73,7 @@ public class ReservationFragment extends Fragment {
         });
 
         searchButton = view.findViewById(R.id.button4);
-        datePicker = (DatePicker) view.findViewById(R.id.datePicker);
+        datePicker = view.findViewById(R.id.datePicker);
 
 
 

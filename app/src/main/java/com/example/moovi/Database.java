@@ -2,6 +2,8 @@ package com.example.moovi;
 
 
 
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -173,7 +175,7 @@ public class Database {
 
                 for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
 
-                    reservations.add((Reservation) documentsnapshot.toObject(Reservation.class));
+                    reservations.add(documentsnapshot.toObject(Reservation.class));
                 }
 
             }
@@ -238,7 +240,7 @@ public class Database {
                 for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
 
                     if (documentsnapshot.toObject(Reservation.class).getResDate().equalsIgnoreCase(date)) {
-                        reservations.add((Reservation) documentsnapshot.toObject(Reservation.class));
+                        reservations.add(documentsnapshot.toObject(Reservation.class));
 
                     } else {
 
@@ -252,7 +254,15 @@ public class Database {
 
     }
 
-
+    //Deletes reservation from db, Takes the documents name as parameter.
+    public void deleteRes(final String s) {
+        db.collection("Reservations").document(s).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                System.out.println("Reservation "+ s +"Removed");
+            }
+        });
+    }
 
 
 }

@@ -196,11 +196,8 @@ public class freeTimesFragment extends Fragment {
             }
         }
 
-        if (availability.equalsIgnoreCase("False")){  // Metodi palauttaa truen jos listavertailun jälkeen ei ole löytynyt päällekkäisyyttä
-            return false;                                          // Palauttaa falsen jos lötyy päällekkäisyyttä
-        } else{
-            return true;
-        }
+        // Metodi palauttaa truen jos listavertailun jälkeen ei ole löytynyt päällekkäisyyttä
+        return !availability.equalsIgnoreCase("False");                                          // Palauttaa falsen jos lötyy päällekkäisyyttä
 
     }
 
