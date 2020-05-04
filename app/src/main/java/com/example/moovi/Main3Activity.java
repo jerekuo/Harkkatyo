@@ -12,8 +12,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class Main3Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private Toolbar toolbar;
@@ -21,11 +24,35 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
     private NavigationView navigationView;
     FirebaseUser user;
     Database database = Database.getInstance();
+    User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Database.getInstance().getUserFromDB();
+        Database.getInstance().getUserFromDB(new OnGetDataListener() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                currentUser = documentSnapshot.toObject(User.class);
+                HallSystem.getInstance().setUseri(currentUser);
+                System.out.println("USERI SETATTU");
+
+            }
+
+            @Override
+            public void onSuccess(@NonNull Task<QuerySnapshot> task) {
+
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
         database.writeRoomList("Huhtari");
         database.writeRoomList("Sammonlahden urheiluhalli");
         database.writeRoomList("Urheilutalo");

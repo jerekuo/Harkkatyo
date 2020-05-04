@@ -1,10 +1,13 @@
 package com.example.moovi;
 
+
 import android.util.Log;
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -14,8 +17,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
-import static androidx.constraintlayout.widget.Constraints.TAG;
-
 
 
 public class Database {
@@ -78,18 +79,21 @@ public class Database {
     }
 
     //Method for getting users details from db for currently logged in user
-    public void getUserFromDB() {
-        final User[] useri = new User[1];
+    public void getUserFromDB(final OnGetDataListener listener) {
+        listener.onStart();
         DocumentReference docRef = db.collection("Users").document(user.getEmail());
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                useri[0] = documentSnapshot.toObject(User.class);
-                hallsystem.setUseri(useri[0]);
+                listener.onSuccess(documentSnapshot);
+
             }
         });
 
     }
+
+
+
 
     public void writeHallList(){
         halls = new ArrayList<>();
@@ -173,33 +177,26 @@ public class Database {
 
                     reservations.add((Reservation) documentsnapshot.toObject(Reservation.class));
                 }
+
             }
-        }); hallsystem.setResList(reservations);
+        });
+
+        hallsystem.setResList(reservations);
+
+
 
     }
 
-    public void writeCurrentUserReservationList(final String email){
+    public void writeCurrentUserReservationList(final String email, final OnGetDataListener listener){
+        listener.onStart();
         final ArrayList<Reservation> reservations = new ArrayList<>();
         db.collection("Reservations").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                listener.onSuccess(task);
 
-                for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
-                    String[] tokens = documentsnapshot.getId().split("[,]");
-
-
-                    if (tokens[0].equalsIgnoreCase(email)){
-
-                        reservations.add(documentsnapshot.toObject(Reservation.class));
-                    } else {
-
-                    }
-
-
-
-                }
             }
-        }); hallsystem.setCurUserResList(reservations);
+        });
     }
 
     public void getUserFromDBemail(String email) {

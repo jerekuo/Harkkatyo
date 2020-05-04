@@ -14,24 +14,60 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
 public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     FirebaseUser user;
     Database database = Database.getInstance();
     User currentUser;
+    final ArrayList<Reservation> reservations = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Database.getInstance().getUserFromDB();
+        Database.getInstance().getUserFromDB(new OnGetDataListener() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                currentUser = documentSnapshot.toObject(User.class);
+                HallSystem.getInstance().setUseri(currentUser);
+                System.out.println("USERI SETATTU");
+
+                if (currentUser == null) {
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    Fragment fragment;
+                    fragment = new SettingsFragment();
+                    transaction.replace(R.id.fragmentView,fragment);
+                    transaction.commit();
+                }
+            }
+
+            @Override
+            public void onSuccess(@NonNull Task<QuerySnapshot> task) {
+
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
 
         setContentView(R.layout.activity_main2);
         database.writeReservationList();
@@ -60,15 +96,8 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         actionBarDrawerToggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-       /* currentUser = HallSystem.getInstance().getUseri();
-f
-        if (currentUser == null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            Fragment fragment;
-            fragment = new SettingsFragment();
-            transaction.replace(R.id.fragmentView,fragment);
-            transaction.commit();
-        }*/
+
+
 
 
 
@@ -77,7 +106,47 @@ f
     @Override
     protected void onStart(){
         super.onStart();
-        database.writeCurrentUserReservationList(user.getEmail());
+        database.writeCurrentUserReservationList(user.getEmail(), new OnGetDataListener() {
+
+
+
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+            }
+
+            @Override
+            public void onSuccess(@NonNull Task<QuerySnapshot> task) {
+                for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
+
+                    String[] tokens = documentsnapshot.getId().split("[,]");
+
+
+                    if (tokens[0].equalsIgnoreCase(user.getEmail())){
+
+                        reservations.add(documentsnapshot.toObject(Reservation.class));
+                    } else {
+
+                    }
+
+
+
+                }
+                HallSystem.getInstance().setCurUserResList(reservations);
+            }
+
+
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
     }
 
 
@@ -106,8 +175,50 @@ f
             HallSystem.getInstance().setUser(null);
             Intent intent = new Intent(Main2Activity.this, MainActivity.class);
             startActivity(intent);
+
         } else if (item.getTitle().toString().equalsIgnoreCase("Home")) {
-            //database.writeCurrentUserReservationList(user.getEmail());
+            database.writeCurrentUserReservationList(user.getEmail(), new OnGetDataListener() {
+
+
+
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                }
+
+                @Override
+                public void onSuccess(@NonNull Task<QuerySnapshot> task) {
+                    reservations.clear();
+                    for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
+
+                        String[] tokens = documentsnapshot.getId().split("[,]");
+
+
+                        if (tokens[0].equalsIgnoreCase(user.getEmail())){
+
+                            reservations.add(documentsnapshot.toObject(Reservation.class));
+                        } else {
+
+                        }
+
+
+
+                    }
+                    HallSystem.getInstance().setCurUserResList(reservations);
+                }
+
+
+
+                @Override
+                public void onStart() {
+
+                }
+
+                @Override
+                public void onFailure() {
+
+                }
+            });
             fragment = new HomeFragment();
             transaction.replace(R.id.fragmentView, fragment);
         }
