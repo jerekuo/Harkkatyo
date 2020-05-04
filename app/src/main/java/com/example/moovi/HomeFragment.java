@@ -38,8 +38,10 @@ public class HomeFragment extends Fragment {
         ArrayList<String> resList = new ArrayList<>();
 
         for (Reservation r : res){
-            System.out.println(r.hall+"  ,  "+r.resDate+"  ,  "+r.startTime);
-            resList.add(r.hall+"  ,  "+r.resDate+"  ,  "+r.startTime);
+            String[] date = r.resDate.split("-");
+            String md = date[2] + "." + date[1];
+
+            resList.add(r.hall+" "+r.room+ " " +md+" "+r.startTime);
         }
 
         // set up the RecyclerView
