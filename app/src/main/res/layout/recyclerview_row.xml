@@ -11,7 +11,7 @@
         android:id="@+id/card_view"
         android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         card_view:cardBackgroundColor="@color/cardview_light_background"
         card_view:cardElevation="5dp"
         card_view:cardUseCompatPadding="true">
@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:textSize="24dp" />
+            android:textSize="20dp" />
 
     </androidx.cardview.widget.CardView>
 
