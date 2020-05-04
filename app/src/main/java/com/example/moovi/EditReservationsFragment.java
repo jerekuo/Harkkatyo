@@ -14,6 +14,7 @@ import android.view.ViewGroup;
  */
 public class EditReservationsFragment extends Fragment {
     View view;
+    Reservation res;
 
     public EditReservationsFragment() {
         // Required empty public constructor
@@ -24,6 +25,9 @@ public class EditReservationsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        res = HallSystem.getInstance().getChosenRes();
+
+
         return view;
     }
 }

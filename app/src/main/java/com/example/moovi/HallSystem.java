@@ -11,6 +11,16 @@ import java.util.ArrayList;
 
 public class HallSystem {
 
+    public Reservation getChosenRes() {
+        return chosenRes;
+    }
+
+    public void setChosenRes(Reservation chosenRes) {
+        this.chosenRes = chosenRes;
+    }
+
+    public Reservation chosenRes;
+
 
     private static HallSystem hallsystem = new HallSystem();
 
