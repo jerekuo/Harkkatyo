@@ -35,10 +35,13 @@ public class HomeFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_home, container, false);
         ArrayList<Reservation> res = hallSystem.getCurUserResList();
-        final ArrayList<String> resList = new ArrayList<>();
+        ArrayList<String> resList = new ArrayList<>();
 
         for (Reservation r : res){
-            resList.add(r.hall+"  ,  "+r.resDate+"  ,  "+r.startTime);
+            String[] date = r.resDate.split("-");
+            String md = date[2] + "." + date[1];
+
+            resList.add(r.hall+" "+r.room+ " " +md+" "+r.startTime);
         }
 
         // set up the RecyclerView
@@ -48,7 +51,7 @@ public class HomeFragment extends Fragment {
         adapter.setClickListener(new MyRecyclerViewAdapter.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
+                System.out.println("Painettu nappia");
             }
         });
         recyclerView.setAdapter(adapter);
