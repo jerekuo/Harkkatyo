@@ -17,7 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
-import static androidx.constraintlayout.widget.Constraints.TAG;
+
 
 public class Database {
     //CLASS VARIABLES
