@@ -60,6 +60,7 @@ public class EditUserInfoFragment extends Fragment {
         return view;
     }
 
+    //gets the user from database so we can fill the current info to text fields.
     public void getUser() {
         userEmail = view.findViewById(R.id.userEmail);
         String email = userEmail.getText().toString();
@@ -70,6 +71,7 @@ public class EditUserInfoFragment extends Fragment {
         }
     }
 
+    //method parses info from user we got from db and sets it to text fields.
     public void setInfo() {
         editFirstName = view.findViewById(R.id.editFirstName);
         editLastName = view.findViewById(R.id.editLastName);
@@ -90,6 +92,7 @@ public class EditUserInfoFragment extends Fragment {
         datePicker.updateDate(year,month,day);
     }
 
+    //Updates modified information to database.
     public void updateUserInfo(){
         String email = userEmail.getText().toString();
         String name = editFirstName.getText().toString();

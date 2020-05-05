@@ -61,6 +61,7 @@ public class Database {
 
     }
 
+    //Method overwrites the user in database with new details. Used when updating existing user information.
     public void editUser(User u) {
 
         db.collection("Users").document(u.getEmail())
@@ -94,7 +95,7 @@ public class Database {
 
 
 
-
+    //Method sets arraylist containing all the halls to hallsystem singleton for easy access.
     public void writeHallList(){
         halls = new ArrayList<>();
         db.collection("AllHalls")
@@ -124,6 +125,7 @@ public class Database {
         hallsystem.setHallList(halls);
     }
 
+    //Method returns arraylist which contains all the rooms in the database.
     public ArrayList<Room> writeRoomList(final String hall){
         final ArrayList<Room> rooms = new ArrayList<>();
         //final String h = hall;
@@ -146,7 +148,7 @@ public class Database {
         }); return rooms;
 
     }
-
+    //adds reservation to the database.
     public void addReservation(Reservation r) {
 
         db.collection("Reservations").document(user.getEmail()+","+r.resDate+","+r.startTime)
@@ -167,6 +169,7 @@ public class Database {
     }
     //U
 
+    //writes all reservations in the database to a list and sets it to hallsystem for easy access.
     public void writeReservationList(){
         final ArrayList<Reservation> reservations = new ArrayList<>();
         db.collection("Reservations").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -184,6 +187,7 @@ public class Database {
         hallsystem.setResList(reservations);
     }
 
+    //Method for deleting reservations from DB
     public void deleteReservation(){
         final Reservation res = HallSystem.getInstance().getChosenRes();
         db.collection("Reservations").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -191,7 +195,7 @@ public class Database {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
                 for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
-                    if (documentsnapshot.getId().equalsIgnoreCase(user.getEmail()+","+res.getResDate()+","+res.getStartTime())){
+                    if (documentsnapshot.getId().equalsIgnoreCase(user.getEmail()+","+res.getResDate()+","+res.getStartTime())){ //Finds the correct reservation.
                         deleteRes(user.getEmail()+","+res.getResDate()+","+res.getStartTime());
                     }
                 }
@@ -200,6 +204,7 @@ public class Database {
         });
     }
 
+    //Adds new reservation with edited information and deletes the old one from db.
     public void editReservation(final Reservation r){
         final Reservation res = HallSystem.getInstance().getChosenRes();
         db.collection("Reservations").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -217,6 +222,7 @@ public class Database {
         });
     }
 
+    //writes reservationlist for the given user. Uses Interface to make app to wait until DB completes query.
     public void writeCurrentUserReservationList(final String email, final OnGetDataListener listener){
         listener.onStart();
         final ArrayList<Reservation> reservations = new ArrayList<>();
@@ -229,6 +235,7 @@ public class Database {
         });
     }
 
+    //Sets given user to hallsystem for easy access.
     public void getUserFromDBemail(String email) {
         final User[] useri = new User[1];
         DocumentReference docRef = db.collection("Users").document(email);
@@ -243,10 +250,13 @@ public class Database {
 
     }
 
+
+    //Method returns arrayList<Reservation> which contains all the reservations in the given date.
     public ArrayList getReservationsByDate(int day, int month, int year) {
         String sMonth;
         String sDay;
 
+        //Checks if month or day is only one digit and converts it to 2 digits.
         if(month < 10) {
             sMonth = "0" + month;
         } else {

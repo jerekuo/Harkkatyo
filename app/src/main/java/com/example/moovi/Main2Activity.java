@@ -22,6 +22,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+//THIS ACTIVITY IS MAIN MENU FOR THE APP
+
 public class Main2Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar toolbar;
@@ -32,7 +34,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     User currentUser;
     final ArrayList<Reservation> reservations = new ArrayList<>();
 
-
+    //Sets the current user to hallsystem for easy access to user information when needed.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,13 +71,17 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         });
 
         setContentView(R.layout.activity_main2);
+        //writes the users reservations to a list in hallsystem for easy access later.
         database.writeReservationList();
 
+        //Gets user object from hallsystem singleton.
 
         user = HallSystem.getInstance().getUser();
         toolbar = findViewById(R.id.main_toolbar);
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.drawer_layout);
+
+        //Writes Halllist so we can fill spinners with the information later.
         database.writeHallList();
 
 
@@ -105,6 +111,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     @Override
     protected void onStart(){
         super.onStart();
+        //writes users own reservations to list so we can populate the home screen later.
         database.writeCurrentUserReservationList(user.getEmail(), new OnGetDataListener() {
 
 

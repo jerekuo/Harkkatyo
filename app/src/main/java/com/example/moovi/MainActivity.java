@@ -31,6 +31,8 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.List;
 import java.util.Random;
 
+//This is the login screen for the app.
+
 public class MainActivity extends AppCompatActivity {
     EditText password;
     EditText userName;
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //NEW REGISTER
+    //Bypass for developers
     public void byPassLogin(View v) {
         String email = "jere@hotmail.com";
         String pass = "testitesti";

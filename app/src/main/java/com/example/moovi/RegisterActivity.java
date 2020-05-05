@@ -41,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
         String pass2 = editPassword2.getText().toString();
         String email = editEmail.getText().toString();
         String errortext = "";
+        //Booleans for password security check.
         boolean hasLetter = false;
         boolean hasDigit = false;
         boolean hasLowercase = false;
@@ -50,6 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         Pattern pattern = Pattern.compile("[a-zA-Z0-9]*");
         Matcher matcher = pattern.matcher(pass1);
 
+        //checks if password has all the needed attributes for strong password
         if (email.isEmpty() != true && pass1.isEmpty() != true && pass2.isEmpty() != true && pass1.equals(pass2)) {
             if(pass1.length() >= 12) {
             hasLenght = true;
@@ -111,6 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    //If password is strong enough method creates the account, adds it to DB and takes user to frontpage.
     public void regAcc(String email, String pass) {
         mAuth.createUserWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

@@ -62,6 +62,7 @@ public class Calendar_Fragment extends Fragment {
         });
     }
 
+    //method prints all the reservations in the chosen date and sorts them by starting hour.
     public void printReservations(ArrayList<Reservation> list) {
         calendarText = view.findViewById(R.id.textView3);
         String s ="";

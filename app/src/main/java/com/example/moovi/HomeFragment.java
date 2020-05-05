@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 Reservation resChoice = res.get(position);
                 HallSystem.getInstance().setChosenRes(resChoice);
-                //avaa fragment
+
             }
         });
         recyclerView.setAdapter(adapter);

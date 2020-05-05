@@ -98,6 +98,9 @@ public class freeTimesFragment extends Fragment {
         textView.setText("*****Näytetään vapaat ajat*****\nHALLI: "+hall+"\nHUONE: "+room);
     }
 
+
+    //Populates spinner with available times, Method first populates arraylist with all available times and then fetches reservations from db and picks already reserved
+    //times out of the list.
     public void freeTimeSpinner(String date, String hall, String room) throws ParseException {
         ArrayList<String> timeList = new ArrayList<>();
         for (int i = 8 ; i < 21 ; i++){
@@ -138,7 +141,7 @@ public class freeTimesFragment extends Fragment {
 
 
 
-
+    //adds the new reservation to database
     public void makeReservation() throws ParseException {
         SimpleDateFormat format1 = new SimpleDateFormat("HH.mm");
         SimpleDateFormat format2 = new SimpleDateFormat("H.mm");
@@ -177,7 +180,7 @@ public class freeTimesFragment extends Fragment {
 
     }
 
-
+    //Method checks if the chosen time is free.
     public Boolean checkIfFree(Reservation reservation){
         HallSystem hallSystem = HallSystem.getInstance();
         Reservation res = reservation;
@@ -192,8 +195,8 @@ public class freeTimesFragment extends Fragment {
             }
         }
 
-        // Metodi palauttaa truen jos listavertailun jälkeen ei ole löytynyt päällekkäisyyttä
-        return !availability.equalsIgnoreCase("False");                                          // Palauttaa falsen jos lötyy päällekkäisyyttä
+        //Return true if the chosen time is free.
+        return !availability.equalsIgnoreCase("False");
 
     }
 

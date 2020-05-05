@@ -18,6 +18,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+//This activity is only for admin user.
+
 public class Main3Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;

@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
+//Singleton which is used to store all the objects we get from database.
 
 public class HallSystem {
 

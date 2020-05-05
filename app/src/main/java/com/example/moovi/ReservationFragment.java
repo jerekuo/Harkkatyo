@@ -91,6 +91,8 @@ public class ReservationFragment extends Fragment {
     }
 
 
+
+    //Populates hallspinner with all the halls from database.
     public void hallSpinner(){
 
         hallSpinner = view.findViewById(R.id.spinner);
@@ -118,6 +120,7 @@ public class ReservationFragment extends Fragment {
         });
     }
 
+    //Populates roomspinner for the Hall chosen, gets the rooms from DB.
     public void roomSpinner(Hall h){
         roomSpinner = view.findViewById(R.id.spinner2);
         ArrayList<Room> rlist = h.getRoomList();
@@ -143,6 +146,7 @@ public class ReservationFragment extends Fragment {
         });
     }
 
+    //Takes user to choosing the time for the reservation.
     public void showFreeTimes() throws ParseException {
         Bundle bundle = new Bundle();
 
