@@ -35,14 +35,15 @@
                 android:calendarViewShown="false"
                 android:datePickerMode="spinner"></DatePicker>
 
-            <EditText
+            <TextView
                 android:id="@+id/editText4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:gravity="center"
-                android:inputType="textPersonName"
-                android:text="Name" />
+                android:text="Edit or delete chosen reservation"
+                android:textColor="#373535"
+                android:textSize="24sp" />
 
             <Spinner
                 android:id="@+id/spinner4"
@@ -77,7 +78,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="650dp"
                 android:layout_marginLeft="70dp"
-                android:onClick="onDelete"
                 android:text="Delete" />
 
             <Button
@@ -86,8 +86,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="580dp"
                 android:layout_marginLeft="270dp"
-                android:onClick="refresh"
                 android:text="Refresh" />
+
+            <EditText
+                android:id="@+id/editText5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="570dp"
+                android:layout_marginLeft="10dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                android:text="Press refresh to show available times!" />
 
 
         </FrameLayout>

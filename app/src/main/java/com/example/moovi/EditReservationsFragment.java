@@ -264,5 +264,9 @@ public class EditReservationsFragment extends Fragment {
 
 }
 
-
-// Nappien paikat vituillaan ja ylhäällä lukee "name", vois laittaa jtn esim "Edit/delete reservation".
+/*
+TODO
+Yläteksti menee "yläpalkin" kanssa päällekkäin, pitäisi korjata.
+ Kannattaa harkita scrollViewistä luopumista koska turha.
+ Ympäri koodia on suomenkielisiä printtejä ja kommentteja, pitäisi poistaa/ muuttaa lontooksi.
+ Jos keksii tolle hardkoodatulle setSelection jutulle paremman tyylin, do dat */
