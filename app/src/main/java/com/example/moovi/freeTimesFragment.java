@@ -32,6 +32,7 @@ public class freeTimesFragment extends Fragment {
 
     HallSystem hallSystem = HallSystem.getInstance();
 
+
     View view;
     TextView textView;
     String resTime;

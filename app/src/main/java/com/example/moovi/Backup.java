@@ -47,10 +47,5 @@ public class Backup {
         } catch (IOException e) {
             Log.e("IOEXCEPTION", "virhe tuli!");
         }
-
     }
-
-
-
-
 }
