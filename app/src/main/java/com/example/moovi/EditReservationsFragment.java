@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -33,6 +34,7 @@ public class EditReservationsFragment extends Fragment {
     Spinner hallSpinner;
     Spinner roomSpinner;
     Spinner freeTimeSpinner;
+    Button refresh;
     EditText editText;
     HallSystem hallSystem = HallSystem.getInstance();
     DatePicker datePicker;
@@ -57,7 +59,18 @@ public class EditReservationsFragment extends Fragment {
         // Inflate the layout for this fragment
         res = HallSystem.getInstance().getChosenRes();
         editText = view.findViewById(R.id.editText2);
+        refresh = view.findViewById(R.id.button9);
 
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    refresh();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         return view;
     }
@@ -101,7 +114,7 @@ public class EditReservationsFragment extends Fragment {
 
     }
 
-    public void refresh(View V) throws ParseException {
+    public void refresh() throws ParseException {
 
         int y = datePicker.getYear();
         int m = datePicker.getMonth();
@@ -144,8 +157,9 @@ public class EditReservationsFragment extends Fragment {
     }
 
     public void roomSpinner(Hall h){
-        roomSpinner = view.findViewById(R.id.spinner2);
+        roomSpinner = view.findViewById(R.id.spinner5);
         ArrayList<Room> rlist = h.getRoomList();
+
 
 
 
