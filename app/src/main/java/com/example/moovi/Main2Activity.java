@@ -209,8 +209,8 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         fragment = new HomeFragment();
         transaction.replace(R.id.fragmentView, fragment);
         transaction.commit();
-
     }
+
     //method writes a list with current users reservations, used for displaying them to users
     public void writeReservationlist(){
         database.writeCurrentUserReservationList(user.getEmail(), new OnGetDataListener() {

@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -82,6 +83,12 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
         actionBarDrawerToggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Fragment fragment;
+        fragment = new AdminHomeFragment();
+        transaction.replace(R.id.fragmentView, fragment);
+        transaction.commit();
+
     }
 
     @Override
@@ -99,8 +106,28 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
         }else if (item.getTitle().toString().equalsIgnoreCase("edit reservations")){
             fragment = new EditReservationsFragment();
             transaction.replace(R.id.fragmentView,fragment);
+        }else if (item.getTitle().toString().equalsIgnoreCase("log out")) {
+            Toast.makeText(Main3Activity.this, "Logged out!",
+                    Toast.LENGTH_SHORT).show();
+            HallSystem.getInstance().setUser(null);
+            Intent intent = new Intent(Main3Activity.this, MainActivity.class);
+            startActivity(intent);
+        }else if (item.getTitle().toString().equalsIgnoreCase("home")){
+            fragment = new AdminHomeFragment();
+            transaction.replace(R.id.fragmentView,fragment);
         }
         transaction.commit();
         return false;
+    }
+    @Override
+    public void onBackPressed() {
+        //Only accepts going to login screen via logout button.
+        //Opens home Fragment if pressed
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Fragment fragment;
+        fragment = new AdminHomeFragment();
+        transaction.replace(R.id.fragmentView, fragment);
+        transaction.commit();
+
     }
 }

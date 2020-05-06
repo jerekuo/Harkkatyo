@@ -66,7 +66,6 @@ public class SettingsFragment extends Fragment {
             if (uuseri.getBirthdate() != null) {
                 String date = uuseri.getBirthdate();
                 String[] values = date.split("\\.", -1);
-                System.out.println("Arvot: "+values[0]);
                 int day = Integer.parseInt(values[0]);
                 int month = Integer.parseInt(values[1]);
                 int year = Integer.parseInt(values[2]);
