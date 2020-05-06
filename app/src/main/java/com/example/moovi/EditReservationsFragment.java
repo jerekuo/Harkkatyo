@@ -98,7 +98,13 @@ public class EditReservationsFragment extends Fragment {
     }
 
     public void onViewCreated (View view, Bundle savedInstanceState) {
+        datePicker = view.findViewById(R.id.datePicker);
         hallSpinner();
+        String[] tokens = res.resDate.split("\\-",-1);
+        int year = Integer.parseInt(tokens[0]);
+        int month = Integer.parseInt(tokens[1]);
+        int day = Integer.parseInt(tokens[2]);
+        datePicker.updateDate(year, month, day);
 
     }
 
@@ -139,20 +145,20 @@ public class EditReservationsFragment extends Fragment {
     }
 
     public void refresh() throws ParseException {
-
+        datePicker = view.findViewById(R.id.datePicker);
         int y = datePicker.getYear();
         int m = datePicker.getMonth();
         int d = datePicker.getDayOfMonth();
         SimpleDateFormat sf = new SimpleDateFormat("YYYY-MM-dd");
         String chosendaate = String.format("%04d-%02d-%02d", y, m, d);
-        Date chosendate = sf.parse(chosendaate);
-        day = chosendate.toString();
+        day = chosendaate;
 
         try {
             freeTimeSpinner(day,hall.getHallName(),room.getName());
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        edit.setVisibility(View.VISIBLE);
     }
 
     public void hallSpinner(){
@@ -165,7 +171,7 @@ public class EditReservationsFragment extends Fragment {
         ArrayAdapter<Hall> dataAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hallSpinner.setAdapter(dataAdapter);
-        System.out.println(res.getHall().getHallName());
+
 
         if(res.getHall().getHallName().equalsIgnoreCase("Slahen halli")) {
             hallSpinner.setSelection(1);
@@ -198,7 +204,7 @@ public class EditReservationsFragment extends Fragment {
         ArrayAdapter<Room> dataAdapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item, rlist);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         roomSpinner.setAdapter(dataAdapter);
-        roomSpinner.setSelection(rlist.indexOf(res.getRoom().getName()));
+
 
         if (res.getRoom().getName().equalsIgnoreCase("koripallo halli") || res.getRoom().getName().equalsIgnoreCase("squash")) {
             roomSpinner.setSelection(1);
@@ -257,3 +263,6 @@ public class EditReservationsFragment extends Fragment {
 
 
 }
+
+
+// Nappien paikat vituillaan ja ylhäällä lukee "name", vois laittaa jtn esim "Edit/delete reservation".

@@ -154,8 +154,7 @@ public class ReservationFragment extends Fragment {
         int d = datePicker.getDayOfMonth();
         SimpleDateFormat sf = new SimpleDateFormat("YYYY-MM-dd");
         String chosendaate = String.format("%04d-%02d-%02d", y, m, d);
-        Date chosendate = sf.parse(chosendaate);
-        System.out.println(chosendate);
+
         String info = chosendaate +","+ hall.hallName +","+ room.name;
         bundle.putString("key", info);
         System.out.println(bundle);
