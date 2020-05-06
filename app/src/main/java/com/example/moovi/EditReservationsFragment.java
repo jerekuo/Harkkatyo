@@ -14,15 +14,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 
-//KESKENKESNKENKESKENKESKEN
-    // free time spinneri kesken
 
 
 
@@ -38,6 +38,11 @@ public class EditReservationsFragment extends Fragment {
     DatePicker datePicker;
     Hall hall;
     Room room;
+    String resTime;
+    String day;
+
+    Hall newHall;
+    Room newRoom;
 
 
     public EditReservationsFragment() {
@@ -57,15 +62,60 @@ public class EditReservationsFragment extends Fragment {
         return view;
     }
 
+    public void onViewCreated (View view, Bundle savedInstanceState) {
+        hallSpinner();
+
+    }
+
+
+
     public void onDelete(View V){
         Database.getInstance().deleteReservation();
     }
 
-    public void onEdit(View V){
+    public void onEdit(View V) throws ParseException {
+        SimpleDateFormat format2 = new SimpleDateFormat("H.mm");
+
         String desc = editText.getText().toString();
-        Reservation newRes = new Reservation(hall, room, desc, res.getResId(), 10, startTime, endTime, resDate);
+
+        String startTime = resTime; // String pitäs saada oikeesee muotoo eli HH.mm eikä sitä litaniaa mis on 1970
+        long helpTime = format2.parse(resTime).getTime();
+        long helpEndTime = helpTime + 1000 * 60 * 60;
+        String endTime = Long.toString(helpEndTime);
+
+
+        for (Hall h: hallSystem.getHallList()){
+            if (h.hallName.equalsIgnoreCase(hall.getHallName())){
+                newHall = h;
+                for (Room r : newHall.getRoomList()){
+                    if (r.name.equalsIgnoreCase(room.getName())){
+                        newRoom = r;
+                    }
+                }
+            }
+        }
+
+
+        Reservation newRes = new Reservation(hall, room, desc, res.getResId(), 10, startTime, endTime, day);
         Database.getInstance().editReservation(newRes);
 
+    }
+
+    public void refresh(View V) throws ParseException {
+
+        int y = datePicker.getYear();
+        int m = datePicker.getMonth();
+        int d = datePicker.getDayOfMonth();
+        SimpleDateFormat sf = new SimpleDateFormat("YYYY-MM-dd");
+        String chosendaate = String.format("%04d-%02d-%02d", y, m, d);
+        Date chosendate = sf.parse(chosendaate);
+        day = chosendate.toString();
+
+        try {
+            freeTimeSpinner(day,hall.getHallName(),room.getName());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public void hallSpinner(){

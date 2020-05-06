@@ -3,6 +3,7 @@ package com.example.moovi;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,6 +57,11 @@ public class HomeFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 Reservation resChoice = res.get(position);
                 HallSystem.getInstance().setChosenRes(resChoice);
+
+                Fragment fragment = new EditReservationsFragment();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentView, fragment);
+                transaction.commit();
 
             }
         });

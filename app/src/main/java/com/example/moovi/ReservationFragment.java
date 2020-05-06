@@ -108,7 +108,6 @@ public class ReservationFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 hall = (Hall) parent.getItemAtPosition(position);
-                System.out.println(hall);
                 chosenHall = hall.getHallName();
                 roomSpinner(hall);
             }

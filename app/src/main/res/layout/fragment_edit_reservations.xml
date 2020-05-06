@@ -22,7 +22,7 @@
                 android:id="@+id/editText2"
                 android:layout_width="match_parent"
                 android:layout_height="76dp"
-                android:layout_marginVertical="500dp"
+                android:layout_marginVertical="475dp"
                 android:ems="10"
                 android:text="Description" />
 
@@ -68,7 +68,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="650dp"
                 android:layout_marginLeft="270dp"
-                android:text="Change" />
+                android:text="Change"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/button8"
@@ -78,6 +79,15 @@
                 android:layout_marginLeft="70dp"
                 android:onClick="onDelete"
                 android:text="Delete" />
+
+            <Button
+                android:id="@+id/button9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="580dp"
+                android:layout_marginLeft="270dp"
+                android:onClick="refresh"
+                android:text="Refresh" />
 
 
         </FrameLayout>

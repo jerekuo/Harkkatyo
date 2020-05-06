@@ -108,41 +108,7 @@ public class Reservation {
         //Null constructor
     }
 
-    /*public void makeReservation(Reservation reservation){
-        HallSystem hallSystem = HallSystem.getInstance();
 
-        Reservation res = reservation;
-
-        if (checkIfFree(res) == true) {
-            hallSystem.addToResList(res);
-        } else{
-            System.out.println("Varauksen teko ei onnistunut, löytyi päällekkäisyys.");
-        }
-
-    }
-
-
-    public Boolean checkIfFree(Reservation reservation){
-        HallSystem hallSystem = HallSystem.getInstance();
-        Reservation res = reservation;
-        String availability = "True";
-
-        for (Reservation r : hallSystem.getResList()) {
-            if (r.room == res.room && r.startTime.compareTo(res.startTime)  < 0 && r.endTime.compareTo(res.endTime) > 0){
-                //Listasta löytyy varaus samalle ajalle
-                // date vertailu löytyy netistä helposti
-                availability = "False";
-                break;
-            }
-        }
-
-        if (availability.equalsIgnoreCase("False")){  // Metodi palauttaa truen jos listavertailun jälkeen ei ole löytynyt päällekkäisyyttä
-            return false;                                          // Palauttaa falsen jos lötyy päällekkäisyyttä
-        } else{
-            return true;
-        }
-
-    }*/
 
     public void addParticipants(Reservation res){
         res.participants++;
