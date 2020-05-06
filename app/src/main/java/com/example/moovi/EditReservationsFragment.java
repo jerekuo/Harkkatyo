@@ -35,6 +35,8 @@ public class EditReservationsFragment extends Fragment {
     Spinner roomSpinner;
     Spinner freeTimeSpinner;
     Button refresh;
+    Button edit;
+    Button delete;
     EditText editText;
     HallSystem hallSystem = HallSystem.getInstance();
     DatePicker datePicker;
@@ -60,12 +62,32 @@ public class EditReservationsFragment extends Fragment {
         res = HallSystem.getInstance().getChosenRes();
         editText = view.findViewById(R.id.editText2);
         refresh = view.findViewById(R.id.button9);
+        delete = view.findViewById(R.id.button8);
+        edit = view.findViewById(R.id.button7);
+
 
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     refresh();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onDelete();
+            }
+        });
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    onEdit();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -82,11 +104,12 @@ public class EditReservationsFragment extends Fragment {
 
 
 
-    public void onDelete(View V){
+    public void onDelete(){
         Database.getInstance().deleteReservation();
+        getActivity().onBackPressed();
     }
 
-    public void onEdit(View V) throws ParseException {
+    public void onEdit() throws ParseException {
         SimpleDateFormat format2 = new SimpleDateFormat("H.mm");
 
         String desc = editText.getText().toString();
@@ -111,6 +134,7 @@ public class EditReservationsFragment extends Fragment {
 
         Reservation newRes = new Reservation(hall, room, desc, res.getResId(), 10, startTime, endTime, day);
         Database.getInstance().editReservation(newRes);
+        getActivity().onBackPressed();
 
     }
 
@@ -141,6 +165,13 @@ public class EditReservationsFragment extends Fragment {
         ArrayAdapter<Hall> dataAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hallSpinner.setAdapter(dataAdapter);
+        System.out.println(res.getHall().getHallName());
+
+        if(res.getHall().getHallName().equalsIgnoreCase("Slahen halli")) {
+            hallSpinner.setSelection(1);
+        } else if (res.getHall().getHallName().equalsIgnoreCase("urkki")) {
+            hallSpinner.setSelection(2);
+        }
 
         hallSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -167,7 +198,11 @@ public class EditReservationsFragment extends Fragment {
         ArrayAdapter<Room> dataAdapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item, rlist);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         roomSpinner.setAdapter(dataAdapter);
+        roomSpinner.setSelection(rlist.indexOf(res.getRoom().getName()));
 
+        if (res.getRoom().getName().equalsIgnoreCase("koripallo halli") || res.getRoom().getName().equalsIgnoreCase("squash")) {
+            roomSpinner.setSelection(1);
+        }
 
         roomSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

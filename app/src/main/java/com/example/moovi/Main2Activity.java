@@ -153,6 +153,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
 
             }
         });
+
     }
 
 
@@ -183,48 +184,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             startActivity(intent);
 
         } else if (item.getTitle().toString().equalsIgnoreCase("Home")) {
-            database.writeCurrentUserReservationList(user.getEmail(), new OnGetDataListener() {
-
-
-
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-                }
-
-                @Override
-                public void onSuccess(@NonNull Task<QuerySnapshot> task) {
-                    reservations.clear();
-                    for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
-
-                        String[] tokens = documentsnapshot.getId().split("[,]");
-
-
-                        if (tokens[0].equalsIgnoreCase(user.getEmail())){
-
-                            reservations.add(documentsnapshot.toObject(Reservation.class));
-                        } else {
-
-                        }
-
-
-
-                    }
-                    HallSystem.getInstance().setCurUserResList(reservations);
-                }
-
-
-
-                @Override
-                public void onStart() {
-
-                }
-
-                @Override
-                public void onFailure() {
-
-                }
-            });
+            writeReservationlist();
             fragment = new HomeFragment();
             transaction.replace(R.id.fragmentView, fragment);
         }
@@ -243,6 +203,58 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     @Override
     public void onBackPressed() {
         //Only accepts going to login screen via logout button.
+        //Opens home Fragment if pressed
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Fragment fragment;
+        fragment = new HomeFragment();
+        transaction.replace(R.id.fragmentView, fragment);
+        transaction.commit();
+
+    }
+    //method writes a list with current users reservations, used for displaying them to users
+    public void writeReservationlist(){
+        database.writeCurrentUserReservationList(user.getEmail(), new OnGetDataListener() {
+
+
+
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+            }
+
+            @Override
+            public void onSuccess(@NonNull Task<QuerySnapshot> task) {
+                reservations.clear();
+                for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
+
+                    String[] tokens = documentsnapshot.getId().split("[,]");
+
+
+                    if (tokens[0].equalsIgnoreCase(user.getEmail())){
+
+                        reservations.add(documentsnapshot.toObject(Reservation.class));
+                    } else {
+
+                    }
+
+
+
+                }
+                HallSystem.getInstance().setCurUserResList(reservations);
+            }
+
+
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
     }
 
 }
