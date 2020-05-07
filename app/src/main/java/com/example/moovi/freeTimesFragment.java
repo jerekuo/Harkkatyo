@@ -96,7 +96,7 @@ public class freeTimesFragment extends Fragment {
 
 
         textView = view.findViewById(R.id.textView);
-        textView.setText("*****Näytetään vapaat ajat*****\nHALLI: "+hall+"\nHUONE: "+room);
+        textView.setText("*****Showing free times*****\nHALL: "+hall+"\nROOM: "+room);
     }
 
 

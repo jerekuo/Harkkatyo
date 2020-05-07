@@ -22,7 +22,7 @@
             app:layout_constraintHorizontal_bias="0.257"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.086" />
+            app:layout_constraintVertical_bias="0.107" />
 
         <Button
             android:id="@+id/button5"
@@ -72,7 +72,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Valitse aika:"
+            android:text="Choose time:"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
