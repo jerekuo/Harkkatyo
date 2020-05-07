@@ -1,18 +1,17 @@
 package com.example.moovi;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,7 +32,6 @@ public class AdminEditReservationsFragment extends Fragment {
     HallSystem hallSystem = HallSystem.getInstance();
     Database database = Database.getInstance();
     FirebaseUser user;
-    String email;
     Button refresh;
     EditText userEmail;
     final ArrayList<Reservation> reservations = new ArrayList<>();
@@ -59,7 +57,6 @@ public class AdminEditReservationsFragment extends Fragment {
                 database.writeCurrentUserReservationList(userEmail.getText().toString(), new OnGetDataListener() {
 
 
-
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
 
@@ -67,12 +64,12 @@ public class AdminEditReservationsFragment extends Fragment {
 
                     @Override
                     public void onSuccess(@NonNull Task<QuerySnapshot> task) {
-                        for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
+                        for (QueryDocumentSnapshot documentsnapshot : task.getResult()) {
 
                             String[] tokens = documentsnapshot.getId().split("[,]");
 
 
-                            if (tokens[0].equalsIgnoreCase(userEmail.getText().toString())){
+                            if (tokens[0].equalsIgnoreCase(userEmail.getText().toString())) {
 
                                 reservations.add(documentsnapshot.toObject(Reservation.class));
                             } else {
@@ -80,11 +77,9 @@ public class AdminEditReservationsFragment extends Fragment {
                             }
 
 
-
                         }
                         HallSystem.getInstance().setCurUserResList(reservations);
                     }
-
 
 
                     @Override
@@ -102,13 +97,12 @@ public class AdminEditReservationsFragment extends Fragment {
 
                 ArrayList<String> resList = new ArrayList<>();
 
-                for (Reservation r : res){
+                for (Reservation r : res) {
                     String[] date = r.resDate.split("-");
                     String md = date[2] + "." + date[1];
 
 
-
-                    resList.add(r.hall+" "+r.room+ " " +md+" "+r.startTime);
+                    resList.add(r.hall + " " + r.room + " " + md + " " + r.startTime);
                 }
 
                 // set up the RecyclerView

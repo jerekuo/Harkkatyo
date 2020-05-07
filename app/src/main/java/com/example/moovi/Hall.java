@@ -43,7 +43,6 @@ public class Hall {
     }
 
 
-
     //CONSTRUCTOR
     public Hall(int hallId, String hallName, String hallLocation, ArrayList<Room> roomList) {
         this.hallId = hallId;
@@ -52,12 +51,9 @@ public class Hall {
         this.roomList = roomList;
     }
 
-    public Hall(){
+    public Hall() {
         //Null constructor
     }
-
-
-
 
 
     @Override

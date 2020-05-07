@@ -1,5 +1,10 @@
 package com.example.moovi;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,11 +12,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -21,7 +21,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 //This activity is only for admin user.
 
-public class Main3Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class Main3Activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -97,28 +97,29 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
         Fragment fragment;
         if (item.getTitle().toString().equalsIgnoreCase("users")) {
             fragment = new EditUserInfoFragment();
-            transaction.replace(R.id.fragmentView,fragment);
+            transaction.replace(R.id.fragmentView, fragment);
 
-        }else if (item.getTitle().toString().equalsIgnoreCase("reservations")){
+        } else if (item.getTitle().toString().equalsIgnoreCase("reservations")) {
             fragment = new ShowReservationsFragment();
-            transaction.replace(R.id.fragmentView,fragment);
+            transaction.replace(R.id.fragmentView, fragment);
 
-        }else if (item.getTitle().toString().equalsIgnoreCase("edit reservations")){
+        } else if (item.getTitle().toString().equalsIgnoreCase("edit reservations")) {
             fragment = new AdminEditReservationsFragment();
-            transaction.replace(R.id.fragmentView,fragment);
-        }else if (item.getTitle().toString().equalsIgnoreCase("log out")) {
+            transaction.replace(R.id.fragmentView, fragment);
+        } else if (item.getTitle().toString().equalsIgnoreCase("log out")) {
             Toast.makeText(Main3Activity.this, "Logged out!",
                     Toast.LENGTH_SHORT).show();
             HallSystem.getInstance().setUser(null);
             Intent intent = new Intent(Main3Activity.this, MainActivity.class);
             startActivity(intent);
-        }else if (item.getTitle().toString().equalsIgnoreCase("home")){
+        } else if (item.getTitle().toString().equalsIgnoreCase("home")) {
             fragment = new AdminHomeFragment();
-            transaction.replace(R.id.fragmentView,fragment);
+            transaction.replace(R.id.fragmentView, fragment);
         }
         transaction.commit();
         return false;
     }
+
     @Override
     public void onBackPressed() {
         //Only accepts going to login screen via logout button.

@@ -3,11 +3,8 @@ package com.example.moovi;
 import android.content.Context;
 import android.util.Log;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-
-import javax.xml.namespace.QName;
 
 //CLASS FOR WRITING CSV BACKUP
 public class Backup {
@@ -18,7 +15,9 @@ public class Backup {
         //NULL CONSTRUCTOR
     }
 
-    public static Backup getInstance() {return instance;}
+    public static Backup getInstance() {
+        return instance;
+    }
 
 
     //Method backups user data to csv file

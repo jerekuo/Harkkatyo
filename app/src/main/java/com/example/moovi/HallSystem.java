@@ -1,10 +1,7 @@
 package com.example.moovi;
 
 
-
 import com.google.firebase.auth.FirebaseUser;
-
-
 
 import java.util.ArrayList;
 
@@ -60,15 +57,15 @@ public class HallSystem {
 
     public User editUser;
 
-    public void setUser (FirebaseUser u) {
+    public void setUser(FirebaseUser u) {
         this.user = u;
     }
 
-    public FirebaseUser getUser(){
+    public FirebaseUser getUser() {
         return this.user;
     }
 
-    private HallSystem(){
+    private HallSystem() {
 
     }
 
@@ -100,7 +97,7 @@ public class HallSystem {
 
     public ArrayList<Reservation> curUserResList = new ArrayList<>();
 
-    public void addToResList(Reservation res){
+    public void addToResList(Reservation res) {
         Database db = Database.getInstance();
         db.addReservation(res);
 
@@ -109,12 +106,6 @@ public class HallSystem {
     public void setResList(ArrayList<Reservation> resList) {
         this.resList = resList;
     }
-
-
-
-
-
-
 
 
 }

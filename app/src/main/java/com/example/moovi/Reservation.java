@@ -1,7 +1,6 @@
 package com.example.moovi;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Reservation {
     Hall hall;
@@ -22,7 +21,6 @@ public class Reservation {
     }
 
 
-
     public String getStartTime() {
         return startTime;
     }
@@ -38,8 +36,6 @@ public class Reservation {
     public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
-
-
 
 
     public ArrayList<User> getParticipantList() {
@@ -93,7 +89,7 @@ public class Reservation {
         this.participants = participants;
     }
 
-    public Reservation(Hall hall, Room room,  String description, int resId, int participants, String startTime, String endTime, String resDate) {
+    public Reservation(Hall hall, Room room, String description, int resId, int participants, String startTime, String endTime, String resDate) {
         this.hall = hall;
         this.room = room;
         this.description = description;
@@ -104,18 +100,15 @@ public class Reservation {
         this.resDate = resDate;
     }
 
-    public Reservation(){
+    public Reservation() {
         //Null constructor
     }
 
 
-
-    public void addParticipants(Reservation res){
+    public void addParticipants(Reservation res) {
         res.participants++;
 
     }
-
-
 
 
 }
