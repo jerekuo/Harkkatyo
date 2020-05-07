@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,7 +98,11 @@ public class SettingsFragment extends Fragment {
                     Database.getInstance().addUser(user);
                     Backup.getInstance().writeUserBackup(user, getActivity().getApplicationContext());
                     Toast.makeText(getActivity(),"Information updated.",Toast.LENGTH_SHORT).show();
-
+                    Fragment fragment;
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    fragment = new HomeFragment();
+                    transaction.replace(R.id.fragmentView, fragment);
+                    transaction.commit();
 
                 }else if(address.isEmpty() || phone.isEmpty() || email.isEmpty() || name.isEmpty() || last.isEmpty()){
                     Toast.makeText(getActivity(), "Please insert into all fields.", Toast.LENGTH_SHORT).show();
