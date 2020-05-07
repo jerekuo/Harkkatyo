@@ -168,6 +168,23 @@ public class Database {
 
     }
     //U
+    public void adminAddReservation(Reservation r) {
+        db.collection("Reservations").document(HallSystem.getInstance().getEditEmail()+","+r.resDate+","+r.startTime)
+                .set(r)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
+    }
 
     //writes all reservations in the database to a list and sets it to hallsystem for easy access.
     public void writeReservationList(){
@@ -204,6 +221,24 @@ public class Database {
         });
     }
 
+    //Method for admin editing and deleting reservation.
+    public void adminDeleteReservation(){
+        final String email = HallSystem.getInstance().getEditEmail();
+        final Reservation res = HallSystem.getInstance().getChosenRes();
+        db.collection("Reservations").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
+                    if (documentsnapshot.getId().equalsIgnoreCase(email+","+res.getResDate()+","+res.getStartTime())){ //Finds the correct reservation.
+                        deleteRes(email+","+res.getResDate()+","+res.getStartTime());
+                    }
+                }
+
+            }
+        });
+    }
+
     //Adds new reservation with edited information and deletes the old one from db.
     public void editReservation(final Reservation r){
         final Reservation res = HallSystem.getInstance().getChosenRes();
@@ -215,6 +250,24 @@ public class Database {
                     if (documentsnapshot.getId().equalsIgnoreCase(user.getEmail()+","+res.getResDate()+","+res.getStartTime())){
                         deleteRes(user.getEmail()+","+res.getResDate()+","+res.getStartTime());
                         addReservation(r);
+                    }
+                }
+
+            }
+        });
+    }
+
+    public void adminEditReservation(final Reservation r){
+        final String email = hallsystem.getEditEmail();
+        final Reservation res = HallSystem.getInstance().getChosenRes();
+        db.collection("Reservations").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
+                    if (documentsnapshot.getId().equalsIgnoreCase(email+","+res.getResDate()+","+res.getStartTime())){
+                        deleteRes(email+","+res.getResDate()+","+res.getStartTime());
+                        adminAddReservation(r);
                     }
                 }
 

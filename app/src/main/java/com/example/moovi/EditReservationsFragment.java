@@ -14,6 +14,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,7 +47,7 @@ public class EditReservationsFragment extends Fragment {
     Room room;
     String resTime;
     String day;
-
+    FirebaseUser user;
     Hall newHall;
     Room newRoom;
 
@@ -59,6 +62,7 @@ public class EditReservationsFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_edit_reservations, container, false);
         // Inflate the layout for this fragment
+        user = HallSystem.getInstance().getUser();
         res = HallSystem.getInstance().getChosenRes();
         editText = view.findViewById(R.id.editText2);
         refresh = view.findViewById(R.id.button9);
@@ -111,7 +115,12 @@ public class EditReservationsFragment extends Fragment {
 
 
     public void onDelete(){
-        Database.getInstance().deleteReservation();
+        if (user.getEmail().equalsIgnoreCase("admin@gmail.com")){
+            Database.getInstance().adminDeleteReservation();
+        } else {
+            Database.getInstance().deleteReservation();
+        }
+
         getActivity().onBackPressed();
     }
 
@@ -139,7 +148,11 @@ public class EditReservationsFragment extends Fragment {
 
 
         Reservation newRes = new Reservation(hall, room, desc, res.getResId(), 10, startTime, endTime, day);
-        Database.getInstance().editReservation(newRes);
+        if (user.getEmail().equalsIgnoreCase("admin@gmail.com")){
+            Database.getInstance().adminEditReservation(newRes);
+        } else {
+            Database.getInstance().editReservation(newRes);
+        }
         getActivity().onBackPressed();
 
     }
@@ -147,7 +160,7 @@ public class EditReservationsFragment extends Fragment {
     public void refresh() throws ParseException {
         datePicker = view.findViewById(R.id.datePicker);
         int y = datePicker.getYear();
-        int m = datePicker.getMonth();
+        int m = datePicker.getMonth() + 1; // +1 because datepicker starts from month 0
         int d = datePicker.getDayOfMonth();
         SimpleDateFormat sf = new SimpleDateFormat("YYYY-MM-dd");
         String chosendaate = String.format("%04d-%02d-%02d", y, m, d);

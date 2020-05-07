@@ -11,6 +11,15 @@ import java.util.ArrayList;
 //Singleton which is used to store all the objects we get from database.
 
 public class HallSystem {
+    public String getEditEmail() {
+        return editEmail;
+    }
+
+    public void setEditEmail(String editEmail) {
+        this.editEmail = editEmail;
+    }
+
+    String editEmail;
 
     public Reservation getChosenRes() {
         return chosenRes;

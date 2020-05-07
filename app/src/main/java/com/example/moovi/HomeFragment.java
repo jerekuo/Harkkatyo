@@ -48,8 +48,6 @@ public class HomeFragment extends Fragment {
             String[] date = r.resDate.split("-");
             String md = date[2] + "." + date[1];
 
-
-
             resList.add(r.hall+" "+r.room+ " " +md+" "+r.startTime);
         }
 
