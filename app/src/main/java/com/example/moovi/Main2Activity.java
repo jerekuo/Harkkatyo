@@ -46,7 +46,10 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 currentUser = documentSnapshot.toObject(User.class);
                 HallSystem.getInstance().setUseri(currentUser);
                 System.out.println("USERI SETATTU");
-                updateNavHeader();
+                if(currentUser != null) {
+                    updateNavHeader();
+                }
+
 
                 if (currentUser == null) {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
