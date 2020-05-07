@@ -50,18 +50,21 @@
                 android:id="@+id/spinner4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#5B676C"
                 android:layout_marginVertical="70dp" />
 
             <Spinner
                 android:id="@+id/spinner5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#5B676C"
                 android:layout_marginVertical="110dp" />
 
             <Spinner
                 android:id="@+id/spinner6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#5B676C"
                 android:layout_marginVertical="420dp" />
 
             <Button
