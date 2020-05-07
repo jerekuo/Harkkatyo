@@ -45,6 +45,7 @@
             android:layout_height="123dp"
             android:ems="10"
             android:gravity="start|top"
+            android:hint="Write description here"
             android:inputType="textMultiLine"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -52,19 +53,17 @@
             app:layout_constraintHorizontal_bias="0.493"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.687"
-            tools:text="Write description here" />
+            app:layout_constraintVertical_bias="0.687" />
 
         <Spinner
             android:id="@+id/spinner3"
-            android:layout_width="409dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="1dp"
-            android:background="#5B676C"
             android:layout_marginEnd="1dp"
+            android:background="#5B676C"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.37" />
