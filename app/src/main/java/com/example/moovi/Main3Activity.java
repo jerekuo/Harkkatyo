@@ -99,7 +99,7 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
             fragment = new EditUserInfoFragment();
             transaction.replace(R.id.fragmentView, fragment);
 
-        } else if (item.getTitle().toString().equalsIgnoreCase("reservations")) {
+        } else if (item.getTitle().toString().equalsIgnoreCase("Make a reservation")) {
             fragment = new ShowReservationsFragment();
             transaction.replace(R.id.fragmentView, fragment);
 
@@ -112,7 +112,7 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
             HallSystem.getInstance().setUser(null);
             Intent intent = new Intent(Main3Activity.this, MainActivity.class);
             startActivity(intent);
-        } else if (item.getTitle().toString().equalsIgnoreCase("home")) {
+        } else if (item.getTitle().toString().equalsIgnoreCase("Your reservations")) {
             fragment = new AdminHomeFragment();
             transaction.replace(R.id.fragmentView, fragment);
         }

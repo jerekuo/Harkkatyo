@@ -164,7 +164,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             fragment = new SettingsFragment();
             transaction.replace(R.id.fragmentView, fragment);
 
-        } else if (item.getTitle().toString().equalsIgnoreCase("Reservations")) {
+        } else if (item.getTitle().toString().equalsIgnoreCase("Make a reservation")) {
             fragment = new ReservationFragment();
             HallSystem hallSystem = HallSystem.getInstance();
             final ArrayList<Hall> list = hallSystem.getHallList();
@@ -180,7 +180,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             Intent intent = new Intent(Main2Activity.this, MainActivity.class);
             startActivity(intent);
 
-        } else if (item.getTitle().toString().equalsIgnoreCase("Home")) {
+        } else if (item.getTitle().toString().equalsIgnoreCase("Your reservations")) {
             writeReservationlist();
             fragment = new HomeFragment();
             transaction.replace(R.id.fragmentView, fragment);
