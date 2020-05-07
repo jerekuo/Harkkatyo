@@ -232,7 +232,7 @@ public class EditReservationsFragment extends Fragment {
         ArrayList<Reservation> list = hallSystem.getResList();
 
         for (Reservation r: list){
-            //Mikäli varaus löytyy samalle päivälle, poistaa yllä tehdystä listasta kyseiset ajat
+            //Checks if there is reservations for the same day, and if there are it deletes their times from the available times in timelist.
             if (hall.equalsIgnoreCase(r.hall.getHallName()) && room.equalsIgnoreCase(r.room.getName()) && date.equalsIgnoreCase(r.resDate)){   // Ei tietoa mätsääkö start timet daten kanssa?!?!?!?
                 timeList.remove(r.startTime);
             }
