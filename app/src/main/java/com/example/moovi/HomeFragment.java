@@ -40,11 +40,7 @@ public class HomeFragment extends Fragment {
         user = hallSystem.getUser();
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        if (user.getEmail().equalsIgnoreCase("admin@gmail.com")){
-            res = hallSystem.getResList();
-        } else{
-            res = hallSystem.getCurUserResList();
-        }
+        res = hallSystem.getCurUserResList();
 
         ArrayList<String> resList = new ArrayList<>();
 
