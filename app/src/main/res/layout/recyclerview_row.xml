@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        card_view:cardBackgroundColor="@color/cardview_light_background"
+        card_view:cardBackgroundColor="#5B676C"
         card_view:cardElevation="5dp"
         card_view:cardUseCompatPadding="true">
         >

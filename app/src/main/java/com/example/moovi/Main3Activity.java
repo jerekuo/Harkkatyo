@@ -104,7 +104,7 @@ public class Main3Activity extends AppCompatActivity implements NavigationView.O
             transaction.replace(R.id.fragmentView,fragment);
 
         }else if (item.getTitle().toString().equalsIgnoreCase("edit reservations")){
-            fragment = new EditReservationsFragment();
+            fragment = new AdminEditReservationsFragment();
             transaction.replace(R.id.fragmentView,fragment);
         }else if (item.getTitle().toString().equalsIgnoreCase("log out")) {
             Toast.makeText(Main3Activity.this, "Logged out!",

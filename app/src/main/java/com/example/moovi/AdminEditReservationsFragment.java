@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
 
@@ -20,8 +19,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment {
-
+public class AdminEditReservationsFragment extends Fragment {
     View view;
     MyRecyclerViewAdapter adapter;
     ArrayList<Reservation> res;
@@ -29,7 +27,7 @@ public class HomeFragment extends Fragment {
     Database database = Database.getInstance();
     FirebaseUser user;
 
-    public HomeFragment() {
+    public AdminEditReservationsFragment() {
         // Required empty public constructor
     }
 
@@ -38,7 +36,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         user = hallSystem.getUser();
-        view = inflater.inflate(R.layout.fragment_home, container, false);
+        view = inflater.inflate(R.layout.fragment_admin_edit_reservations, container, false);
 
         if (user.getEmail().equalsIgnoreCase("admin@gmail.com")){
             res = hallSystem.getResList();
