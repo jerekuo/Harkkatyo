@@ -65,6 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClick"
+        android:background="#5B676C"
         android:text="Update Information"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -110,7 +111,7 @@
         android:id="@+id/imageView3"
         android:layout_width="109dp"
         android:layout_height="114dp"
-        android:layout_marginStart="39dp"
+        android:layout_marginStart="140dp"
         android:layout_marginTop="57dp"
         android:layout_marginEnd="348dp"
         android:layout_marginBottom="650dp"
@@ -119,7 +120,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.066"
+        app:layout_constraintVertical_bias="0.144"
         app:srcCompat="@drawable/ic_person_black_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

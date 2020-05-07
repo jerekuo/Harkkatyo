@@ -28,6 +28,7 @@
                 android:id="@+id/button6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#5B676C"
                 android:text="Get Reservations" />
 
             <TextView
