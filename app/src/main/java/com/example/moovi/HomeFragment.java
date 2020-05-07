@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 
 
@@ -25,6 +27,7 @@ public class HomeFragment extends Fragment {
     ArrayList<Reservation> res;
     HallSystem hallSystem = HallSystem.getInstance();
     Database database = Database.getInstance();
+    FirebaseUser user;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -34,9 +37,15 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        user = hallSystem.getUser();
         view = inflater.inflate(R.layout.fragment_home, container, false);
-        res = hallSystem.getCurUserResList();
+
+        if (user.getEmail().equalsIgnoreCase("admin@gmail.com")){
+            res = hallSystem.getResList();
+        } else{
+            res = hallSystem.getCurUserResList();
+        }
+
         ArrayList<String> resList = new ArrayList<>();
 
         for (Reservation r : res){
