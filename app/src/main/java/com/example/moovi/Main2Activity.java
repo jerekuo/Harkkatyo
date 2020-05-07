@@ -46,6 +46,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 currentUser = documentSnapshot.toObject(User.class);
                 HallSystem.getInstance().setUseri(currentUser);
                 System.out.println("USERI SETATTU");
+                updateNavHeader();
 
                 if (currentUser == null) {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -103,7 +104,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         actionBarDrawerToggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        updateNavHeader();
+
 
     }
 
@@ -252,13 +253,12 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     }
     // sets the navigation header with custom user values
     public void updateNavHeader(){
-        currentUser = HallSystem.getInstance().getEditUser(); //?? en varma tästä
         navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         TextView navEmail = headerView.findViewById(R.id.nav_userEmail);
         TextView navName = headerView.findViewById(R.id.nav_username);
         navEmail.setText(user.getEmail());
-        navName.setText("Welcome to moovi "); // tähän pitäis jotenki saada userin nimi jare auta
+        navName.setText("Welcome to moovi "+currentUser.getFirstName());
     }
 
 }
