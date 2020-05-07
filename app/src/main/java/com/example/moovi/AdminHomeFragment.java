@@ -23,12 +23,10 @@ public class AdminHomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_admin_home, container, false);
-
         imageView = view.findViewById(R.id.imageView);
         textView = view.findViewById(R.id.textView);
         // Inflate the layout for this fragment
