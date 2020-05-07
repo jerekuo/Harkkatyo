@@ -49,7 +49,7 @@ public class Room {
         this.roomId = roomId;
     }
 
-    public Room(){
+    public Room() {
         //Null constructor
     }
 

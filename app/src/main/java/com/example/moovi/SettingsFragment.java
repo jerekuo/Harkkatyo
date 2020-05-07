@@ -2,11 +2,6 @@ package com.example.moovi;
 
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +11,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseUser;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
+import com.google.firebase.auth.FirebaseUser;
 
 
 /**
@@ -28,7 +23,7 @@ import java.util.Date;
  */
 public class SettingsFragment extends Fragment {
     View view;
-    TextView  updateText;
+    TextView updateText;
     EditText editPhone, editAddress, editLastName, editFirstName;
     DatePicker datePicker;
     Button updateInfo;
@@ -57,7 +52,7 @@ public class SettingsFragment extends Fragment {
         return view;
     }
 
-    public void onViewCreated (View view, Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         User uuseri = HallSystem.getInstance().getUseri();
         if (uuseri != null) {
             editFirstName.setText(uuseri.getFirstName());
@@ -70,12 +65,12 @@ public class SettingsFragment extends Fragment {
                 int day = Integer.parseInt(values[0]);
                 int month = Integer.parseInt(values[1]);
                 int year = Integer.parseInt(values[2]);
-                datePicker.updateDate(year,month,day);
+                datePicker.updateDate(year, month, day);
             }
         }
     }
 
-    public void updateSettings(View view){
+    public void updateSettings(View view) {
         final String email = user.getEmail();
         updateInfo.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
@@ -90,23 +85,23 @@ public class SettingsFragment extends Fragment {
                 int month = datePicker.getMonth() + 1;
                 int year = datePicker.getYear();
 
-                String strDate = (day+"."+month+"."+year);
+                String strDate = (day + "." + month + "." + year);
 
-                if(address.isEmpty() != true && phone.isEmpty() != true && email.isEmpty() != true
-                        && name.isEmpty() != true && last.isEmpty() != true){
-                    User user = new User(email,name,last,strDate,address,phone);
+                if (address.isEmpty() != true && phone.isEmpty() != true && email.isEmpty() != true
+                        && name.isEmpty() != true && last.isEmpty() != true) {
+                    User user = new User(email, name, last, strDate, address, phone);
                     Database.getInstance().addUser(user);
                     Backup.getInstance().writeUserBackup(user, getActivity().getApplicationContext());
-                    Toast.makeText(getActivity(),"Information updated.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Information updated.", Toast.LENGTH_SHORT).show();
                     Fragment fragment;
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     fragment = new HomeFragment();
                     transaction.replace(R.id.fragmentView, fragment);
                     transaction.commit();
 
-                }else if(address.isEmpty() || phone.isEmpty() || email.isEmpty() || name.isEmpty() || last.isEmpty()){
+                } else if (address.isEmpty() || phone.isEmpty() || email.isEmpty() || name.isEmpty() || last.isEmpty()) {
                     Toast.makeText(getActivity(), "Please insert into all fields.", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     //Do nothing
                 }
             }

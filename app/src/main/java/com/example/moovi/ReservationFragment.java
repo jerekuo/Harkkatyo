@@ -2,12 +2,6 @@ package com.example.moovi;
 
 
 import android.os.Bundle;
-
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +11,12 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 
 
 /**
@@ -52,12 +43,10 @@ public class ReservationFragment extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_reservation1, container, false);
-
 
 
         Button xbutton = view.findViewById(R.id.button4);
@@ -76,28 +65,23 @@ public class ReservationFragment extends Fragment {
         datePicker = view.findViewById(R.id.datePicker);
 
 
-
-
         // Inflate the layout for this fragment
         return view;
 
     }
 
 
-
-    public void onViewCreated (View view, Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         hallSpinner();
 
     }
 
 
-
     //Populates hallspinner with all the halls from database.
-    public void hallSpinner(){
+    public void hallSpinner() {
 
         hallSpinner = view.findViewById(R.id.spinner);
         final ArrayList<Hall> list = hallSystem.getHallList();
-
 
 
         ArrayAdapter<Hall> dataAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
@@ -120,14 +104,12 @@ public class ReservationFragment extends Fragment {
     }
 
     //Populates roomspinner for the Hall chosen, gets the rooms from DB.
-    public void roomSpinner(Hall h){
+    public void roomSpinner(Hall h) {
         roomSpinner = view.findViewById(R.id.spinner2);
         ArrayList<Room> rlist = h.getRoomList();
 
 
-
-
-        ArrayAdapter<Room> dataAdapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item, rlist);
+        ArrayAdapter<Room> dataAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, rlist);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         roomSpinner.setAdapter(dataAdapter);
 
@@ -150,12 +132,12 @@ public class ReservationFragment extends Fragment {
         Bundle bundle = new Bundle();
 
         int y = datePicker.getYear();
-        int m = datePicker.getMonth()+1;
+        int m = datePicker.getMonth() + 1;
         int d = datePicker.getDayOfMonth();
         SimpleDateFormat sf = new SimpleDateFormat("YYYY-MM-dd");
         String chosendaate = String.format("%04d-%02d-%02d", y, m, d);
 
-        String info = chosendaate +","+ hall.hallName +","+ room.name;
+        String info = chosendaate + "," + hall.hallName + "," + room.name;
         bundle.putString("key", info);
         System.out.println(bundle);
 
@@ -166,7 +148,6 @@ public class ReservationFragment extends Fragment {
         transaction.replace(R.id.fragmentView, fragment);
         transaction.commit();
     }
-
 
 
 }

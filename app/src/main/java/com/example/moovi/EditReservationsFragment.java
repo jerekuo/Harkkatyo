@@ -1,9 +1,6 @@
 package com.example.moovi;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,21 +11,18 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.google.firebase.auth.FirebaseAuth;
+import androidx.fragment.app.Fragment;
+
 import com.google.firebase.auth.FirebaseUser;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-
-
-
 
 
 public class EditReservationsFragment extends Fragment {
@@ -101,10 +95,10 @@ public class EditReservationsFragment extends Fragment {
         return view;
     }
 
-    public void onViewCreated (View view, Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         datePicker = view.findViewById(R.id.datePicker);
         hallSpinner();
-        String[] tokens = res.resDate.split("\\-",-1);
+        String[] tokens = res.resDate.split("\\-", -1);
         int year = Integer.parseInt(tokens[0]);
         int month = Integer.parseInt(tokens[1]);
         int day = Integer.parseInt(tokens[2]);
@@ -113,9 +107,8 @@ public class EditReservationsFragment extends Fragment {
     }
 
 
-
-    public void onDelete(){
-        if (user.getEmail().equalsIgnoreCase("admin@gmail.com")){
+    public void onDelete() {
+        if (user.getEmail().equalsIgnoreCase("admin@gmail.com")) {
             Database.getInstance().adminDeleteReservation();
         } else {
             Database.getInstance().deleteReservation();
@@ -135,11 +128,11 @@ public class EditReservationsFragment extends Fragment {
         String endTime = Long.toString(helpEndTime);
 
 
-        for (Hall h: hallSystem.getHallList()){
-            if (h.hallName.equalsIgnoreCase(hall.getHallName())){
+        for (Hall h : hallSystem.getHallList()) {
+            if (h.hallName.equalsIgnoreCase(hall.getHallName())) {
                 newHall = h;
-                for (Room r : newHall.getRoomList()){
-                    if (r.name.equalsIgnoreCase(room.getName())){
+                for (Room r : newHall.getRoomList()) {
+                    if (r.name.equalsIgnoreCase(room.getName())) {
                         newRoom = r;
                     }
                 }
@@ -148,7 +141,7 @@ public class EditReservationsFragment extends Fragment {
 
 
         Reservation newRes = new Reservation(hall, room, desc, res.getResId(), 10, startTime, endTime, day);
-        if (user.getEmail().equalsIgnoreCase("admin@gmail.com")){
+        if (user.getEmail().equalsIgnoreCase("admin@gmail.com")) {
             Database.getInstance().adminEditReservation(newRes);
         } else {
             Database.getInstance().editReservation(newRes);
@@ -167,18 +160,17 @@ public class EditReservationsFragment extends Fragment {
         day = chosendaate;
 
         try {
-            freeTimeSpinner(day,hall.getHallName(),room.getName());
+            freeTimeSpinner(day, hall.getHallName(), room.getName());
         } catch (ParseException e) {
             e.printStackTrace();
         }
         edit.setVisibility(View.VISIBLE);
     }
 
-    public void hallSpinner(){
+    public void hallSpinner() {
 
         hallSpinner = view.findViewById(R.id.spinner4);
         final ArrayList<Hall> list = hallSystem.getHallList();
-
 
 
         ArrayAdapter<Hall> dataAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
@@ -186,7 +178,7 @@ public class EditReservationsFragment extends Fragment {
         hallSpinner.setAdapter(dataAdapter);
 
 
-        if(res.getHall().getHallName().equalsIgnoreCase("Slahen halli")) {
+        if (res.getHall().getHallName().equalsIgnoreCase("Slahen halli")) {
             hallSpinner.setSelection(1);
         } else if (res.getHall().getHallName().equalsIgnoreCase("urkki")) {
             hallSpinner.setSelection(2);
@@ -206,15 +198,12 @@ public class EditReservationsFragment extends Fragment {
         });
     }
 
-    public void roomSpinner(Hall h){
+    public void roomSpinner(Hall h) {
         roomSpinner = view.findViewById(R.id.spinner5);
         ArrayList<Room> rlist = h.getRoomList();
 
 
-
-
-
-        ArrayAdapter<Room> dataAdapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item, rlist);
+        ArrayAdapter<Room> dataAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, rlist);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         roomSpinner.setAdapter(dataAdapter);
 
@@ -238,15 +227,15 @@ public class EditReservationsFragment extends Fragment {
 
     public void freeTimeSpinner(String date, String hall, String room) throws ParseException {
         ArrayList<String> timeList = new ArrayList<>();
-        for (int i = 8 ; i < 21 ; i++){
-            timeList.add(i+".00");
+        for (int i = 8; i < 21; i++) {
+            timeList.add(i + ".00");
         }
 
         ArrayList<Reservation> list = hallSystem.getResList();
 
-        for (Reservation r: list){
+        for (Reservation r : list) {
             //Checks if there is reservations for the same day, and if there are it deletes their times from the available times in timelist.
-            if (hall.equalsIgnoreCase(r.hall.getHallName()) && room.equalsIgnoreCase(r.room.getName()) && date.equalsIgnoreCase(r.resDate)){   // Ei tietoa mätsääkö start timet daten kanssa?!?!?!?
+            if (hall.equalsIgnoreCase(r.hall.getHallName()) && room.equalsIgnoreCase(r.room.getName()) && date.equalsIgnoreCase(r.resDate)) {   // Ei tietoa mätsääkö start timet daten kanssa?!?!?!?
                 timeList.remove(r.startTime);
             }
         }

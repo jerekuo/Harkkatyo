@@ -1,8 +1,5 @@
 package com.example.moovi;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,11 +8,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
         textError = findViewById(R.id.textError);
 
     }
+
     public void onClick(View v) {
         String pass1 = editPassword1.getText().toString();
         String pass2 = editPassword2.getText().toString();
@@ -53,8 +55,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         //checks if password has all the needed attributes for strong password
         if (email.isEmpty() != true && pass1.isEmpty() != true && pass2.isEmpty() != true && pass1.equals(pass2)) {
-            if(pass1.length() >= 12) {
-            hasLenght = true;
+            if (pass1.length() >= 12) {
+                hasLenght = true;
             }
             for (int i = 0; i < pass1.length(); i++) {
                 char x = pass1.charAt(i);
@@ -76,37 +78,39 @@ public class RegisterActivity extends AppCompatActivity {
                 if (hasLetter && hasDigit && hasCapital && hasSpecCharacter && hasLowercase && hasLenght) {
                     regAcc(email, pass1);
                     break;
-                } }
+                }
+            }
 
-        }if(pass1.isEmpty() || pass2.isEmpty()) {
+        }
+        if (pass1.isEmpty() || pass2.isEmpty()) {
             errortext = "Please enter a password on blank password spaces";
             textError.setText(errortext);
-        }else if(email.isEmpty()) {
+        } else if (email.isEmpty()) {
             errortext = "Please enter an email on the blank email space";
             textError.setText(errortext);
-        }else if(pass1.equals(pass2) == false && pass1.isEmpty() == false && pass2.isEmpty() == false) {
+        } else if (pass1.equals(pass2) == false && pass1.isEmpty() == false && pass2.isEmpty() == false) {
             errortext = "Please check that both of the passwords matches with eachother.";
             textError.setText(errortext);
 
-        }else if(hasLenght == false || hasCapital == false || hasDigit == false || hasLetter == false ||
-                hasLowercase == false || hasSpecCharacter == false ){
+        } else if (hasLenght == false || hasCapital == false || hasDigit == false || hasLetter == false ||
+                hasLowercase == false || hasSpecCharacter == false) {
             errortext = "Invalid password input! The password must consist of:\n";
-            if(hasLenght == false) {
+            if (hasLenght == false) {
                 errortext = errortext + "Lenght of atleast 12 characters.\n";
             }
-            if(hasLetter == false) {
+            if (hasLetter == false) {
                 errortext = errortext + "Atleast one letter\n";
             }
-            if(hasCapital == false) {
+            if (hasCapital == false) {
                 errortext = errortext + "Atleast one capital letter\n";
             }
-            if(hasLowercase == false) {
+            if (hasLowercase == false) {
                 errortext = errortext + "Atleast one lowercase letter\n";
             }
-            if(hasDigit == false) {
+            if (hasDigit == false) {
                 errortext = errortext + "Atleast one number\n";
             }
-            if(hasSpecCharacter == false) {
+            if (hasSpecCharacter == false) {
                 errortext = errortext + "Atleast one special letter\n";
             }
             textError.setText(errortext);

@@ -1,28 +1,23 @@
 package com.example.moovi;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
-
 
 
 /**
@@ -78,7 +73,7 @@ public class freeTimesFragment extends Fragment {
         return view;
     }
 
-    public void onViewCreated (View view, Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         Bundle bundle = this.getArguments();
         String list = bundle.getString("key");
         SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd");
@@ -89,7 +84,7 @@ public class freeTimesFragment extends Fragment {
 
 
         try {
-            freeTimeSpinner(d,hall,room);
+            freeTimeSpinner(d, hall, room);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -104,15 +99,15 @@ public class freeTimesFragment extends Fragment {
     //times out of the list.
     public void freeTimeSpinner(String date, String hall, String room) throws ParseException {
         ArrayList<String> timeList = new ArrayList<>();
-        for (int i = 8 ; i < 21 ; i++){
-            timeList.add(i+".00");
+        for (int i = 8; i < 21; i++) {
+            timeList.add(i + ".00");
         }
 
         ArrayList<Reservation> list = hallSystem.getResList();
 
-        for (Reservation r: list){
-         //Mikäli varaus löytyy samalle päivälle, poistaa yllä tehdystä listasta kyseiset ajat
-            if (hall.equalsIgnoreCase(r.hall.getHallName()) && room.equalsIgnoreCase(r.room.getName()) && date.equalsIgnoreCase(r.resDate)){   // Ei tietoa mätsääkö start timet daten kanssa?!?!?!?
+        for (Reservation r : list) {
+            //Mikäli varaus löytyy samalle päivälle, poistaa yllä tehdystä listasta kyseiset ajat
+            if (hall.equalsIgnoreCase(r.hall.getHallName()) && room.equalsIgnoreCase(r.room.getName()) && date.equalsIgnoreCase(r.resDate)) {   // Ei tietoa mätsääkö start timet daten kanssa?!?!?!?
                 timeList.remove(r.startTime);
             }
         }
@@ -141,7 +136,6 @@ public class freeTimesFragment extends Fragment {
     }
 
 
-
     //adds the new reservation to database
     public void makeReservation() throws ParseException {
         SimpleDateFormat format1 = new SimpleDateFormat("HH.mm");
@@ -154,41 +148,41 @@ public class freeTimesFragment extends Fragment {
         String endTime = Long.toString(helpEndTime);
 
 
-        for (Hall h: hallSystem.getHallList()){
-            if (h.hallName.equalsIgnoreCase(hall)){
+        for (Hall h : hallSystem.getHallList()) {
+            if (h.hallName.equalsIgnoreCase(hall)) {
                 newHall = h;
-                for (Room r : newHall.getRoomList()){
-                    if (r.name.equalsIgnoreCase(room)){
+                for (Room r : newHall.getRoomList()) {
+                    if (r.name.equalsIgnoreCase(room)) {
                         newRoom = r;
                     }
                 }
             }
         }
 
-        Reservation res = new Reservation(newHall, newRoom,  desc, 123, 100, startTime, endTime , d);
+        Reservation res = new Reservation(newHall, newRoom, desc, 123, 100, startTime, endTime, d);
 
         if (checkIfFree(res) == true) {
             hallSystem.addToResList(res);
-            Toast.makeText(getContext(),"Reservation done", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Reservation done", Toast.LENGTH_SHORT).show();
             fragment = new ReservationFragment();
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragmentView, fragment);
             transaction.commit();
 
-        } else{
+        } else {
             System.out.println("Varauksen teko ei onnistunut, löytyi päällekkäisyys.");
         }
 
     }
 
     //Method checks if the chosen time is free.
-    public Boolean checkIfFree(Reservation reservation){
+    public Boolean checkIfFree(Reservation reservation) {
         HallSystem hallSystem = HallSystem.getInstance();
         Reservation res = reservation;
         String availability = "True";
 
         for (Reservation r : hallSystem.getResList()) {
-            if (r.room == res.room && r.startTime.compareTo(res.startTime)  <= 0 && r.endTime.compareTo(res.endTime) >= 0){
+            if (r.room == res.room && r.startTime.compareTo(res.startTime) <= 0 && r.endTime.compareTo(res.endTime) >= 0) {
                 //Listasta löytyy varaus samalle ajalle
                 // date vertailu löytyy netistä helposti
                 availability = "False";

@@ -1,8 +1,5 @@
 package com.example.moovi;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -12,7 +9,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -22,13 +18,15 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.List;
 import java.util.Random;
 
 //This is the login screen for the app.
@@ -55,14 +53,13 @@ public class MainActivity extends AppCompatActivity {
         showPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 } else {
                     password.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
             }
         });
-
 
 
     }
@@ -99,9 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
-
     }
-
 
 
     //takes user to register window
@@ -110,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
     //takes user to login window
     public void toLogin(View v) {
         findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
@@ -122,13 +118,13 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-                            if(email.equals("admin@gmail.com")){
+                            if (email.equals("admin@gmail.com")) {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 HallSystem.getInstance().setUser(user);
                                 findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                                 Intent intent = new Intent(MainActivity.this, Main3Activity.class);
                                 startActivity(intent);
-                            }else{
+                            } else {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("SUCCESS", "signInWithEmail:success");
                                 loginAuth();
@@ -156,8 +152,6 @@ public class MainActivity extends AppCompatActivity {
         final LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
         View popupView = inflater.inflate(R.layout.popup_window, null);
-
-
 
 
         //CREATE POPUPWINDOW

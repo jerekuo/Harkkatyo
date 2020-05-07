@@ -1,16 +1,15 @@
 package com.example.moovi;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,13 +41,13 @@ public class ShowReservationsFragment extends Fragment {
         return view;
     }
 
-    public void onViewCreated (View view, Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
 
         // METHOD FOR FETCHING ALL RESERVATIONS ON THIS DAY
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                reslist = Database.getInstance().getReservationsByDate(dayOfMonth, month+1, year);
+                reslist = Database.getInstance().getReservationsByDate(dayOfMonth, month + 1, year);
 
 
             }
@@ -63,7 +62,7 @@ public class ShowReservationsFragment extends Fragment {
 
     public void printReservations(ArrayList<Reservation> list) {
         calendarText = view.findViewById(R.id.textView3);
-        String s ="";
+        String s = "";
 
         Collections.sort(list, new Comparator<Reservation>() {
             @Override
@@ -77,12 +76,12 @@ public class ShowReservationsFragment extends Fragment {
 
         });
         for (Reservation r : list) {
-            s += r.getHall() +" " + r.getRoom() + " " + r.getStartTime() + "\n";
-            s += r.getDescription() +"\n\n";
+            s += r.getHall() + " " + r.getRoom() + " " + r.getStartTime() + "\n";
+            s += r.getDescription() + "\n\n";
             System.out.println(s);
         }
 
-        if(s!=""){
+        if (s != "") {
             calendarText.setText(s);
         } else {
             calendarText.setText("No reservations on this day!");

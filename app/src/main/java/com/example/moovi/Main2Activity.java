@@ -1,5 +1,12 @@
 package com.example.moovi;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,13 +14,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -46,7 +46,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                 currentUser = documentSnapshot.toObject(User.class);
                 HallSystem.getInstance().setUseri(currentUser);
                 System.out.println("USERI SETATTU");
-                if(currentUser != null) {
+                if (currentUser != null) {
                     updateNavHeader();
                 }
 
@@ -55,7 +55,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     Fragment fragment;
                     fragment = new SettingsFragment();
-                    transaction.replace(R.id.fragmentView,fragment);
+                    transaction.replace(R.id.fragmentView, fragment);
                     transaction.commit();
                 }
             }
@@ -108,15 +108,13 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         //writes users own reservations to list so we can populate the home screen later.
         database.writeCurrentUserReservationList(user.getEmail(), new OnGetDataListener() {
-
 
 
             @Override
@@ -126,12 +124,12 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
 
             @Override
             public void onSuccess(@NonNull Task<QuerySnapshot> task) {
-                for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
+                for (QueryDocumentSnapshot documentsnapshot : task.getResult()) {
 
                     String[] tokens = documentsnapshot.getId().split("[,]");
 
 
-                    if (tokens[0].equalsIgnoreCase(user.getEmail())){
+                    if (tokens[0].equalsIgnoreCase(user.getEmail())) {
 
                         reservations.add(documentsnapshot.toObject(Reservation.class));
                     } else {
@@ -139,11 +137,9 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
                     }
 
 
-
                 }
                 HallSystem.getInstance().setCurUserResList(reservations);
             }
-
 
 
             @Override
@@ -160,22 +156,20 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     }
 
 
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         Fragment fragment;
         if (item.getTitle().toString().equalsIgnoreCase("settings")) {
             fragment = new SettingsFragment();
-            transaction.replace(R.id.fragmentView,fragment);
+            transaction.replace(R.id.fragmentView, fragment);
 
-        } else if (item.getTitle().toString().equalsIgnoreCase("Reservations")) {
+        } else if (item.getTitle().toString().equalsIgnoreCase("Make a reservation")) {
             fragment = new ReservationFragment();
             HallSystem hallSystem = HallSystem.getInstance();
             final ArrayList<Hall> list = hallSystem.getHallList();
             transaction.replace(R.id.fragmentView, fragment);
-        }
-        else if (item.getTitle().toString().equalsIgnoreCase("Calendar")){
+        } else if (item.getTitle().toString().equalsIgnoreCase("Calendar")) {
             fragment = new Calendar_Fragment();
             transaction.replace(R.id.fragmentView, fragment);
 
@@ -186,7 +180,7 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             Intent intent = new Intent(Main2Activity.this, MainActivity.class);
             startActivity(intent);
 
-        } else if (item.getTitle().toString().equalsIgnoreCase("Home")) {
+        } else if (item.getTitle().toString().equalsIgnoreCase("Your reservations")) {
             writeReservationlist();
             fragment = new HomeFragment();
             transaction.replace(R.id.fragmentView, fragment);
@@ -215,9 +209,8 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
     }
 
     //method writes a list with current users reservations, used for displaying them to users
-    public void writeReservationlist(){
+    public void writeReservationlist() {
         database.writeCurrentUserReservationList(user.getEmail(), new OnGetDataListener() {
-
 
 
             @Override
@@ -228,12 +221,12 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             @Override
             public void onSuccess(@NonNull Task<QuerySnapshot> task) {
                 reservations.clear();
-                for (QueryDocumentSnapshot documentsnapshot : task.getResult()){
+                for (QueryDocumentSnapshot documentsnapshot : task.getResult()) {
 
                     String[] tokens = documentsnapshot.getId().split("[,]");
 
 
-                    if (tokens[0].equalsIgnoreCase(user.getEmail())){
+                    if (tokens[0].equalsIgnoreCase(user.getEmail())) {
 
                         reservations.add(documentsnapshot.toObject(Reservation.class));
                     } else {
@@ -254,14 +247,15 @@ public class Main2Activity extends AppCompatActivity implements NavigationView.O
             }
         });
     }
+
     // sets the navigation header with custom user values
-    public void updateNavHeader(){
+    public void updateNavHeader() {
         navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         TextView navEmail = headerView.findViewById(R.id.nav_userEmail);
         TextView navName = headerView.findViewById(R.id.nav_username);
         navEmail.setText(user.getEmail());
-        navName.setText("Welcome to moovi "+currentUser.getFirstName());
+        navName.setText("Welcome to moovi " + currentUser.getFirstName());
     }
 
 }
